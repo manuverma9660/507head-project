@@ -35,6 +35,10 @@ export async function submitContact(formData: FormData): Promise<ContactResult> 
   const ip = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   const fingerprint = createHash("sha256").update(`${ip}|${requestHeaders.get("user-agent") ?? ""}`).digest("hex");
   const { data: allowed, error: rateLimitError } = await supabase.rpc("allow_contact_submission", { p_fingerprint: fingerprint });
+  if (rateLimitError) {
+    console.error("Contact rate-limit check failed:", rateLimitError.message);
+    return { success: false, message: "Contact inbox ka Supabase setup abhi complete nahi hai. SQL migration run karke phir try karein." };
+  }
   if (rateLimitError || !allowed) return { success: false, message: "कृपया कुछ देर बाद फिर प्रयास करें।" };
   const { error } = await supabase.from("contact_submissions").insert({
     name,

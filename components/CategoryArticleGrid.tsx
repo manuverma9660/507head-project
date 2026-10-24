@@ -75,7 +75,6 @@ export default function CategoryArticleGrid({
                 src={article.featured_image_url}
                 alt={article.featured_image_alt}
                 fill
-                unoptimized
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-cover transition duration-300 group-hover:scale-105"
               />

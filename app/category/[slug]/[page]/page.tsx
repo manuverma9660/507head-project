@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { APPROVED_CATEGORIES, getArticlesByCategory } from "@/lib/content";
+import { getArticlesByCategory, getCategories } from "@/lib/content";
 
 const PAGE_SIZE = 12;
 
@@ -13,7 +13,8 @@ export const instant = false;
 
 export async function generateMetadata({ params }: CategoryPaginationPageProps): Promise<Metadata> {
   const { slug, page } = await params;
-  const category = APPROVED_CATEGORIES.find((item) => item.slug === slug);
+  const categories = await getCategories();
+  const category = categories.find((item) => item.slug === slug);
   if (!category) return {};
 
   return {
@@ -26,7 +27,8 @@ export async function generateMetadata({ params }: CategoryPaginationPageProps):
 export default async function CategoryPaginationPage({ params }: CategoryPaginationPageProps) {
   const { slug, page } = await params;
   const pageNumber = Number(page);
-  const category = APPROVED_CATEGORIES.find((item) => item.slug === slug);
+  const categories = await getCategories();
+  const category = categories.find((item) => item.slug === slug);
 
   if (!category || !Number.isInteger(pageNumber) || pageNumber < 2) notFound();
 

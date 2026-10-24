@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { APPROVED_CATEGORIES, getArticlesByCategory } from "@/lib/content";
+import { getArticlesByCategory, getCategories } from "@/lib/content";
 
 export const instant = false;
 
@@ -14,7 +14,8 @@ export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const category = APPROVED_CATEGORIES.find((c) => c.slug === slug);
+  const categories = await getCategories();
+  const category = categories.find((c) => c.slug === slug);
 
   if (!category) {
     return {
@@ -35,7 +36,8 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const category = APPROVED_CATEGORIES.find((c) => c.slug === slug);
+  const categories = await getCategories();
+  const category = categories.find((c) => c.slug === slug);
 
   if (!category) {
     notFound();
@@ -60,7 +62,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-semibold">
             <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
-            {APPROVED_CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <Link
                 key={c.slug}
                 href={`/category/${c.slug}`}
@@ -133,7 +135,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     src={article.featured_image_url}
                     alt={article.featured_image_alt}
                     fill
-                    unoptimized
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition duration-300 group-hover:scale-105"
                   />

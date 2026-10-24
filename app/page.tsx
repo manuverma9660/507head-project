@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import {
-  APPROVED_CATEGORIES,
-  getAllPublishedArticles,
-  getFeaturedArticle,
-} from "@/lib/content";
+import { getAllPublishedArticles, getCategories } from "@/lib/content";
+import { getLatestInstagramReels } from "@/lib/instagram";
+import SocialIcon from "@/components/SocialIcon";
+import HeroSlider from "@/components/HeroSlider";
 
 export const instant = false;
 
@@ -26,43 +25,70 @@ const INSTAGRAM_URL = "https://www.instagram.com/507head/";
 const FACEBOOK_URL = "https://www.facebook.com/507Head/";
 const YOUTUBE_URL = "https://www.youtube.com/channel/UC0QF1fncNE4Z8G8ryNa4DiQ";
 
-const reels = [
+const fallbackReels = [
   {
     title: "507 हेड — थार रेगिस्तान की अनूठी झलक",
     image:
-      "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEyTtGBClDFHDUPJL2qK7vosE24ZreCkLg1GYZi5esyw&s=10",
     url: INSTAGRAM_URL,
   },
   {
     title: "थार के धोरों में सूर्यास्त",
     image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQMaA7LGtefXqSnLZwt-N6LgFaXYmXBgy3ff3dMbbVww&s=10",
     url: INSTAGRAM_URL,
   },
   {
     title: "राठी गोवंश की समृद्ध परंपरा",
     image:
-      "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=600&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShUNJzXGSMFEBS2UDR2DIynpv0LU5m1RGEq81msYDZug&s=10",
     url: INSTAGRAM_URL,
   },
   {
     title: "507 हेड — ग्रामीण जीवन की कहानी",
     image:
-      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPzlis4w-yX_1kMaJMlCEPEKNeP7JcmUv3UUa5tN9rIg&s=10",
     url: INSTAGRAM_URL,
   },
 ];
 
 export default async function Home() {
-  const allArticles = await getAllPublishedArticles();
-  const featured = await getFeaturedArticle();
+  const [allArticles, instagramReels, categories] = await Promise.all([
+    getAllPublishedArticles(),
+    getLatestInstagramReels(),
+    getCategories(),
+  ]);
+  const reels = instagramReels.length > 0 ? instagramReels : fallbackReels;
+  const featured =
+    allArticles.find((article) => article.slug === "thar-registan-507-head-itihas") ||
+    allArticles.find((article) => article.is_featured) ||
+    allArticles[0];
 
+  // Latest cards are intentionally separate from the featured story. Do not
+  // repeat it as a fallback: when fewer than six posts exist, show fewer cards.
+  const seenLatestSlugs = new Set<string>();
   const latestArticles = allArticles
-    .filter((a) => a.id !== featured.id)
+    .filter((article) => {
+      if (article.id === featured.id || article.slug === featured.slug) return false;
+      if (seenLatestSlugs.has(article.slug)) return false;
+      seenLatestSlugs.add(article.slug);
+      return true;
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+    )
     .slice(0, 6);
+  const heroSlides = [featured, ...latestArticles.slice(0, 4)].map((article) => ({
+    image: article.featured_image_url,
+    title: article.title,
+    excerpt: article.excerpt,
+    href: `/blog/${article.slug}`,
+    category: article.category_name,
+  }));
 
   return (
-    <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
+    <main className="public-page min-h-screen bg-[#fcf9f5] text-[#222222]">
       {/* Topline Banner */}
       <div className="bg-[#6b3915] px-4 py-2 text-center text-xs sm:text-sm font-medium text-white tracking-wide">
         507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर
@@ -70,13 +96,13 @@ export default async function Home() {
 
       {/* Main Header */}
       <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
-          <Link href="/" className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3.5 sm:gap-4 sm:px-6">
+          <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#8a4b1f] text-lg font-black text-white shadow-sm">
               507
             </span>
-            <span className="leading-tight">
-              <strong className="block text-2xl font-black text-[#222] tracking-tight">
+            <span className="min-w-0 leading-tight">
+              <strong className="block text-xl font-black text-[#222] tracking-tight sm:text-2xl">
                 507 हेड
               </strong>
               <small className="text-xs text-[#777] font-semibold">
@@ -90,7 +116,7 @@ export default async function Home() {
             <Link href="/" className="text-[#8a4b1f] font-bold">
               होम
             </Link>
-            {APPROVED_CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <Link
                 key={cat.slug}
                 href={`/category/${cat.slug}`}
@@ -102,18 +128,16 @@ export default async function Home() {
           </nav>
 
           {/* Social Icons & Admin Link */}
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
             {/* Facebook */}
             <a
               href={FACEBOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1877F2]/10 text-[#1877F2] transition hover:bg-[#1877F2] hover:text-white"
+              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
+              <SocialIcon name="facebook" className="h-10 w-10" />
             </a>
             {/* Instagram */}
             <a
@@ -121,11 +145,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E1306C]/10 text-[#E1306C] transition hover:bg-gradient-to-br hover:from-[#833ab4] hover:via-[#fd1d1d] hover:to-[#fcb045] hover:text-white"
+              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
+              <SocialIcon name="instagram" className="h-10 w-10" />
             </a>
             {/* YouTube */}
             <a
@@ -133,26 +155,24 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FF0000]/10 text-[#FF0000] transition hover:bg-[#FF0000] hover:text-white"
+              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-              </svg>
+              <SocialIcon name="youtube" className="h-10 w-10" />
             </a>
 
           </div>
         </div>
 
         {/* Mobile Horizontal Category Scroll */}
-        <div className="xl:hidden flex items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] no-scrollbar">
-          <Link href="/" className="shrink-0 text-[#8a4b1f]">
+        <div className="xl:hidden flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] no-scrollbar">
+          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">
             होम
           </Link>
-          {APPROVED_CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.slug}
               href={`/category/${cat.slug}`}
-              className="shrink-0 hover:text-[#8a4b1f]"
+              className="shrink-0 snap-start hover:text-[#8a4b1f]"
             >
               {cat.name}
             </Link>
@@ -161,7 +181,8 @@ export default async function Home() {
       </header>
 
       {/* Featured Story Hero */}
-      <section className="border-b border-[#e5ddd3] bg-gradient-to-b from-[#f7efe3] to-[#fcf9f5] py-10 sm:py-16">
+      <HeroSlider slides={heroSlides} />
+      <section className="hidden border-b border-[#e5ddd3] bg-gradient-to-b from-[#f7efe3] to-[#fcf9f5] py-10 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-4 flex items-center gap-2">
             <span className="flex h-2.5 w-2.5 rounded-full bg-[#8a4b1f] animate-pulse" />
@@ -170,9 +191,9 @@ export default async function Home() {
             </span>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+          <div className="grid gap-8 md:grid-cols-12 md:items-center">
             {/* Left Content */}
-            <div className="lg:col-span-6 space-y-4">
+            <div className="space-y-4 md:col-span-6">
               <Link
                 href={`/category/${featured.category_slug}`}
                 className="inline-block rounded-full bg-[#8a4b1f]/10 px-3.5 py-1 text-xs font-bold text-[#8a4b1f]"
@@ -217,7 +238,7 @@ export default async function Home() {
             </div>
 
             {/* Right Hero Image */}
-            <div className="lg:col-span-6">
+            <div className="md:col-span-6">
               <Link
                 href={`/blog/${featured.slug}`}
                 className="group relative block aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white shadow-md"
@@ -227,8 +248,7 @@ export default async function Home() {
                   alt={featured.featured_image_alt}
                   fill
                   priority
-                  unoptimized
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 767px) 100vw, 50vw"
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
                 <span className="absolute bottom-3 left-3 rounded-lg bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
@@ -241,7 +261,7 @@ export default async function Home() {
       </section>
 
       {/* Latest 6 Stories Section */}
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-[#e5ddd3] pb-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#8a4b1f]">
@@ -270,7 +290,6 @@ export default async function Home() {
                   src={article.featured_image_url}
                   alt={article.featured_image_alt}
                   fill
-                  unoptimized
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
@@ -279,7 +298,7 @@ export default async function Home() {
                 </span>
               </Link>
 
-              <div className="flex flex-1 flex-col p-6">
+              <div className="flex flex-1 flex-col p-4 sm:p-6">
                 <div className="mb-3 flex items-center gap-2 text-xs text-[#888]">
                   <span>
                     {new Date(article.published_at).toLocaleDateString("hi-IN", {
@@ -375,9 +394,9 @@ export default async function Home() {
       </section>
 
       {/* Category Blocks: 3 cards per category */}
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 space-y-12">
+      <section className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:space-y-12 sm:px-6 sm:py-12">
 
-        {APPROVED_CATEGORIES.map((cat) => {
+        {categories.map((cat) => {
           const catArticles = allArticles.filter(
             (a) => a.category_slug === cat.slug
           );
@@ -385,7 +404,7 @@ export default async function Home() {
 
           return (
             <div key={cat.slug} className="pt-6">
-              <div className="mb-6 flex items-center justify-between border-b-2 border-[#8a4b1f] pb-3">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#8a4b1f] pb-3">
                 <div className="flex items-center gap-3">
                   <span className="h-6 w-1.5 rounded-full bg-[#8a4b1f]" />
                   <h3 className="text-xl sm:text-2xl font-black text-[#222] tracking-tight">
@@ -415,7 +434,6 @@ export default async function Home() {
                         src={article.featured_image_url}
                         alt={article.featured_image_alt}
                         fill
-                        unoptimized
                         sizes="(max-width: 640px) 100vw, 33vw"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
@@ -473,9 +491,7 @@ export default async function Home() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#1877F2]/80"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
+              <SocialIcon name="facebook" className="h-3.5 w-3.5" />
               Facebook ↗
             </a>
             <a
@@ -531,7 +547,7 @@ export default async function Home() {
           <div>
             <h4 className="font-bold text-[#222] text-sm mb-4">प्रमुख श्रेणियां</h4>
             <ul className="space-y-2 text-xs">
-              {APPROVED_CATEGORIES.map((c) => (
+              {categories.map((c) => (
                 <li key={c.slug}>
                   <Link
                     href={`/category/${c.slug}`}

@@ -1,7 +1,7 @@
 
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { validateArticleInput } from "@/lib/editorial";
 import { recordArticleHistory } from "@/lib/editorial-history";
@@ -89,6 +89,7 @@ async function getAdminClient() {
 }
 
 function refreshArticles(paths?: { slug?: string; categorySlug?: string }) {
+  updateTag("published-articles");
   revalidatePath("/admin/articles", "page");
   revalidatePath("/admin/articles/new", "page");
   revalidatePath("/admin", "page");

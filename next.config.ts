@@ -39,7 +39,37 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "thumb.wikimedia.org",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "sc0.blr1.cdn.digitaloceanspaces.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.shutterstock.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "media.assettype.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.bhaskarassets.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "img-cdn.krishijagran.com",
         pathname: "/**",
       },
     ],

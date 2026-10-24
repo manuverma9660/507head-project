@@ -53,8 +53,8 @@ export default async function AdminAuthorsPage() {
           </div>
         </header>
 
-        <div className="rounded-2xl border border-[#e8dac9] bg-white overflow-hidden shadow-sm">
-          <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto rounded-2xl border border-[#e8dac9] bg-white shadow-sm">
+          <table className="w-full min-w-[680px] text-left text-sm">
             <thead className="border-b border-[#e8dac9] bg-[#f7efe3] text-xs font-bold uppercase tracking-wider text-[#6b3915]">
               <tr>
                 <th className="px-6 py-4">नाम</th>

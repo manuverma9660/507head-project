@@ -123,7 +123,6 @@ export default function HistoryPage() {
                   alt={stories[0].alt}
                   fill
                   priority
-                  unoptimized
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover"
                 />
@@ -172,7 +171,6 @@ export default function HistoryPage() {
                   src={story.image}
                   alt={story.alt}
                   fill
-                  unoptimized
                   loading="lazy"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition duration-300 group-hover:scale-[1.03]"

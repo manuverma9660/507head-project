@@ -1,9 +1,9 @@
 import { MetadataRoute } from "next";
-import { APPROVED_CATEGORIES, getAllPublishedArticles } from "@/lib/content";
+import { getAllPublishedArticles, getCategories } from "@/lib/content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://507head.com";
-  const articles = await getAllPublishedArticles();
+  const [articles, categories] = await Promise.all([getAllPublishedArticles(), getCategories()]);
 
   const articleEntries: MetadataRoute.Sitemap = articles.map((article) => ({
     url: `${siteUrl}/blog/${article.slug}/`,
@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const categoryEntries: MetadataRoute.Sitemap = APPROVED_CATEGORIES.map(
+  const categoryEntries: MetadataRoute.Sitemap = categories.map(
     (cat) => ({
       url: `${siteUrl}/category/${cat.slug}/`,
       lastModified: new Date(),

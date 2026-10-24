@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
@@ -34,6 +34,7 @@ export async function GET(request: Request) {
     });
     revalidatePath(`/blog/${article.slug}`);
   }
+  revalidateTag("published-articles", "max");
   revalidatePath("/");
   revalidatePath("/sitemap.xml");
   revalidatePath("/rss.xml");

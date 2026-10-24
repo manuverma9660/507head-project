@@ -1,4 +1,4 @@
-import { cacheTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 
 export type PublicSiteSettings = {
   site_name: string;
@@ -22,6 +22,7 @@ const fallback: PublicSiteSettings = {
 
 export async function getPublicSiteSettings(): Promise<PublicSiteSettings> {
   "use cache";
+  cacheLife("hours");
   cacheTag("site-settings");
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;

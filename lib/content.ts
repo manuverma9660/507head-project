@@ -1,5 +1,6 @@
 import { createPublicClient } from "./supabase/public";
 import { parseRichText, type RichTextDocument } from "./rich-text";
+import { cacheLife, cacheTag } from "next/cache";
 
 export interface Category {
   id: string;
@@ -89,6 +90,57 @@ export const APPROVED_CATEGORIES: Category[] = [
   },
 ];
 
+/**
+ * The database is the live source for category labels, ordering and visibility.
+ * The approved list remains a safe fallback and prevents accidental categories
+ * created by old editor versions (for example `kheti` / `shikhsa`) from leaking
+ * into the public navigation.
+ */
+export async function getCategories(): Promise<Category[]> {
+  try {
+    const supabase = createPublicClient();
+    if (!supabase) return APPROVED_CATEGORIES;
+
+    const { data, error } = await supabase
+      .from("categories")
+      .select("id, slug, name, description, sort_order")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+
+    if (error || !data) return APPROVED_CATEGORIES;
+
+    const liveCategories = data;
+    const storedBySlug = new Map(liveCategories.map((category) => [category.slug, category]));
+    const standardCategories = APPROVED_CATEGORIES.map((fallback) => {
+      const stored = storedBySlug.get(fallback.slug);
+      return stored
+        ? {
+            ...fallback,
+            id: String(stored.id),
+            name: stored.name || fallback.name,
+            description: stored.description || fallback.description,
+            sort_order: typeof stored.sort_order === "number" ? stored.sort_order : fallback.sort_order,
+          }
+        : fallback;
+    });
+    const standardSlugs = new Set(APPROVED_CATEGORIES.map((category) => category.slug));
+    const customCategories: Category[] = liveCategories
+      .filter((category) => !standardSlugs.has(category.slug))
+      .map((category) => ({
+        id: String(category.id),
+        slug: category.slug,
+        name: category.name,
+        description: category.description || "",
+        sort_order: typeof category.sort_order === "number" ? category.sort_order : 999,
+      }));
+
+    return [...standardCategories, ...customCategories].sort((a, b) => a.sort_order - b.sort_order);
+  } catch (error) {
+    console.error("Error fetching categories from Supabase:", error);
+    return APPROVED_CATEGORIES;
+  }
+}
+
 export const DEFAULT_AUTHOR: Author = {
   id: "author-default",
   slug: "507-head-team",
@@ -106,7 +158,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "history",
     category_name: "इतिहास और विरासत",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://images.bhaskarassets.com/web2images/521/2025/08/11/orig_4-1-1-1-1-1-1-1-1-1-1-1_1754872440.jpg",
     featured_image_alt: "थार मरुस्थल के रेतीले धोरे और सूर्यास्त का दृश्य",
     featured_image_caption: "507 हेड के आसपास फैले थार के विशाल धोरे",
     is_featured: true,
@@ -128,7 +180,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "farming",
     category_name: "खेती-बाड़ी",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi5OaYV-_JlxDzp2JKqU7NJ9a4AXX-bggjKNeBXp1ZTg&s=10",
     featured_image_alt: "लहलहाते खेत और सुबह की ताजी धूप",
     featured_image_caption: "नहरी पानी से सींचे गए 507 हेड क्षेत्र के खेत",
     is_featured: false,
@@ -150,7 +202,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "pashupalan",
     category_name: "पशुपालन",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://img-cdn.krishijagran.com/68043/ty.jpeg",
     featured_image_alt: "मरुस्थलीय परिवेश में राठी गाय और उसका बछड़ा",
     featured_image_caption: "बीकानेर और 507 हेड इलाके की प्रसिद्ध राठी नस्ल",
     is_featured: false,
@@ -172,7 +224,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "wisdom",
     category_name: "बुजुर्गों की सीख",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tsXyf-KOkWlFBzQTjJF-MK7S1p3MclAEMeOpgNJPPb_rMosdeOSRaH4R&s=10",
     featured_image_alt: "गाँव की चौपाल पर बैठे बुजुर्ग और पारंपरिक पगड़ी",
     featured_image_caption: "गाँव की चौपाल में जीवन के अनुभव साझा करते बुजुर्ग",
     is_featured: false,
@@ -194,7 +246,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "food",
     category_name: "खान-पान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAhYxoVz_zQeD-Ki_4T6gpbFKYqf4y9P11rJgGY23dB2kVAOvApsnqHwO&s=10",
     featured_image_alt: "पारंपरिक राजस्थानी थाली और बाजरे की रोटी",
     featured_image_caption: "पौष्टिकता से भरपूर पारंपरिक मरुस्थलीय खान-पान",
     is_featured: false,
@@ -216,7 +268,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "heritage",
     category_name: "सांस्कृतिक विरासत",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Rajasthan_Folk_Music.jpg/3840px-Rajasthan_Folk_Music.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
     featured_image_alt: "राजस्थानी लोक कलाकार और पारंपरिक संगीत वाद्ययंत्र",
     featured_image_caption: "थार की सांस्कृतिक विरासत को संजोते स्थानीय कलाकार",
     is_featured: false,
@@ -238,7 +290,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "kisan",
     category_name: "किसान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://sc0.blr1.cdn.digitaloceanspaces.com/article/196544-fiimlmpoxr-1702239573.jpg",
     featured_image_alt: "खेत में काम करता हुआ राजस्थानी किसान",
     featured_image_caption: "507 हेड के कर्मठ किसान की मेहनत का एक दृश्य",
     is_featured: false,
@@ -260,7 +312,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "farming",
     category_name: "खेती-बाड़ी",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://media.istockphoto.com/id/1050650472/photo/ripe-pomegranate-fruits-on-the-branches-of-trees-in-the-garden-rows-of-pomegranate-trees-with.jpg?s=612x612&w=0&k=20&c=C_GX-u9pCaznrSdl2SGVAtVul8N5kFglGKyRy12ThbM=",
     featured_image_alt: "किन्नू और फलों का हरा-भरा बगीचा",
     featured_image_caption: "नहरी क्षेत्र में बागवानी का सफल मॉडल",
     is_featured: false,
@@ -281,7 +333,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "pashupalan",
     category_name: "पशुपालन",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNh_R6xE4OQOOs7ty00IOmVb0YUMOh_NhST3yLBf-jA&s=10",
     featured_image_alt: "रेगिस्तान में ऊँटों का झुंड",
     featured_image_caption: "थार का जहाज: ऊँट संरक्षण और दुग्ध उत्पादन",
     is_featured: false,
@@ -302,7 +354,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "kisan",
     category_name: "किसान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://www.shutterstock.com/editorial/image-editorial/MdTeE53aN8jbI02cMzE3NzA=/village-life-daily-farmers-farmer-irrigating-his-440nw-11666024d.jpg",
     featured_image_alt: "रात के समय खेत में पानी लगाता किसान",
     featured_image_caption: "नहरी बारी के दौरान रात का सन्नाटा और किसान की मेहनत",
     is_featured: false,
@@ -323,7 +375,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "wisdom",
     category_name: "बुजुर्गों की सीख",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://media.assettype.com/indiawaterportal-hindi%2Fimport%2F5546%2F11475902195_41bed58549_o.jpg?w=640&auto=format%2Ccompress",
     featured_image_alt: "पारंपरिक राजस्थानी टांका और जल संचयन",
     featured_image_caption: "थार मरुस्थल में वर्षा जल संचयन की पारंपरिक तकनीक",
     is_featured: false,
@@ -344,7 +396,7 @@ export const INITIAL_ARTICLES: Article[] = [
     category_slug: "food",
     category_name: "खान-पान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1400&q=85",
+    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZ9sSvY4pB808MuwgpaxZV_4MOkbYGYjlhHJJezbbZI9AMnXsePaH5zIg&s=10",
     featured_image_alt: "ताजी काचरी और देशी राजस्थानी सामग्री",
     featured_image_caption: "प्राकृतिक स्वाद और पोषण से भरपूर मरुस्थलीय उपज",
     is_featured: false,
@@ -359,7 +411,26 @@ export const INITIAL_ARTICLES: Article[] = [
   },
 ];
 
+const CURATED_FEATURED_IMAGES: Record<string, string> = {
+  "rathi-gaay-marusthal-ki-kamdhenu": "https://img-cdn.krishijagran.com/68043/ty.jpeg",
+  "purane-kund-aur-tanke-jal-parampara": "https://media.assettype.com/indiawaterportal-hindi%2Fimport%2F5546%2F11475902195_41bed58549_o.jpg?w=640&auto=format%2Ccompress",
+  "raat-ke-sannate-me-nahari-paani-ki-baari": "https://www.shutterstock.com/editorial/image-editorial/MdTeE53aN8jbI02cMzE3NzA=/village-life-daily-farmers-farmer-irrigating-his-440nw-11666024d.jpg",
+  "kinnu-anaar-kheti-bikaner-munafa": "https://media.istockphoto.com/id/1050650472/photo/ripe-pomegranate-fruits-on-the-branches-of-trees-in-the-garden-rows-of-pomegranate-trees-with.jpg?s=612x612&w=0&k=20&c=C_GX-u9pCaznrSdl2SGVAtVul8N5kFglGKyRy12ThbM=",
+  "kisan-mehanat-anubhav-desh-ki-shaan": "https://sc0.blr1.cdn.digitaloceanspaces.com/article/196544-fiimlmpoxr-1702239573.jpg",
+  "thar-sanskriti-lokgeet-parampara": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Rajasthan_Folk_Music.jpg/3840px-Rajasthan_Folk_Music.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
+  "untni-ka-doodh-marusthal-dairy": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNh_R6xE4OQOOs7ty00IOmVb0YUMOh_NhST3yLBf-jA&s=10",
+  "thar-registan-507-head-itihas": "https://images.bhaskarassets.com/web2images/521/2025/08/11/orig_4-1-1-1-1-1-1-1-1-1-1-1_1754872440.jpg",
+  "nahari-kshetra-kheti-unnat-tarike": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi5OaYV-_JlxDzp2JKqU7NJ9a4AXX-bggjKNeBXp1ZTg&s=10",
+  "bujurgon-ke-tajurbe-aur-paramparik-seekh": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tsXyf-KOkWlFBzQTjJF-MK7S1p3MclAEMeOpgNJPPb_rMosdeOSRaH4R&s=10",
+  "bajra-roti-sangri-marusthal-poshan": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAhYxoVz_zQeD-Ki_4T6gpbFKYqf4y9P11rJgGY23dB2kVAOvApsnqHwO&s=10",
+  "matira-kachri-chatni-marusthal-swad": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZ9sSvY4pB808MuwgpaxZV_4MOkbYGYjlhHJJezbbZI9AMnXsePaH5zIg&s=10",
+};
+
 export async function getAllPublishedArticles(): Promise<Article[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("published-articles");
+
   try {
     const supabase = createPublicClient();
     if (!supabase) return INITIAL_ARTICLES;
@@ -446,6 +517,7 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
           category_name: matchedName || "ताज़ा खबरें",
           author: DEFAULT_AUTHOR,
           featured_image_url:
+            CURATED_FEATURED_IMAGES[item.slug] ||
             item.featured_image_url ||
             "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1400&q=85",
           featured_image_alt: item.featured_image_alt || item.title,
@@ -518,6 +590,10 @@ export async function getRelatedArticles(
 }
 
 export async function getAuthorBySlug(slug: string): Promise<Author | null> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("authors");
+
   try {
     const supabase = createPublicClient();
     if (supabase) {

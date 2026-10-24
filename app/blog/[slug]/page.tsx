@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { getArticleBySlug, getRelatedArticles, APPROVED_CATEGORIES } from "@/lib/content";
 import ArticleBody from "@/components/ArticleBody";
+import SocialIcon from "@/components/SocialIcon";
 
 export const instant = false;
 
@@ -219,34 +220,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
 
           {/* Social Share Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <span className="text-xs font-bold text-[#888] mr-1 hidden sm:inline">शेयर करें:</span>
             <a
               href={`https://api.whatsapp.com/send?text=${encodeURIComponent(article.title + " - " + currentUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="व्हाट्सएप पर शेयर करें"
-              className="flex h-9 items-center gap-1.5 rounded-lg bg-[#25D366] px-3 text-xs font-bold text-white hover:opacity-90"
+              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
             >
-              <span>WhatsApp</span>
+              <SocialIcon name="whatsapp" className="h-10 w-10" />
             </a>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="फेसबुक पर शेयर करें"
-              className="flex h-9 items-center gap-1.5 rounded-lg bg-[#1877F2] px-3 text-xs font-bold text-white hover:opacity-90"
+              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
             >
-              <span>FB</span>
+              <SocialIcon name="facebook" className="h-10 w-10" />
             </a>
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X पर शेयर करें"
-              className="flex h-9 items-center gap-1.5 rounded-lg bg-black px-3 text-xs font-bold text-white hover:opacity-90"
+              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-125"
             >
-              <span>X</span>
+              <SocialIcon name="x" className="h-10 w-10" />
             </a>
           </div>
         </div>
@@ -258,7 +259,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             alt={article.featured_image_alt}
             fill
             priority
-            unoptimized
             sizes="(max-width: 896px) 100vw, 896px"
             className="object-cover"
           />
@@ -347,7 +347,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       src={rel.featured_image_url}
                       alt={rel.featured_image_alt}
                       fill
-                      unoptimized
                       sizes="(max-width: 640px) 100vw, 33vw"
                       className="object-cover transition duration-300 group-hover:scale-105"
                     />

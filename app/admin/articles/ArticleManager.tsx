@@ -33,6 +33,7 @@ export default function ArticleManager({
 }) {
   const router = useRouter();
   const [editingId, setEditingId] = useState("");
+  const [formOpen, setFormOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [categorySlug, setCategorySlug] = useState("history");
@@ -100,6 +101,7 @@ export default function ArticleManager({
           setExcerpt("");
           setContent("");
           setCategorySlug("history");
+          setFormOpen(false);
           router.refresh();
         }
       } catch {
@@ -192,10 +194,13 @@ export default function ArticleManager({
     setCategorySlug(article.category_slug || "history");
     setContent(String(article.body ?? ""));
     setMessage("");
+    setFormOpen(true);
 
-    document.getElementById("article-form")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
+    requestAnimationFrame(() => {
+      document.getElementById("article-form")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     });
   }
 
@@ -206,10 +211,12 @@ export default function ArticleManager({
     setCategorySlug("history");
     setContent("");
     setMessage("");
+    setFormOpen(false);
   }
 
   return (
     <div className="space-y-8">
+      {formOpen && (
       <section
         id="article-form"
         className="scroll-mt-6 rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm md:p-7"
@@ -352,6 +359,7 @@ export default function ArticleManager({
           </p>
         )}
       </section>
+      )}
 
       <section className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm md:p-7">
         <div className="flex flex-wrap items-center justify-between gap-4">

@@ -21,6 +21,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 24px;
+  overflow-x: clip;
 }
 
 body,
@@ -33,6 +34,8 @@ select {
 
 body {
   margin: 0;
+  min-width: 0;
+  overflow-x: clip;
   background: var(--surface);
   color: var(--text);
   font-size: 17px;
@@ -59,6 +62,29 @@ button:focus-visible {
 img {
   display: block;
   max-width: 100%;
+}
+
+/* Keep long Hindi labels, URLs and data tables inside small viewports. */
+main,
+section,
+article,
+header,
+footer,
+div {
+  min-width: 0;
+}
+
+input,
+textarea,
+select,
+button {
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
 }
 
 .site-shell {
