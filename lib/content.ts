@@ -102,6 +102,10 @@ export const APPROVED_CATEGORIES: Category[] = [
  * Only the handbook's seven approved categories are ever returned publicly.
  */
 export async function getCategories(): Promise<Category[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("categories");
+
   try {
     const supabase = createPublicClient();
     if (!supabase) return APPROVED_CATEGORIES;

@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import SocialIcon from "@/components/SocialIcon";
 
 const categories = [["history", "इतिहास और विरासत"], ["farming", "खेती-बाड़ी"], ["kisan", "किसान"], ["wisdom", "बुजुर्गों की सीख"], ["heritage", "सांस्कृतिक विरासत"], ["pashupalan", "पशुपालन"], ["food", "खान-पान"]] as const;
 const socials = [["facebook", "https://www.facebook.com/507Head/", "Facebook"], ["instagram", "https://www.instagram.com/507head/", "Instagram"], ["youtube", "https://www.youtube.com/channel/UC0QF1fncNE4Z8G8ryNa4DiQ", "YouTube"]] as const;
 
 function Header() {
-  return <><div className="bg-[#6b3915] px-4 py-2 text-center text-xs font-medium tracking-wide text-white sm:text-sm">507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर</div><header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white/95 backdrop-blur-md"><div className="mx-auto flex max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-4 sm:px-6 sm:py-3.5"><Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#8a4b1f] text-base font-black text-white shadow-sm sm:h-11 sm:w-11 sm:text-lg">507</span><span className="min-w-0 leading-tight"><strong className="block text-lg font-black tracking-tight text-[#222] sm:text-2xl">507 हेड</strong><small className="hidden text-xs font-semibold text-[#777] min-[390px]:block">जल, प्रकृति और जनजीवन</small></span></Link><nav className="hidden items-center gap-5 text-sm font-semibold text-[#444] xl:flex"><Link href="/" className="font-bold text-[#8a4b1f]">होम</Link>{categories.map(([slug, name]) => <Link key={slug} href={`/category/${slug}`} className="transition-colors hover:text-[#8a4b1f]">{name}</Link>)}</nav><div className="flex shrink-0 items-center gap-1.5 sm:gap-3">{socials.map(([name, href, label]) => <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"><SocialIcon name={name} className="h-4 w-4 sm:h-5 sm:w-5" /></a>)}</div></div><nav aria-label="श्रेणियाँ" className="no-scrollbar flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden"><Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">होम</Link>{categories.map(([slug, name]) => <Link key={slug} href={`/category/${slug}`} className="shrink-0 snap-start hover:text-[#8a4b1f]">{name}</Link>)}</nav></header></>;
+  return <><div className="bg-[#6b3915] px-4 py-2 text-center text-xs font-medium tracking-wide text-white sm:text-sm">507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर</div><header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white/95 backdrop-blur-md"><div className="mx-auto flex max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-4 sm:px-6 sm:py-3.5"><Link href="/" prefetch className="flex min-w-0 items-center gap-2 sm:gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#8a4b1f] text-base font-black text-white shadow-sm sm:h-11 sm:w-11 sm:text-lg">507</span><span className="min-w-0 leading-tight"><strong className="block text-lg font-black tracking-tight text-[#222] sm:text-2xl">507 हेड</strong><small className="hidden text-xs font-semibold text-[#777] min-[390px]:block">जल, प्रकृति और जनजीवन</small></span></Link><nav className="hidden items-center gap-5 text-sm font-semibold text-[#444] xl:flex"><Link href="/" prefetch className="font-bold text-[#8a4b1f]">होम</Link>{categories.map(([slug, name]) => <Link key={slug} href={`/category/${slug}`} prefetch className="transition-colors hover:text-[#8a4b1f]">{name}</Link>)}</nav><div className="flex shrink-0 items-center gap-1.5 sm:gap-3">{socials.map(([name, href, label]) => <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"><SocialIcon name={name} className="h-4 w-4 sm:h-5 sm:w-5" /></a>)}</div></div><nav aria-label="श्रेणियाँ" className="no-scrollbar flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden"><Link href="/" prefetch className="shrink-0 snap-start text-[#8a4b1f]">होम</Link>{categories.map(([slug, name]) => <Link key={slug} href={`/category/${slug}`} prefetch className="shrink-0 snap-start hover:text-[#8a4b1f]">{name}</Link>)}</nav></header></>;
 }
 
 function Footer() {
@@ -19,15 +19,38 @@ function Footer() {
 export default function PublicSiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const prefetchedRoutes = useRef(new Set<string>());
   useEffect(() => {
+    const prefetch = (href: string) => {
+      if (!href.startsWith("/") || prefetchedRoutes.current.has(href)) return;
+      prefetchedRoutes.current.add(href);
+      router.prefetch(href);
+    };
+
+    const prefetchOnIntent = (event: Event) => {
+      const target = event.target as HTMLElement;
+      const link = target.closest<HTMLAnchorElement>("a[href]");
+      const href = link?.getAttribute("href");
+      if (href) prefetch(href);
+    };
+
     const openCard = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (target.closest("a, button, input, textarea, select, label")) return;
       const card = target.closest<HTMLElement>("[data-article-href]");
-      if (card?.dataset.articleHref) router.push(card.dataset.articleHref);
+      if (card?.dataset.articleHref) {
+        prefetch(card.dataset.articleHref);
+        router.push(card.dataset.articleHref);
+      }
     };
+    document.addEventListener("pointerover", prefetchOnIntent, { passive: true });
+    document.addEventListener("focusin", prefetchOnIntent);
     document.addEventListener("click", openCard);
-    return () => document.removeEventListener("click", openCard);
+    return () => {
+      document.removeEventListener("pointerover", prefetchOnIntent);
+      document.removeEventListener("focusin", prefetchOnIntent);
+      document.removeEventListener("click", openCard);
+    };
   }, [router]);
   if (pathname.startsWith("/admin") || pathname.startsWith("/api")) return <>{children}</>;
   return <div className="public-site-shell"><Header /><div className="public-site-content">{children}</div><Footer /></div>;
