@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@fontsource/mukta/400.css";
 import "@fontsource/mukta/700.css";
 import "./globals.css";
+import { getCategories } from "@/lib/content";
 import { getPublicSiteSettings } from "@/lib/site-settings";
 import { Analytics } from "@vercel/analytics/next";
 import PublicSiteChrome from "@/components/PublicSiteChrome";
@@ -34,11 +35,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const categories = await getCategories();
+
   return (
     <html lang="hi">
       <body>
-        <PublicSiteChrome>{children}</PublicSiteChrome>
+        <PublicSiteChrome
+          categories={categories.map(({ slug, name }) => ({ slug, name }))}
+        >
+          {children}
+        </PublicSiteChrome>
         <Analytics />
       </body>
     </html>
