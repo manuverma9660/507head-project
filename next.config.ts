@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
     agentFeedback: true,
   },
   images: {
+    // Editors may use a public image URL from any host. Serve it directly so
+    // an unfamiliar domain never causes a Vercel Image Optimizer 400 error.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
