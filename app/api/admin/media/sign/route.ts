@@ -16,17 +16,21 @@ const ALLOWED_TYPES = new Set([
 ]);
 
 function safeBaseName(value: string) {
-  return value
-    .replace(/\.[^.]+$/, "")
-    .normalize("NFKD")
-    .replace(/[^a-zA-Z0-9_-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 48) || "image";
+  return (
+    value
+      .replace(/\.[^.]+$/, "")
+      .normalize("NFKD")
+      .replace(/[^a-zA-Z0-9_-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || "image"
+  );
 }
 
 async function getAdmin() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return null;
 
   const { data: profile } = await supabase
@@ -40,7 +44,8 @@ async function getAdmin() {
 
 export async function POST(request: Request) {
   const user = await getAdmin();
-  if (!user) return NextResponse.json({ error: "अनुमति नहीं है।" }, { status: 401 });
+  if (!user)
+    return NextResponse.json({ error: "अनुमति नहीं है।" }, { status: 401 });
 
   let body: { fileName?: unknown; fileType?: unknown; fileSize?: unknown };
   try {
@@ -53,8 +58,17 @@ export async function POST(request: Request) {
   const fileType = typeof body.fileType === "string" ? body.fileType : "";
   const fileSize = typeof body.fileSize === "number" ? body.fileSize : 0;
 
-  if (!fileName || !ALLOWED_TYPES.has(fileType) || !Number.isFinite(fileSize) || fileSize <= 0 || fileSize > MAX_FILE_SIZE) {
-    return NextResponse.json({ error: "केवल JPG, PNG, WebP, GIF या AVIF (अधिकतम 10 MB) अपलोड करें।" }, { status: 400 });
+  if (
+    !fileName ||
+    !ALLOWED_TYPES.has(fileType) ||
+    !Number.isFinite(fileSize) ||
+    fileSize <= 0 ||
+    fileSize > MAX_FILE_SIZE
+  ) {
+    return NextResponse.json(
+      { error: "केवल JPG, PNG, WebP, GIF या AVIF (अधिकतम 10 MB) अपलोड करें।" },
+      { status: 400 },
+    );
   }
 
   try {
@@ -67,8 +81,18 @@ export async function POST(request: Request) {
       apiSecret,
     );
 
-    return NextResponse.json({ cloudName, apiKey, timestamp, signature, folder: CLOUDINARY_MEDIA_FOLDER, publicId });
+    return NextResponse.json({
+      cloudName,
+      apiKey,
+      timestamp,
+      signature,
+      folder: CLOUDINARY_MEDIA_FOLDER,
+      publicId,
+    });
   } catch {
-    return NextResponse.json({ error: "Cloudinary configuration नहीं मिली।" }, { status: 503 });
+    return NextResponse.json(
+      { error: "Cloudinary configuration नहीं मिली।" },
+      { status: 503 },
+    );
   }
 }

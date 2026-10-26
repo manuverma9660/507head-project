@@ -1,4 +1,3 @@
-
 export const instant = false;
 
 import Link from "next/link";
@@ -8,9 +7,7 @@ type LoginPageProps = {
   searchParams: Promise<{ error?: string }>;
 };
 
-export default async function AdminLoginPage({
-  searchParams,
-}: LoginPageProps) {
+export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
   const { error } = await searchParams;
 
   const messages: Record<string, string> = {
@@ -53,9 +50,8 @@ export default async function AdminLoginPage({
           </h1>
 
           <p className="intro-description">
-            507 Head के एडमिन पोर्टल में आपका स्वागत है।
-            खबरों को मैनेज करें, कंटेंट प्रकाशित करें और
-            अपने न्यूज़ प्लेटफॉर्म को एक जगह से संभालें।
+            507 Head के एडमिन पोर्टल में आपका स्वागत है। खबरों को मैनेज करें,
+            कंटेंट प्रकाशित करें और अपने न्यूज़ प्लेटफॉर्म को एक जगह से संभालें।
           </p>
 
           <div className="intro-divider" />

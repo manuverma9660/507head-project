@@ -38,7 +38,7 @@ export default function CategoryArticleGrid({
 
         {categories.map((cat) => {
           const count = articles.filter(
-            (a) => a.category_slug === cat.slug
+            (a) => a.category_slug === cat.slug,
           ).length;
           if (count === 0) return null;
 
@@ -92,7 +92,7 @@ export default function CategoryArticleGrid({
                       {
                         day: "numeric",
                         month: "short",
-                      }
+                      },
                     )}
                   </span>
                   <span>•</span>
@@ -100,9 +100,7 @@ export default function CategoryArticleGrid({
                 </div>
 
                 <h3 className="text-base sm:text-lg font-bold leading-snug line-clamp-2 text-[#222] group-hover:text-[#8a4b1f]">
-                  <Link href={`/blog/${article.slug}`}>
-                    {article.title}
-                  </Link>
+                  <Link href={`/blog/${article.slug}`}>{article.title}</Link>
                 </h3>
 
                 <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#666] line-clamp-2">

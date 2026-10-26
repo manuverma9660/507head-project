@@ -29,13 +29,17 @@ export async function getPublicSiteSettings(): Promise<PublicSiteSettings> {
   if (!url || !key) return fallback;
 
   try {
-    const response = await fetch(`${url}/rest/v1/site_settings?key=eq.site&select=value`, {
-      headers: { apikey: key },
-    });
+    const response = await fetch(
+      `${url}/rest/v1/site_settings?key=eq.site&select=value`,
+      {
+        headers: { apikey: key },
+      },
+    );
     if (!response.ok) return fallback;
     const rows = (await response.json()) as Array<{ value?: unknown }>;
     const value = rows[0]?.value;
-    if (!value || typeof value !== "object" || Array.isArray(value)) return fallback;
+    if (!value || typeof value !== "object" || Array.isArray(value))
+      return fallback;
     return { ...fallback, ...(value as Partial<PublicSiteSettings>) };
   } catch {
     return fallback;

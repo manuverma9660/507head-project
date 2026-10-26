@@ -16,15 +16,25 @@ export default function TermsPage() {
               507
             </span>
             <span className="leading-tight">
-              <strong className="block text-xl font-black text-[#222]">507 हेड</strong>
-              <small className="text-xs text-[#666]">जल, प्रकृति और जनजीवन</small>
+              <strong className="block text-xl font-black text-[#222]">
+                507 हेड
+              </strong>
+              <small className="text-xs text-[#666]">
+                जल, प्रकृति और जनजीवन
+              </small>
             </span>
           </Link>
 
           <nav className="flex items-center gap-5 text-sm font-semibold">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">हमारे बारे में</Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">संपर्क</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
+            <Link href="/about" className="hover:text-[#8a4b1f]">
+              हमारे बारे में
+            </Link>
+            <Link href="/contact" className="hover:text-[#8a4b1f]">
+              संपर्क
+            </Link>
           </nav>
         </div>
       </header>
@@ -37,22 +47,36 @@ export default function TermsPage() {
 
         <div className="prose max-w-none text-base leading-relaxed text-[#444] space-y-6">
           <p>
-            507 Head (507head.com) का उपयोग करके आप निम्नलिखित नियमों और शर्तों से बंधे होने की सहमति देते हैं।
+            507 Head (507head.com) का उपयोग करके आप निम्नलिखित नियमों और शर्तों
+            से बंधे होने की सहमति देते हैं।
           </p>
 
-          <h2 className="text-xl font-bold text-[#222]">1. सामग्री का स्वामित्व (Copyright)</h2>
+          <h2 className="text-xl font-bold text-[#222]">
+            1. सामग्री का स्वामित्व (Copyright)
+          </h2>
           <p>
-            इस वेबसाइट पर प्रकाशित सभी आलेख, रिपोर्ट, तस्वीरें और ऑडियो-विजुअल सामग्री 507 Head या उनके संबंधित लेखकों/फोटोग्राफरों की बौद्धिक संपदा हैं। उचित संदर्भ और श्रेय दिए बिना व्यावसायिक उपयोग प्रतिबंधित है।
+            इस वेबसाइट पर प्रकाशित सभी आलेख, रिपोर्ट, तस्वीरें और ऑडियो-विजुअल
+            सामग्री 507 Head या उनके संबंधित लेखकों/फोटोग्राफरों की बौद्धिक
+            संपदा हैं। उचित संदर्भ और श्रेय दिए बिना व्यावसायिक उपयोग प्रतिबंधित
+            है।
           </p>
 
-          <h2 className="text-xl font-bold text-[#222]">2. सूचना की प्रामाणिकता</h2>
+          <h2 className="text-xl font-bold text-[#222]">
+            2. सूचना की प्रामाणिकता
+          </h2>
           <p>
-            हम कृषि, जल प्रबंधन और स्थानीय इतिहास से जुड़ी सामग्री को पूरी प्रामाणिकता और शोध के साथ प्रकाशित करने का प्रयास करते हैं। हालांकि, किसान भाइयों को सलाह दी जाती है कि कृषि संबंधी बड़े तकनीकी निर्णय लेने से पहले स्थानीय कृषि वैज्ञानिकों या विभाग से भी परामर्श लें।
+            हम कृषि, जल प्रबंधन और स्थानीय इतिहास से जुड़ी सामग्री को पूरी
+            प्रामाणिकता और शोध के साथ प्रकाशित करने का प्रयास करते हैं। हालांकि,
+            किसान भाइयों को सलाह दी जाती है कि कृषि संबंधी बड़े तकनीकी निर्णय
+            लेने से पहले स्थानीय कृषि वैज्ञानिकों या विभाग से भी परामर्श लें।
           </p>
 
-          <h2 className="text-xl font-bold text-[#222]">3. संपादकीय स्वतंत्रता</h2>
+          <h2 className="text-xl font-bold text-[#222]">
+            3. संपादकीय स्वतंत्रता
+          </h2>
           <p>
-            507 Head एक स्वतंत्र ग्रामीण पत्रकारिता मंच है। संपादकीय निर्णय निष्पक्षता और जनहित पर आधारित होते हैं।
+            507 Head एक स्वतंत्र ग्रामीण पत्रकारिता मंच है। संपादकीय निर्णय
+            निष्पक्षता और जनहित पर आधारित होते हैं।
           </p>
         </div>
       </section>

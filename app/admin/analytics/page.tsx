@@ -10,7 +10,9 @@ export default async function AdminAnalyticsPage() {
 
   const supabase = await createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) redirect("/admin/login");
 
@@ -56,7 +58,8 @@ export default async function AdminAnalyticsPage() {
   const categoryCounts: Record<string, number> = {};
   for (const a of categoryRes.data ?? []) {
     if (a.category_slug) {
-      categoryCounts[a.category_slug] = (categoryCounts[a.category_slug] ?? 0) + 1;
+      categoryCounts[a.category_slug] =
+        (categoryCounts[a.category_slug] ?? 0) + 1;
     }
   }
   const topCategories = Object.entries(categoryCounts)
@@ -88,13 +91,42 @@ export default async function AdminAnalyticsPage() {
         {/* Stats Row */}
         <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { label: "कुल लेख", value: total, icon: "📰", color: "text-[#8a4b1f]", bg: "bg-[#f7efe3]" },
-            { label: "प्रकाशित", value: published, icon: "✅", color: "text-green-700", bg: "bg-green-50" },
-            { label: "ड्राफ्ट", value: draft, icon: "✏️", color: "text-yellow-700", bg: "bg-yellow-50" },
-            { label: "Publish Rate", value: `${publishRate}%`, icon: "📈", color: "text-blue-700", bg: "bg-blue-50" },
+            {
+              label: "कुल लेख",
+              value: total,
+              icon: "📰",
+              color: "text-[#8a4b1f]",
+              bg: "bg-[#f7efe3]",
+            },
+            {
+              label: "प्रकाशित",
+              value: published,
+              icon: "✅",
+              color: "text-green-700",
+              bg: "bg-green-50",
+            },
+            {
+              label: "ड्राफ्ट",
+              value: draft,
+              icon: "✏️",
+              color: "text-yellow-700",
+              bg: "bg-yellow-50",
+            },
+            {
+              label: "Publish Rate",
+              value: `${publishRate}%`,
+              icon: "📈",
+              color: "text-blue-700",
+              bg: "bg-blue-50",
+            },
           ].map((s) => (
-            <div key={s.label} className="rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm">
-              <div className={`mb-2 flex h-10 w-10 items-center justify-center rounded-xl ${s.bg} text-xl`}>
+            <div
+              key={s.label}
+              className="rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm"
+            >
+              <div
+                className={`mb-2 flex h-10 w-10 items-center justify-center rounded-xl ${s.bg} text-xl`}
+              >
                 {s.icon}
               </div>
               <p className={`text-3xl font-black ${s.color}`}>{s.value}</p>
@@ -112,13 +144,17 @@ export default async function AdminAnalyticsPage() {
             ) : (
               <ul className="space-y-3">
                 {recentArticles.map((a, i) => (
-                  <li key={i} className="flex items-start justify-between gap-3 border-b border-[#f0e7dd] pb-3 last:border-0">
+                  <li
+                    key={i}
+                    className="flex items-start justify-between gap-3 border-b border-[#f0e7dd] pb-3 last:border-0"
+                  >
                     <div className="flex-1 min-w-0">
                       <p className="truncate text-sm font-semibold text-[#29231e]">
                         {a.title || "बिना शीर्षक"}
                       </p>
                       <p className="text-xs text-gray-500">
-                        {a.category_slug ?? "—"} · {String(a.created_at ?? "").slice(0, 10)}
+                        {a.category_slug ?? "—"} ·{" "}
+                        {String(a.created_at ?? "").slice(0, 10)}
                       </p>
                     </div>
                     <span
@@ -152,13 +188,19 @@ export default async function AdminAnalyticsPage() {
                 {topCategories.map(([slug, count]) => (
                   <li key={slug}>
                     <div className="mb-1 flex items-center justify-between text-sm">
-                      <span className="font-semibold capitalize">{slug.replace(/-/g, " ")}</span>
-                      <span className="font-bold text-[#8a4b1f]">{count} लेख</span>
+                      <span className="font-semibold capitalize">
+                        {slug.replace(/-/g, " ")}
+                      </span>
+                      <span className="font-bold text-[#8a4b1f]">
+                        {count} लेख
+                      </span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-[#f0e7dd]">
                       <div
                         className="h-full rounded-full bg-[#8a4b1f]"
-                        style={{ width: `${Math.round((count / published) * 100)}%` }}
+                        style={{
+                          width: `${Math.round((count / published) * 100)}%`,
+                        }}
                       />
                     </div>
                   </li>
@@ -172,8 +214,10 @@ export default async function AdminAnalyticsPage() {
         <div className="mt-6 rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm">
           <h2 className="mb-2 text-lg font-bold">Page Views Analytics</h2>
           <p className="text-sm text-gray-600">
-            Real-time page views tracking के लिए <strong>Google Analytics</strong> या <strong>Vercel Analytics</strong> integrate करें।
-            अभी Supabase content analytics दिखाया जा रहा है।
+            Real-time page views tracking के लिए{" "}
+            <strong>Google Analytics</strong> या{" "}
+            <strong>Vercel Analytics</strong> integrate करें। अभी Supabase
+            content analytics दिखाया जा रहा है।
           </p>
         </div>
       </div>

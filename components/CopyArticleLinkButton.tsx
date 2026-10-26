@@ -7,7 +7,9 @@ type CopyArticleLinkButtonProps = {
   url: string;
 };
 
-export default function CopyArticleLinkButton({ url }: CopyArticleLinkButtonProps) {
+export default function CopyArticleLinkButton({
+  url,
+}: CopyArticleLinkButtonProps) {
   const [copied, setCopied] = useState(false);
 
   async function copyLink() {

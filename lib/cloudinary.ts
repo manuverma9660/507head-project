@@ -14,7 +14,9 @@ export function getCloudinaryConfig() {
   const config = cloudinary.config();
 
   if (!config.cloud_name || !config.api_key || !config.api_secret) {
-    throw new Error("Cloudinary credentials are missing. Add CLOUDINARY_URL to .env.local.");
+    throw new Error(
+      "Cloudinary credentials are missing. Add CLOUDINARY_URL to .env.local.",
+    );
   }
 
   return {

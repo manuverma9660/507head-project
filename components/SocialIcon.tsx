@@ -20,8 +20,12 @@ export default function SocialIcon({ name, className = "" }: SocialIconProps) {
     case "youtube":
       return <FaYoutube aria-hidden className={`text-black ${iconClass}`} />;
     case "whatsapp":
-      return <IoLogoWhatsapp aria-hidden className={`text-black ${iconClass}`} />;
+      return (
+        <IoLogoWhatsapp aria-hidden className={`text-black ${iconClass}`} />
+      );
     case "x":
-      return <FaSquareXTwitter aria-hidden className={`text-black ${iconClass}`} />;
+      return (
+        <FaSquareXTwitter aria-hidden className={`text-black ${iconClass}`} />
+      );
   }
 }

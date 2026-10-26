@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -101,8 +100,8 @@ export default function HistoryPage() {
               </h1>
 
               <p className="mt-5 max-w-2xl text-base leading-8 text-stone-600 sm:text-lg">
-                राजस्थान की ऐतिहासिक धरोहर, ग्रामीण संस्कृति, पुराने रास्तों
-                और स्थानीय परंपराओं से जुड़ी कहानियाँ यहाँ पढ़ें।
+                राजस्थान की ऐतिहासिक धरोहर, ग्रामीण संस्कृति, पुराने रास्तों और
+                स्थानीय परंपराओं से जुड़ी कहानियाँ यहाँ पढ़ें।
               </p>
 
               <Link
@@ -155,8 +154,8 @@ export default function HistoryPage() {
             राजस्थान की कहानियाँ
           </h2>
           <p className="mt-3 max-w-2xl leading-7 text-stone-600">
-            मरुस्थल, ग्रामीण जीवन और स्थानीय विरासत से जुड़े विषयों को
-            तस्वीरों के साथ जानिए।
+            मरुस्थल, ग्रामीण जीवन और स्थानीय विरासत से जुड़े विषयों को तस्वीरों
+            के साथ जानिए।
           </p>
         </div>
 
@@ -225,9 +224,7 @@ export default function HistoryPage() {
       <section className="border-y border-[#e5ddd3] bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div>
-            <h2 className="text-xl font-bold">
-              दूसरे विषय भी देखिए
-            </h2>
+            <h2 className="text-xl font-bold">दूसरे विषय भी देखिए</h2>
             <p className="mt-2 text-sm leading-6 text-stone-600">
               खेती-बाड़ी, किसान, पशुपालन और ग्रामीण जीवन से जुड़ी सामग्री भी
               हमारी वेबसाइट पर खोजें।

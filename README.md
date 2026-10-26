@@ -1,43 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 507 Head
 
-## Getting Started
+Hindi editorial site built with Next.js, Supabase, Cloudinary, Vercel Cron, and optional Resend transactional email.
 
-First, run the development server:
+## Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js **22.x** (the CI release gate uses Node 22)
+- npm 10+
+- Docker Desktop and the [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started) for local database work
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## 507 Head project setup
-
-### Local development
+## Local application setup
 
 ```bash
 npm ci
@@ -45,26 +16,69 @@ copy .env.example .env.local
 npm run dev
 ```
 
-Add the Supabase project URL and publishable key to `.env.local`. Do not commit this file.
+Open `http://127.0.0.1:3000`. Do not commit `.env.local` or any API key.
 
-### Verification
+## Reproducible local Supabase database
 
-Run these checks before a deployment or pull request:
+The committed migration history creates the base schema, editorial workflows, RLS policies, media catalogue, redirects, settings, contact inbox, and fixed categories. `supabase/config.toml` and `supabase/seed.sql` are committed for local use.
 
 ```bash
-npm run typecheck
-npm run lint
-npm run build
+supabase start
+supabase db reset --local
+supabase test db
 ```
 
-GitHub Actions runs the same checks for `main` pushes and pull requests.
+`supabase db reset --local` rebuilds the local database from every migration and applies the deterministic seed. It is destructive only to the local Supabase database; never use it against production.
 
-### Database and media setup
+For a hosted environment, apply migrations through the approved Supabase workflow in timestamp order. Back up production first, then verify:
 
-- Apply committed SQL files from `supabase/migrations/` to each environment through the approved Supabase migration workflow.
-- The Media Library uses the `media` Storage bucket. Its reproducible bucket/policy setup is in `supabase/migrations/20261023000000_create_media_bucket.sql`.
-- Use separate Supabase projects and environment values for development and production.
+```sql
+select status, count(*) from public.articles group by status;
+select slug from public.categories where is_active = true order by sort_order;
+```
 
-### Environment variables
+## Environment variables
 
-Use `.env.example` as the only committed template. Values beginning with `NEXT_PUBLIC_` are safe to expose to the browser; service keys, Cloudinary secrets, and cron secrets must remain server-only.
+Copy `.env.example` and fill only the providers you use.
+
+| Variable                               | Purpose                                                     |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`                 | Canonical public site URL.                                  |
+| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase project URL.                                       |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Browser-safe Supabase key.                                  |
+| `SUPABASE_SERVICE_ROLE_KEY`            | Server-only key for scheduled publishing.                   |
+| `CRON_SECRET`                          | Bearer secret required by the scheduled-publish endpoint.   |
+| `CLOUDINARY_*`                         | Server-only Cloudinary media credentials.                   |
+| `RESEND_API_KEY`                       | Server-only Resend key for transactional contact email.     |
+| `RESEND_FROM_EMAIL`                    | Verified Resend sender, e.g. `507 Head <news@example.com>`. |
+| `CONTACT_NOTIFICATION_EMAIL`           | Inbox that receives new contact-form notifications.         |
+| `INSTAGRAM_*`                          | Optional Instagram reel integration.                        |
+
+`RESEND_FROM_EMAIL` requires a domain verified in Resend. Without the three Resend variables, contact messages remain safely stored in Supabase but no email is delivered.
+
+## Verification and release gate
+
+```bash
+npm run format:check
+npm run typecheck
+npm run lint
+npm test
+npm run build
+npm run test:e2e
+```
+
+GitHub Actions runs formatting, typechecking, linting, unit tests, the production build, and Playwright E2E on pushes and pull requests to `main`.
+
+The test suite covers Zod editorial validation, fixed categories, database RLS/policy contracts, protected preview/admin access, media authorization, scheduled-publish authorization, redirects, public rendering, accessibility, and SEO utility routes. `supabase test db` covers the local database policy and workflow contracts.
+
+## Operations and recovery
+
+- **Draft/review recovery:** use `/admin/articles/[id]/revisions` to inspect a protected preview and restore a revision.
+- **Scheduled publishing:** the endpoint is `/api/cron/publish-scheduled`; it requires `Authorization: Bearer $CRON_SECRET` and the Supabase service-role key. Check Vercel logs after a scheduled run.
+- **Redirect incident:** disable or correct the redirect in `/admin/redirects`; redirect records only allow internal destinations.
+- **Bad production migration:** do not delete migration files or run `db reset`. Restore the database backup if needed, then add a new forward-only corrective migration and deploy it through staging first.
+- **Vercel rollback:** use Vercel’s Instant Rollback for application code. Database rollbacks must be forward migrations or a verified database restore.
+
+## Deployment
+
+Vercel deploys `main`. Configure production variables in Vercel before enabling a provider. Run the release gate locally, push the commit, wait for the Vercel deployment to reach **Ready**, then smoke-test the homepage, a public article, the protected admin preview, and the contact form.

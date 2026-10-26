@@ -30,11 +30,19 @@ type ArticlePreview = {
   updated_at: string;
 };
 
-export default async function ArticlePreviewPage({ params, searchParams }: PreviewPageProps) {
+export default async function ArticlePreviewPage({
+  params,
+  searchParams,
+}: PreviewPageProps) {
   await connection();
-  const [{ id }, { revision: revisionId }] = await Promise.all([params, searchParams]);
+  const [{ id }, { revision: revisionId }] = await Promise.all([
+    params,
+    searchParams,
+  ]);
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) redirect("/admin/login");
 
@@ -44,7 +52,10 @@ export default async function ArticlePreviewPage({ params, searchParams }: Previ
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (!profile?.is_active || !["admin", "editor", "author"].includes(profile.role)) {
+  if (
+    !profile?.is_active ||
+    !["admin", "editor", "author"].includes(profile.role)
+  ) {
     redirect("/admin/login?error=unauthorized");
   }
 
@@ -67,10 +78,17 @@ export default async function ArticlePreviewPage({ params, searchParams }: Previ
       .eq("article_id", id)
       .maybeSingle();
 
-    if (!revision || !revision.snapshot || typeof revision.snapshot !== "object" || Array.isArray(revision.snapshot)) notFound();
+    if (
+      !revision ||
+      !revision.snapshot ||
+      typeof revision.snapshot !== "object" ||
+      Array.isArray(revision.snapshot)
+    )
+      notFound();
 
     const snapshot = revision.snapshot as Record<string, unknown>;
-    if (typeof snapshot.title !== "string" || typeof snapshot.body !== "string") notFound();
+    if (typeof snapshot.title !== "string" || typeof snapshot.body !== "string")
+      notFound();
 
     preview = {
       ...article,
@@ -78,14 +96,16 @@ export default async function ArticlePreviewPage({ params, searchParams }: Previ
       excerpt: typeof snapshot.excerpt === "string" ? snapshot.excerpt : null,
       body: snapshot.body,
       body_json: snapshot.body_json ?? null,
-      status: typeof snapshot.status === "string" ? snapshot.status : article.status,
+      status:
+        typeof snapshot.status === "string" ? snapshot.status : article.status,
     };
     revisionNumber = revision.revision_number;
   }
 
-  const richBody = typeof preview.body_json === "object" && preview.body_json
-    ? parseRichText(JSON.stringify(preview.body_json))
-    : null;
+  const richBody =
+    typeof preview.body_json === "object" && preview.body_json
+      ? parseRichText(JSON.stringify(preview.body_json))
+      : null;
   const fallback = preview.body.split(/\n{2,}/).filter(Boolean);
 
   return (
@@ -94,14 +114,26 @@ export default async function ArticlePreviewPage({ params, searchParams }: Previ
         Protected preview — this page is not indexed or publicly accessible.
       </div>
       <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
-        <Link href={`/admin/articles/${id}/revisions`} className="text-sm font-semibold text-[#8a4b1f] hover:underline">
+        <Link
+          href={`/admin/articles/${id}/revisions`}
+          className="text-sm font-semibold text-[#8a4b1f] hover:underline"
+        >
           ← Back to revision history
         </Link>
         <p className="mt-8 text-xs font-bold uppercase tracking-wider text-[#8a4b1f]">
-          {revisionNumber ? `Revision #${revisionNumber}` : "Current saved version"} · {preview.status}
+          {revisionNumber
+            ? `Revision #${revisionNumber}`
+            : "Current saved version"}{" "}
+          · {preview.status}
         </p>
-        <h1 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">{preview.title}</h1>
-        {preview.excerpt && <p className="mt-5 text-xl leading-relaxed text-[#555]">{preview.excerpt}</p>}
+        <h1 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">
+          {preview.title}
+        </h1>
+        {preview.excerpt && (
+          <p className="mt-5 text-xl leading-relaxed text-[#555]">
+            {preview.excerpt}
+          </p>
+        )}
         <p className="mt-6 border-y border-[#e5ddd3] py-3 text-xs text-[#666]">
           Last saved: {new Date(preview.updated_at).toLocaleString("hi-IN")}
         </p>

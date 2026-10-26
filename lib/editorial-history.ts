@@ -3,7 +3,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 type HistoryEvent = {
   articleId: string;
   actorUserId: string;
-  action: "article.created" | "article.updated" | "article.published" | "article.unpublished" | "article.restored";
+  action:
+    | "article.created"
+    | "article.updated"
+    | "article.published"
+    | "article.unpublished"
+    | "article.restored";
   snapshot: Record<string, unknown>;
   summary: string;
 };
@@ -23,13 +28,15 @@ export async function recordArticleHistory(
   if (latestRevisionError) throw latestRevisionError;
 
   const revisionNumber = (latestRevision?.revision_number ?? 0) + 1;
-  const { error: revisionError } = await supabase.from("article_revisions").insert({
-    article_id: event.articleId,
-    revision_number: revisionNumber,
-    snapshot: event.snapshot,
-    changed_by: event.actorUserId,
-    change_summary: event.summary,
-  });
+  const { error: revisionError } = await supabase
+    .from("article_revisions")
+    .insert({
+      article_id: event.articleId,
+      revision_number: revisionNumber,
+      snapshot: event.snapshot,
+      changed_by: event.actorUserId,
+      change_summary: event.summary,
+    });
 
   if (revisionError) throw revisionError;
 

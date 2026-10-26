@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
@@ -91,21 +90,50 @@ export default async function AdminDashboardPage() {
 
   const [dbArticlesRes, publishedRes, draftRes] = await Promise.all([
     supabase.from("articles").select("slug"),
-    supabase.from("articles").select("id", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("articles").select("id", { count: "exact", head: true }).eq("status", "draft"),
+    supabase
+      .from("articles")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "published"),
+    supabase
+      .from("articles")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "draft"),
   ]);
 
   const dbSlugs = new Set((dbArticlesRes.data ?? []).map((a) => a.slug));
-  const missingCount = INITIAL_ARTICLES.filter((a) => !dbSlugs.has(a.slug)).length;
+  const missingCount = INITIAL_ARTICLES.filter(
+    (a) => !dbSlugs.has(a.slug),
+  ).length;
 
   const totalCount = (dbArticlesRes.data?.length ?? 0) + missingCount;
   const publishedCount = (publishedRes.count ?? 0) + missingCount;
   const draftCount = draftRes.count ?? 0;
 
   const stats = [
-    { title: "Total Articles", subtitle: "कुल लेख", icon: "📰", count: totalCount, color: "text-[#8a4b1f]", bg: "bg-[#f7efe3]" },
-    { title: "Published", subtitle: "प्रकाशित लेख", icon: "✅", count: publishedCount, color: "text-green-700", bg: "bg-green-50" },
-    { title: "Drafts", subtitle: "ड्राफ्ट लेख", icon: "✏️", count: draftCount, color: "text-yellow-700", bg: "bg-yellow-50" },
+    {
+      title: "Total Articles",
+      subtitle: "कुल लेख",
+      icon: "📰",
+      count: totalCount,
+      color: "text-[#8a4b1f]",
+      bg: "bg-[#f7efe3]",
+    },
+    {
+      title: "Published",
+      subtitle: "प्रकाशित लेख",
+      icon: "✅",
+      count: publishedCount,
+      color: "text-green-700",
+      bg: "bg-green-50",
+    },
+    {
+      title: "Drafts",
+      subtitle: "ड्राफ्ट लेख",
+      icon: "✏️",
+      count: draftCount,
+      color: "text-yellow-700",
+      bg: "bg-yellow-50",
+    },
   ];
 
   return (
@@ -116,9 +144,7 @@ export default async function AdminDashboardPage() {
             507
           </span>
           <span>
-            <span className="block text-xl font-black tracking-wide">
-              HEAD
-            </span>
+            <span className="block text-xl font-black tracking-wide">HEAD</span>
             <span className="text-xs text-[#786b5e]">
               Content Management System
             </span>
@@ -128,9 +154,7 @@ export default async function AdminDashboardPage() {
         <div className="flex items-center gap-4">
           <div className="hidden text-right sm:block">
             <p className="text-sm font-bold">{displayName}</p>
-            <p className="text-xs capitalize text-[#786b5e]">
-              {profile.role}
-            </p>
+            <p className="text-xs capitalize text-[#786b5e]">{profile.role}</p>
           </div>
 
           <form action={logout}>
@@ -149,9 +173,7 @@ export default async function AdminDashboardPage() {
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-[#8a4b1f]">
             Administration
           </p>
-          <h1 className="text-3xl font-black md:text-4xl">
-            Admin Dashboard
-          </h1>
+          <h1 className="text-3xl font-black md:text-4xl">Admin Dashboard</h1>
           <p className="mt-3 text-sm text-[#71665b] md:text-base">
             स्वागत है, {displayName}. यहाँ से अपनी वेबसाइट मैनेज करें।
           </p>
@@ -159,9 +181,18 @@ export default async function AdminDashboardPage() {
 
         <section className="mb-10 grid gap-5 sm:grid-cols-3">
           {stats.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm">
-              <div className={`mb-3 flex h-12 w-12 items-center justify-center rounded-xl ${item.bg} text-2xl`}>{item.icon}</div>
-              <p className={`text-4xl font-black ${item.color}`}>{item.count}</p>
+            <div
+              key={item.title}
+              className="rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm"
+            >
+              <div
+                className={`mb-3 flex h-12 w-12 items-center justify-center rounded-xl ${item.bg} text-2xl`}
+              >
+                {item.icon}
+              </div>
+              <p className={`text-4xl font-black ${item.color}`}>
+                {item.count}
+              </p>
               <h2 className="mt-1 font-bold text-[#29231e]">{item.title}</h2>
               <p className="mt-1 text-sm text-[#786b5e]">{item.subtitle}</p>
             </div>

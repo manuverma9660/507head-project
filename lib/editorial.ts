@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const FIXED_CATEGORY_SLUGS = [
   "history",
   "farming",
@@ -14,27 +16,35 @@ export function isFixedCategorySlug(value: string): value is FixedCategorySlug {
   return FIXED_CATEGORY_SLUGS.includes(value as FixedCategorySlug);
 }
 
-export function validateArticleInput({
-  title,
-  excerpt,
-  body,
-  categorySlug,
-  tags,
-}: {
+export const articleInputSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(40, "Title must be at least 40 characters.")
+    .max(70, "Title must be at most 70 characters."),
+  excerpt: z
+    .string()
+    .trim()
+    .min(1, "Excerpt is required.")
+    .max(160, "Excerpt must be at most 160 characters."),
+  body: z.string().trim().min(1, "Article body is required."),
+  categorySlug: z.enum(FIXED_CATEGORY_SLUGS, {
+    error: "Choose one of the seven approved categories.",
+  }),
+  tags: z.array(z.string().trim().min(1)).max(5, "Use at most five tags."),
+});
+
+export type ArticleInput = {
   title: string;
   excerpt: string;
   body: string;
   categorySlug: string;
   tags: string[];
-}): string | null {
-  if (title.length < 40 || title.length > 70) {
-    return "शीर्षक 40 से 70 अक्षरों के बीच होना चाहिए।";
-  }
-  if (!excerpt || excerpt.length > 160) {
-    return "विवरण जरूरी है और अधिकतम 160 अक्षरों का हो सकता है।";
-  }
-  if (!body) return "समाचार की सामग्री भरना जरूरी है।";
-  if (!isFixedCategorySlug(categorySlug)) return "कृपया अनुमोदित श्रेणी चुनें।";
-  if (tags.length > 5) return "अधिकतम 5 टैग जोड़े जा सकते हैं।";
-  return null;
+};
+
+export function validateArticleInput(input: ArticleInput): string | null {
+  const result = articleInputSchema.safeParse(input);
+  return result.success
+    ? null
+    : (result.error.issues[0]?.message ?? "Invalid article input.");
 }

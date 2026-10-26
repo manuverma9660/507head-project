@@ -9,7 +9,9 @@ import type { RichTextDocument } from "@/lib/rich-text";
 
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
   ssr: false,
-  loading: () => <div className="min-h-72 animate-pulse rounded-xl bg-[#f7f3ed]" />,
+  loading: () => (
+    <div className="min-h-72 animate-pulse rounded-xl bg-[#f7f3ed]" />
+  ),
 });
 
 const CATEGORIES = [
@@ -174,9 +176,7 @@ export default function NewArticlePage() {
 
             {/* Image Alt */}
             <div>
-              <label className="mb-2 block font-semibold">
-                Image Alt Text
-              </label>
+              <label className="mb-2 block font-semibold">Image Alt Text</label>
               <input
                 name="featured_image_alt"
                 value={imageAlt}
@@ -248,10 +248,16 @@ export default function NewArticlePage() {
             </div>
 
             {/* Hidden reading time */}
-            <input type="hidden" name="reading_time_minutes" value={readingTime} />
+            <input
+              type="hidden"
+              name="reading_time_minutes"
+              value={readingTime}
+            />
 
             <div>
-              <label className="mb-2 block font-semibold">Schedule date and time</label>
+              <label className="mb-2 block font-semibold">
+                Schedule date and time
+              </label>
               <input
                 name="scheduled_for"
                 type="datetime-local"
@@ -259,7 +265,9 @@ export default function NewArticlePage() {
                 onChange={(event) => setScheduledFor(event.target.value)}
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
-              <p className="mt-1 text-xs text-gray-500">Future date चुनकर Schedule दबाएँ।</p>
+              <p className="mt-1 text-xs text-gray-500">
+                Future date चुनकर Schedule दबाएँ।
+              </p>
             </div>
 
             {/* Action Buttons */}
@@ -292,24 +300,24 @@ export default function NewArticlePage() {
               </button>
             </div>
 
-              <button
-                type="submit"
-                name="status"
-                value="in_review"
-                disabled={isPending}
-                className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#f7efe3] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Send for review
-              </button>
-              <button
-                type="submit"
-                name="status"
-                value="scheduled"
-                disabled={isPending || !scheduledFor}
-                className="rounded-xl bg-[#6b3915] px-6 py-3 font-semibold text-white transition hover:bg-[#512a0f] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Schedule
-              </button>
+            <button
+              type="submit"
+              name="status"
+              value="in_review"
+              disabled={isPending}
+              className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#f7efe3] disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Send for review
+            </button>
+            <button
+              type="submit"
+              name="status"
+              value="scheduled"
+              disabled={isPending || !scheduledFor}
+              className="rounded-xl bg-[#6b3915] px-6 py-3 font-semibold text-white transition hover:bg-[#512a0f] disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Schedule
+            </button>
             {message && (
               <p
                 role="status"
@@ -325,7 +333,9 @@ export default function NewArticlePage() {
             <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 p-4">
               <div className="mx-auto my-8 max-w-3xl rounded-2xl bg-white p-6 shadow-xl md:p-10">
                 <div className="flex items-center justify-between gap-4 border-b border-[#e7ddd0] pb-4">
-                  <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">Draft Preview</p>
+                  <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">
+                    Draft Preview
+                  </p>
                   <button
                     type="button"
                     onClick={() => setShowPreview(false)}
@@ -336,14 +346,22 @@ export default function NewArticlePage() {
                   </button>
                 </div>
                 <article className="mx-auto max-w-2xl py-8">
-                  <p className="text-sm font-bold text-[#8a4b1f]">{categorySlug}</p>
+                  <p className="text-sm font-bold text-[#8a4b1f]">
+                    {categorySlug}
+                  </p>
                   <h2 className="mt-3 text-3xl font-bold leading-tight text-[#29231e]">
                     {title || "शीर्षक लिखें"}
                   </h2>
-                  {excerpt && <p className="mt-4 text-lg text-gray-600">{excerpt}</p>}
+                  {excerpt && (
+                    <p className="mt-4 text-lg text-gray-600">{excerpt}</p>
+                  )}
                   {imageUrl && (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={imageUrl} alt={imageAlt || title} className="mt-6 aspect-video w-full rounded-xl object-cover" />
+                    <img
+                      src={imageUrl}
+                      alt={imageAlt || title}
+                      className="mt-6 aspect-video w-full rounded-xl object-cover"
+                    />
                   )}
                   <div className="mt-6 space-y-4 whitespace-pre-wrap leading-8 text-[#29231e]">
                     {content || "समाचार की सामग्री यहाँ दिखाई देगी।"}

@@ -1,4 +1,3 @@
-
 "use server";
 
 import { revalidatePath, updateTag } from "next/cache";
@@ -7,7 +6,12 @@ import { isFixedCategorySlug, validateArticleInput } from "@/lib/editorial";
 import { recordArticleHistory } from "@/lib/editorial-history";
 import { parseRichText, richTextSummary } from "@/lib/rich-text";
 
-const ARTICLE_STATUSES = ["draft", "in_review", "published", "scheduled"] as const;
+const ARTICLE_STATUSES = [
+  "draft",
+  "in_review",
+  "published",
+  "scheduled",
+] as const;
 
 type ArticleStatus = (typeof ARTICLE_STATUSES)[number];
 
@@ -109,17 +113,25 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
 
   const title = getTextValue(formData, "title");
   const richText = parseRichText(getTextValue(formData, "content_json"));
-  const body = richText ? richTextSummary(richText) : getTextValue(formData, "content") || getTextValue(formData, "body");
+  const body = richText
+    ? richTextSummary(richText)
+    : getTextValue(formData, "content") || getTextValue(formData, "body");
   const excerpt = getTextValue(formData, "excerpt");
   const categorySlug = getTextValue(formData, "category_slug");
   const featuredImageUrl = getTextValue(formData, "featured_image_url");
-  const featuredImageAlt = getTextValue(formData, "featured_image_alt") || title;
+  const featuredImageAlt =
+    getTextValue(formData, "featured_image_alt") || title;
   const featuredImageCaption = getTextValue(formData, "featured_image_caption");
   const featuredImageCredit = getTextValue(formData, "featured_image_credit");
   const tagsRaw = getTextValue(formData, "tags");
   const status = getArticleStatus(getTextValue(formData, "status"));
   const scheduledFor = getScheduledFor(formData);
-  const tags = tagsRaw ? tagsRaw.split(",").map((t) => t.trim()).filter(Boolean) : [];
+  const tags = tagsRaw
+    ? tagsRaw
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean)
+    : [];
   const validationError = validateArticleInput({
     title,
     excerpt,
@@ -147,11 +159,21 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
   }
 
   if (status !== "draft" && role === "author") {
-    return { success: false, message: "लेखक केवल draft बना सकते हैं; publish करने के लिए editor की समीक्षा जरूरी है।" };
+    return {
+      success: false,
+      message:
+        "लेखक केवल draft बना सकते हैं; publish करने के लिए editor की समीक्षा जरूरी है।",
+    };
   }
 
-  if (status === "scheduled" && (!scheduledFor || scheduledFor.getTime() <= Date.now())) {
-    return { success: false, message: "Scheduled article के लिए future date और time जरूरी है।" };
+  if (
+    status === "scheduled" &&
+    (!scheduledFor || scheduledFor.getTime() <= Date.now())
+  ) {
+    return {
+      success: false,
+      message: "Scheduled article के लिए future date और time जरूरी है।",
+    };
   }
 
   const { data: author, error: authorError } = await supabase
@@ -191,7 +213,11 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
   let categoryId: string | null = null;
   if (categorySlug) {
     if (!isFixedCategorySlug(categorySlug)) {
-      return { success: false, message: "केवल सात approved categories उपलब्ध हैं। नई category के लिए owner approval चाहिए।" };
+      return {
+        success: false,
+        message:
+          "केवल सात approved categories उपलब्ध हैं। नई category के लिए owner approval चाहिए।",
+      };
     }
     const { data: catData } = await supabase
       .from("categories")
@@ -200,7 +226,10 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
       .maybeSingle();
 
     if (!catData?.id) {
-      return { success: false, message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।" };
+      return {
+        success: false,
+        message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।",
+      };
     }
 
     if (catData?.id) {
@@ -239,7 +268,8 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
       featured_image_credit: featuredImageCredit || null,
       author_id: authorId,
       published_at: status === "published" ? new Date().toISOString() : null,
-      scheduled_for: status === "scheduled" ? scheduledFor?.toISOString() : null,
+      scheduled_for:
+        status === "scheduled" ? scheduledFor?.toISOString() : null,
     })
     .select("id")
     .single();
@@ -268,7 +298,10 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
           featured_image_url: featuredImageUrl || null,
           featured_image_alt: featuredImageAlt || null,
         },
-        summary: status === "published" ? "Article created and published" : "Draft created",
+        summary:
+          status === "published"
+            ? "Article created and published"
+            : "Draft created",
       });
     } catch (historyError) {
       console.error("Article history could not be recorded:", historyError);
@@ -296,7 +329,9 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
   const id = getTextValue(formData, "id");
   const title = getTextValue(formData, "title");
   const richText = parseRichText(getTextValue(formData, "content_json"));
-  const body = richText ? richTextSummary(richText) : getTextValue(formData, "content") || getTextValue(formData, "body");
+  const body = richText
+    ? richTextSummary(richText)
+    : getTextValue(formData, "content") || getTextValue(formData, "body");
   const status = getArticleStatus(getTextValue(formData, "status"));
   const scheduledFor = getScheduledFor(formData);
 
@@ -318,8 +353,14 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
     return { success: false, message: "लेखक published status नहीं चुन सकते।" };
   }
 
-  if (status === "scheduled" && (!scheduledFor || scheduledFor.getTime() <= Date.now())) {
-    return { success: false, message: "Scheduled article के लिए future date और time जरूरी है।" };
+  if (
+    status === "scheduled" &&
+    (!scheduledFor || scheduledFor.getTime() <= Date.now())
+  ) {
+    return {
+      success: false,
+      message: "Scheduled article के लिए future date और time जरूरी है।",
+    };
   }
 
   const excerpt = getTextValue(formData, "excerpt");
@@ -337,7 +378,8 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
     scheduled_for: status === "scheduled" ? scheduledFor?.toISOString() : null,
   };
 
-  if (status === "published") updatePayload.published_at = new Date().toISOString();
+  if (status === "published")
+    updatePayload.published_at = new Date().toISOString();
 
   if (excerpt !== undefined && excerpt !== null && excerpt !== "") {
     updatePayload.excerpt = excerpt;
@@ -354,7 +396,11 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
   const categorySlug = getTextValue(formData, "category_slug");
   if (categorySlug) {
     if (!isFixedCategorySlug(categorySlug)) {
-      return { success: false, message: "केवल सात approved categories उपलब्ध हैं। नई category के लिए owner approval चाहिए।" };
+      return {
+        success: false,
+        message:
+          "केवल सात approved categories उपलब्ध हैं। नई category के लिए owner approval चाहिए।",
+      };
     }
     const { data: catData } = await supabase
       .from("categories")
@@ -363,7 +409,10 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
       .maybeSingle();
 
     if (!catData?.id) {
-      return { success: false, message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।" };
+      return {
+        success: false,
+        message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।",
+      };
     }
 
     if (catData?.id) {
@@ -460,7 +509,10 @@ export async function publishArticle(id: string): Promise<ActionResult> {
   }
 
   if (role === "author") {
-    return { success: false, message: "केवल editor या admin लेख publish कर सकते हैं।" };
+    return {
+      success: false,
+      message: "केवल editor या admin लेख publish कर सकते हैं।",
+    };
   }
 
   const articleId = id.trim();
@@ -480,7 +532,9 @@ export async function publishArticle(id: string): Promise<ActionResult> {
       updated_at: new Date().toISOString(),
     })
     .eq("id", articleId)
-    .select("id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at");
+    .select(
+      "id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at",
+    );
 
   if (!updateError && data?.[0]) {
     try {
@@ -523,7 +577,10 @@ export async function unpublishArticle(id: string): Promise<ActionResult> {
   const { supabase, user, role, error } = await getAdminClient();
   if (!supabase || !user) return { success: false, message: error };
   if (role === "author") {
-    return { success: false, message: "केवल editor या admin लेख को unpublish कर सकते हैं।" };
+    return {
+      success: false,
+      message: "केवल editor या admin लेख को unpublish कर सकते हैं।",
+    };
   }
 
   const articleId = id.trim();
@@ -534,11 +591,21 @@ export async function unpublishArticle(id: string): Promise<ActionResult> {
     .update({ status: "draft", updated_at: new Date().toISOString() })
     .eq("id", articleId)
     .eq("status", "published")
-    .select("id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at")
+    .select(
+      "id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at",
+    )
     .maybeSingle();
 
-  if (updateError) return { success: false, message: `Unpublish नहीं हुआ: ${updateError.message}` };
-  if (!article) return { success: false, message: "समाचार नहीं मिला या पहले ही unpublish है।" };
+  if (updateError)
+    return {
+      success: false,
+      message: `Unpublish नहीं हुआ: ${updateError.message}`,
+    };
+  if (!article)
+    return {
+      success: false,
+      message: "समाचार नहीं मिला या पहले ही unpublish है।",
+    };
 
   try {
     await recordArticleHistory(supabase, {
@@ -553,14 +620,22 @@ export async function unpublishArticle(id: string): Promise<ActionResult> {
   }
 
   refreshArticles({ slug: article.slug });
-  return { success: true, message: "समाचार को सुरक्षित रूप से Draft में वापस कर दिया गया है।" };
+  return {
+    success: true,
+    message: "समाचार को सुरक्षित रूप से Draft में वापस कर दिया गया है।",
+  };
 }
 
-export async function restoreArticleRevision(formData: FormData): Promise<ActionResult> {
+export async function restoreArticleRevision(
+  formData: FormData,
+): Promise<ActionResult> {
   const { supabase, user, role, error } = await getAdminClient();
   if (!supabase || !user) return { success: false, message: error };
   if (role !== "admin") {
-    return { success: false, message: "Revision restore करने की अनुमति केवल admin को है।" };
+    return {
+      success: false,
+      message: "Revision restore करने की अनुमति केवल admin को है।",
+    };
   }
 
   const revisionId = getTextValue(formData, "revision_id");
@@ -592,14 +667,20 @@ export async function restoreArticleRevision(formData: FormData): Promise<Action
   }
 
   if (!restoredFields.title || !restoredFields.body || !restoredFields.status) {
-    return { success: false, message: "इस revision में restore करने के लिए पूरी article जानकारी नहीं है।" };
+    return {
+      success: false,
+      message:
+        "इस revision में restore करने के लिए पूरी article जानकारी नहीं है।",
+    };
   }
 
   const { data: restoredArticle, error: restoreError } = await supabase
     .from("articles")
     .update({ ...restoredFields, updated_at: new Date().toISOString() })
     .eq("id", revision.article_id)
-    .select("id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at")
+    .select(
+      "id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at",
+    )
     .maybeSingle();
 
   if (restoreError || !restoredArticle) {
@@ -615,7 +696,10 @@ export async function restoreArticleRevision(formData: FormData): Promise<Action
       summary: `Restored from revision ${revisionId}`,
     });
   } catch (historyError) {
-    console.error("Article restore history could not be recorded:", historyError);
+    console.error(
+      "Article restore history could not be recorded:",
+      historyError,
+    );
   }
 
   revalidatePath("/admin/articles", "page");
@@ -636,7 +720,10 @@ export async function deleteArticle(id: string): Promise<ActionResult> {
   }
 
   if (role !== "admin") {
-    return { success: false, message: "लेख delete करने की अनुमति केवल admin को है।" };
+    return {
+      success: false,
+      message: "लेख delete करने की अनुमति केवल admin को है।",
+    };
   }
 
   const articleId = id.trim();
@@ -660,7 +747,9 @@ export async function deleteArticle(id: string): Promise<ActionResult> {
     .from("articles")
     .delete()
     .eq("id", articleId)
-    .select("id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at");
+    .select(
+      "id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at",
+    );
 
   if (deleteError) {
     return {

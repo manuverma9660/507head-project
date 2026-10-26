@@ -11,7 +11,7 @@ export default function ContactPage() {
 
   useEffect(() => {
     fetch("/api/site-settings")
-      .then((response) => response.ok ? response.json() : null)
+      .then((response) => (response.ok ? response.json() : null))
       .then((settings) => {
         if (settings?.contact_email) setContactEmail(settings.contact_email);
       })
@@ -45,15 +45,25 @@ export default function ContactPage() {
               507
             </span>
             <span className="leading-tight">
-              <strong className="block text-xl font-black text-[#222]">507 हेड</strong>
-              <small className="text-xs text-[#666]">जल, प्रकृति और जनजीवन</small>
+              <strong className="block text-xl font-black text-[#222]">
+                507 हेड
+              </strong>
+              <small className="text-xs text-[#666]">
+                जल, प्रकृति और जनजीवन
+              </small>
             </span>
           </Link>
 
           <nav className="flex items-center gap-5 text-sm font-semibold">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">हमारे बारे में</Link>
-            <Link href="/contact" className="text-[#8a4b1f] font-bold">संपर्क</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
+            <Link href="/about" className="hover:text-[#8a4b1f]">
+              हमारे बारे में
+            </Link>
+            <Link href="/contact" className="text-[#8a4b1f] font-bold">
+              संपर्क
+            </Link>
           </nav>
         </div>
       </header>
@@ -81,8 +91,10 @@ export default function ContactPage() {
             <div>
               <h2 className="text-2xl font-bold text-[#222]">कार्यालय व पता</h2>
               <p className="mt-2 text-sm text-[#666] leading-relaxed">
-                507 Head समाचार एवं शोध डेस्क,<br />
-                तहसील: छतरगढ़, जिला: बीकानेर,<br />
+                507 Head समाचार एवं शोध डेस्क,
+                <br />
+                तहसील: छतरगढ़, जिला: बीकानेर,
+                <br />
                 राजस्थान — 334021
               </p>
             </div>
@@ -92,7 +104,10 @@ export default function ContactPage() {
                 <span className="text-xl">📧</span>
                 <div>
                   <strong className="block text-[#222]">ईमेल</strong>
-                  <a href={`mailto:${contactEmail}`} className="text-[#8a4b1f] hover:underline">
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className="text-[#8a4b1f] hover:underline"
+                  >
                     {contactEmail}
                   </a>
                 </div>
@@ -101,7 +116,9 @@ export default function ContactPage() {
               <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-white">
                 <span className="text-xl">📱</span>
                 <div>
-                  <strong className="block text-[#222]">व्हाट्सएप / संदेश</strong>
+                  <strong className="block text-[#222]">
+                    व्हाट्सएप / संदेश
+                  </strong>
                   <span className="text-[#666]">+91 (बीकानेर डेस्क)</span>
                 </div>
               </div>
@@ -110,7 +127,9 @@ export default function ContactPage() {
                 <span className="text-xl">🕒</span>
                 <div>
                   <strong className="block text-[#222]">कार्य समय</strong>
-                  <span className="text-[#666]">सोमवार से शनिवार: प्रातः 9:00 से सायं 6:00 तक</span>
+                  <span className="text-[#666]">
+                    सोमवार से शनिवार: प्रातः 9:00 से सायं 6:00 तक
+                  </span>
                 </div>
               </div>
             </div>
@@ -121,9 +140,12 @@ export default function ContactPage() {
             {submitted ? (
               <div className="p-8 text-center space-y-4">
                 <span className="text-5xl block">✅</span>
-                <h3 className="text-2xl font-bold text-green-800">संदेश प्राप्त हुआ!</h3>
+                <h3 className="text-2xl font-bold text-green-800">
+                  संदेश प्राप्त हुआ!
+                </h3>
                 <p className="text-sm text-[#666]">
-                  धन्यवाद। आपका संदेश 507 Head संपादकीय टीम तक पहुँच गया है। हम जल्द ही आपसे संपर्क करेंगे।
+                  धन्यवाद। आपका संदेश 507 Head संपादकीय टीम तक पहुँच गया है। हम
+                  जल्द ही आपसे संपर्क करेंगे।
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -134,11 +156,22 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-                <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-                <h3 className="text-xl font-bold text-[#222]">हमें संदेश भेजें</h3>
+                <input
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
+                <h3 className="text-xl font-bold text-[#222]">
+                  हमें संदेश भेजें
+                </h3>
 
                 <div>
-                  <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2"
+                  >
                     आपका पूरा नाम *
                   </label>
                   <input
@@ -152,7 +185,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2"
+                  >
                     ईमेल पता *
                   </label>
                   <input
@@ -166,7 +202,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="category" className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2">
+                  <label
+                    htmlFor="category"
+                    className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2"
+                  >
                     संदेश का विषय
                   </label>
                   <select
@@ -182,7 +221,10 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-xs font-bold uppercase tracking-wider text-[#666] mb-2"
+                  >
                     आपका संदेश / विवरण *
                   </label>
                   <textarea
@@ -213,11 +255,21 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl px-4">
           <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
           <div className="mt-3 flex justify-center gap-5 text-xs">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">हमारे बारे में</Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">संपर्क</Link>
-            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">गोपनीयता नीति</Link>
-            <Link href="/terms" className="hover:text-[#8a4b1f]">नियम और शर्तें</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
+            <Link href="/about" className="hover:text-[#8a4b1f]">
+              हमारे बारे में
+            </Link>
+            <Link href="/contact" className="hover:text-[#8a4b1f]">
+              संपर्क
+            </Link>
+            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">
+              गोपनीयता नीति
+            </Link>
+            <Link href="/terms" className="hover:text-[#8a4b1f]">
+              नियम और शर्तें
+            </Link>
           </div>
         </div>
       </footer>

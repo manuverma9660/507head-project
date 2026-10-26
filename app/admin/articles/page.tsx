@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
@@ -52,7 +51,11 @@ export default async function ArticlesPage() {
   };
 
   let articlesList = (dbArticles ?? []).map((art) => {
-    const cat = art.categories as { id?: string; name?: string; slug?: string } | null;
+    const cat = art.categories as {
+      id?: string;
+      name?: string;
+      slug?: string;
+    } | null;
     const slugKey = (cat?.slug || "").toLowerCase();
     const matched = CAT_LOOKUP[slugKey] || {
       slug: cat?.slug || "news",
@@ -100,9 +103,7 @@ export default async function ArticlesPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#8a4b1f]">
               507 HEAD · Content Management
             </p>
-            <h1 className="mt-2 text-3xl font-bold md:text-4xl">
-              लेख
-            </h1>
+            <h1 className="mt-2 text-3xl font-bold md:text-4xl">लेख</h1>
             <p className="mt-2 text-gray-600">
               लेख बनाएँ, Draft सेव करें और प्रकाशित करें।
             </p>

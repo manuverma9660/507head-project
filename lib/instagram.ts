@@ -26,8 +26,13 @@ export async function getLatestInstagramReels(): Promise<InstagramReel[]> {
 
   if (!accountId || !accessToken) return [];
 
-  const url = new URL(`https://graph.facebook.com/${apiVersion}/${accountId}/media`);
-  url.searchParams.set("fields", "id,caption,media_type,thumbnail_url,permalink,timestamp");
+  const url = new URL(
+    `https://graph.facebook.com/${apiVersion}/${accountId}/media`,
+  );
+  url.searchParams.set(
+    "fields",
+    "id,caption,media_type,thumbnail_url,permalink,timestamp",
+  );
   url.searchParams.set("limit", "12");
   url.searchParams.set("access_token", accessToken);
 
@@ -37,11 +42,18 @@ export async function getLatestInstagramReels(): Promise<InstagramReel[]> {
 
     const payload = (await response.json()) as { data?: InstagramMedia[] };
     return (payload.data ?? [])
-      .filter((media) => (media.media_type === "REELS" || media.media_type === "VIDEO") && media.thumbnail_url && media.permalink)
+      .filter(
+        (media) =>
+          (media.media_type === "REELS" || media.media_type === "VIDEO") &&
+          media.thumbnail_url &&
+          media.permalink,
+      )
       .slice(0, 4)
       .map((media) => ({
         id: media.id,
-        title: media.caption?.split("\n")[0].trim().slice(0, 120) || "Latest reel from 507 Head",
+        title:
+          media.caption?.split("\n")[0].trim().slice(0, 120) ||
+          "Latest reel from 507 Head",
         image: media.thumbnail_url as string,
         url: media.permalink as string,
       }));

@@ -21,7 +21,10 @@ const messages = {
 export default function CategoryStatusNotice({ status }: { status?: string }) {
   const router = useRouter();
   const [visible, setVisible] = useState(true);
-  const notice = status && status in messages ? messages[status as keyof typeof messages] : null;
+  const notice =
+    status && status in messages
+      ? messages[status as keyof typeof messages]
+      : null;
 
   useEffect(() => {
     if (!notice) return;
@@ -35,9 +38,22 @@ export default function CategoryStatusNotice({ status }: { status?: string }) {
   if (!notice || !visible) return null;
 
   return (
-    <div className={`mb-5 flex items-center justify-between gap-4 rounded-xl px-4 py-3 text-sm font-semibold ${notice.className}`} role="status">
+    <div
+      className={`mb-5 flex items-center justify-between gap-4 rounded-xl px-4 py-3 text-sm font-semibold ${notice.className}`}
+      role="status"
+    >
       <span>{notice.text}</span>
-      <button type="button" onClick={() => { setVisible(false); router.replace("/admin/categories"); }} className="shrink-0 text-base leading-none" aria-label="संदेश बंद करें">×</button>
+      <button
+        type="button"
+        onClick={() => {
+          setVisible(false);
+          router.replace("/admin/categories");
+        }}
+        className="shrink-0 text-base leading-none"
+        aria-label="संदेश बंद करें"
+      >
+        ×
+      </button>
     </div>
   );
 }

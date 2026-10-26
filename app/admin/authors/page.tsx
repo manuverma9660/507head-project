@@ -64,7 +64,7 @@ export default async function AdminAuthorsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#f0e7dd]">
-              {(authors && authors.length > 0) ? (
+              {authors && authors.length > 0 ? (
                 authors.map((author) => (
                   <tr key={author.id} className="hover:bg-[#fcfaf7]">
                     <td className="px-6 py-4 font-bold text-[#222]">

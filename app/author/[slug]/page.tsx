@@ -2,7 +2,11 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { getAuthorBySlug, getArticlesByAuthor, APPROVED_CATEGORIES } from "@/lib/content";
+import {
+  getAuthorBySlug,
+  getArticlesByAuthor,
+  APPROVED_CATEGORIES,
+} from "@/lib/content";
 
 export const instant = false;
 
@@ -216,20 +220,21 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 <div className="flex flex-1 flex-col p-6">
                   <div className="mb-3 flex items-center gap-2 text-xs text-[#888]">
                     <span>
-                      {new Date(article.published_at).toLocaleDateString("hi-IN", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
+                      {new Date(article.published_at).toLocaleDateString(
+                        "hi-IN",
+                        {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        },
+                      )}
                     </span>
                     <span>•</span>
                     <span>{article.reading_time_minutes} मिनट</span>
                   </div>
 
                   <h3 className="text-lg font-bold leading-snug line-clamp-2 text-[#222] group-hover:text-[#8a4b1f]">
-                    <Link href={`/blog/${article.slug}`}>
-                      {article.title}
-                    </Link>
+                    <Link href={`/blog/${article.slug}`}>{article.title}</Link>
                   </h3>
 
                   <p className="mt-3 text-sm leading-relaxed text-[#666] line-clamp-3 flex-1">

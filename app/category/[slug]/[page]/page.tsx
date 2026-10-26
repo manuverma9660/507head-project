@@ -11,7 +11,9 @@ type CategoryPaginationPageProps = {
 
 export const instant = false;
 
-export async function generateMetadata({ params }: CategoryPaginationPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: CategoryPaginationPageProps): Promise<Metadata> {
   const { slug, page } = await params;
   const categories = await getCategories();
   const category = categories.find((item) => item.slug === slug);
@@ -24,7 +26,9 @@ export async function generateMetadata({ params }: CategoryPaginationPageProps):
   };
 }
 
-export default async function CategoryPaginationPage({ params }: CategoryPaginationPageProps) {
+export default async function CategoryPaginationPage({
+  params,
+}: CategoryPaginationPageProps) {
   const { slug, page } = await params;
   const pageNumber = Number(page);
   const categories = await getCategories();
@@ -42,36 +46,72 @@ export default async function CategoryPaginationPage({ params }: CategoryPaginat
   return (
     <main className="min-h-screen bg-[#f7f3ed] px-5 py-10 text-[#29231e] md:px-10">
       <div className="mx-auto max-w-5xl">
-        <Link href={`/category/${slug}`} className="text-sm font-semibold text-[#8a4b1f] hover:underline">
+        <Link
+          href={`/category/${slug}`}
+          className="text-sm font-semibold text-[#8a4b1f] hover:underline"
+        >
           ← {category.name}
         </Link>
         <header className="mt-8">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#8a4b1f]">507 Head · श्रेणी</p>
-          <h1 className="mt-2 text-3xl font-bold md:text-4xl">{category.name}</h1>
-          <p className="mt-2 text-sm text-gray-600">पेज {pageNumber} / {totalPages}</p>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#8a4b1f]">
+            507 Head · श्रेणी
+          </p>
+          <h1 className="mt-2 text-3xl font-bold md:text-4xl">
+            {category.name}
+          </h1>
+          <p className="mt-2 text-sm text-gray-600">
+            पेज {pageNumber} / {totalPages}
+          </p>
         </header>
 
         <section className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {currentArticles.map((article) => (
-            <article key={article.id} className="overflow-hidden rounded-2xl border border-[#e7ddd0] bg-white shadow-sm">
-              <Link href={`/blog/${article.slug}`} className="block p-5 hover:bg-[#fdf7f0]">
-                <p className="text-xs font-bold text-[#8a4b1f]">{article.category_name}</p>
-                <h2 className="mt-2 text-xl font-bold leading-snug">{article.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-gray-600">{article.excerpt}</p>
+            <article
+              key={article.id}
+              className="overflow-hidden rounded-2xl border border-[#e7ddd0] bg-white shadow-sm"
+            >
+              <Link
+                href={`/blog/${article.slug}`}
+                className="block p-5 hover:bg-[#fdf7f0]"
+              >
+                <p className="text-xs font-bold text-[#8a4b1f]">
+                  {article.category_name}
+                </p>
+                <h2 className="mt-2 text-xl font-bold leading-snug">
+                  {article.title}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  {article.excerpt}
+                </p>
               </Link>
             </article>
           ))}
         </section>
 
-        <nav className="mt-10 flex items-center justify-between gap-4" aria-label="पेज नेविगेशन">
-          <Link href={pageNumber === 2 ? `/category/${slug}` : `/category/${slug}/${pageNumber - 1}`} className="rounded-xl border border-[#8a4b1f] px-4 py-2 text-sm font-bold text-[#8a4b1f] hover:bg-[#f7efe3]">
+        <nav
+          className="mt-10 flex items-center justify-between gap-4"
+          aria-label="पेज नेविगेशन"
+        >
+          <Link
+            href={
+              pageNumber === 2
+                ? `/category/${slug}`
+                : `/category/${slug}/${pageNumber - 1}`
+            }
+            className="rounded-xl border border-[#8a4b1f] px-4 py-2 text-sm font-bold text-[#8a4b1f] hover:bg-[#f7efe3]"
+          >
             ← पिछला पेज
           </Link>
           {pageNumber < totalPages ? (
-            <Link href={`/category/${slug}/${pageNumber + 1}`} className="rounded-xl bg-[#8a4b1f] px-4 py-2 text-sm font-bold text-white hover:bg-[#6b3915]">
+            <Link
+              href={`/category/${slug}/${pageNumber + 1}`}
+              className="rounded-xl bg-[#8a4b1f] px-4 py-2 text-sm font-bold text-white hover:bg-[#6b3915]"
+            >
               अगला पेज →
             </Link>
-          ) : <span />}
+          ) : (
+            <span />
+          )}
         </nav>
       </div>
     </main>

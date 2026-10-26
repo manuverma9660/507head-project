@@ -2,7 +2,11 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { getArticleBySlug, getRelatedArticles, APPROVED_CATEGORIES } from "@/lib/content";
+import {
+  getArticleBySlug,
+  getRelatedArticles,
+  APPROVED_CATEGORIES,
+} from "@/lib/content";
 import ArticleBody from "@/components/ArticleBody";
 import SocialIcon from "@/components/SocialIcon";
 import ArticleShareRow from "@/components/ArticleShareRow";
@@ -69,7 +73,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const relatedArticles = await getRelatedArticles(article.category_slug, article.id, 3);
+  const relatedArticles = await getRelatedArticles(
+    article.category_slug,
+    article.id,
+    3,
+  );
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://507head.com";
   const currentUrl = `${siteUrl}/blog/${article.slug}/`;
 
@@ -125,12 +133,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ],
   };
 
-  const formattedDate = new Date(article.published_at).toLocaleDateString("hi-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const formattedUpdatedDate = new Date(article.updated_at || article.published_at).toLocaleDateString("hi-IN", {
+  const formattedDate = new Date(article.published_at).toLocaleDateString(
+    "hi-IN",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    },
+  );
+  const formattedUpdatedDate = new Date(
+    article.updated_at || article.published_at,
+  ).toLocaleDateString("hi-IN", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -156,28 +169,47 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               507
             </span>
             <span className="leading-tight">
-              <strong className="block text-xl font-black text-[#222]">507 हेड</strong>
-              <small className="text-xs text-[#666]">जल, प्रकृति और जनजीवन</small>
+              <strong className="block text-xl font-black text-[#222]">
+                507 हेड
+              </strong>
+              <small className="text-xs text-[#666]">
+                जल, प्रकृति और जनजीवन
+              </small>
             </span>
           </Link>
 
           <nav className="hidden xl:flex items-center gap-5 text-sm font-semibold">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
             {APPROVED_CATEGORIES.map((c) => (
               <Link
                 key={c.slug}
                 href={`/category/${c.slug}`}
-                className={c.slug === article.category_slug ? "text-[#8a4b1f] font-bold" : "hover:text-[#8a4b1f]"}
+                className={
+                  c.slug === article.category_slug
+                    ? "text-[#8a4b1f] font-bold"
+                    : "hover:text-[#8a4b1f]"
+                }
               >
                 {c.name}
               </Link>
             ))}
           </nav>
         </div>
-        <nav aria-label="श्रेणियाँ" className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden">
-          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">होम</Link>
+        <nav
+          aria-label="श्रेणियाँ"
+          className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden"
+        >
+          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">
+            होम
+          </Link>
           {APPROVED_CATEGORIES.map((c) => (
-            <Link key={c.slug} href={`/category/${c.slug}`} className={`shrink-0 snap-start ${c.slug === article.category_slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}>
+            <Link
+              key={c.slug}
+              href={`/category/${c.slug}`}
+              className={`shrink-0 snap-start ${c.slug === article.category_slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}
+            >
               {c.name}
             </Link>
           ))}
@@ -187,10 +219,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Main Article Container */}
       <article className="mx-auto max-w-4xl px-4 py-8 sm:px-6 md:py-12">
         {/* Breadcrumb */}
-        <nav aria-label="ब्रेडक्रम्ब" className="flex items-center gap-2 text-xs sm:text-sm text-[#8a4b1f] mb-6 flex-wrap">
-          <Link href="/" className="hover:underline">होम</Link>
+        <nav
+          aria-label="ब्रेडक्रम्ब"
+          className="flex items-center gap-2 text-xs sm:text-sm text-[#8a4b1f] mb-6 flex-wrap"
+        >
+          <Link href="/" className="hover:underline">
+            होम
+          </Link>
           <span>›</span>
-          <Link href={`/category/${article.category_slug}`} className="hover:underline">
+          <Link
+            href={`/category/${article.category_slug}`}
+            className="hover:underline"
+          >
             {article.category_name}
           </Link>
           <span>›</span>
@@ -230,14 +270,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               >
                 {article.author.name}
               </Link>
-              <span className="mt-0.5 block text-xs text-[#777]">Updated: {formattedUpdatedDate}</span>
-              <span className="text-xs text-[#777]">{formattedDate} • {article.reading_time_minutes} मिनट पठन</span>
+              <span className="mt-0.5 block text-xs text-[#777]">
+                Updated: {formattedUpdatedDate}
+              </span>
+              <span className="text-xs text-[#777]">
+                {formattedDate} • {article.reading_time_minutes} मिनट पठन
+              </span>
             </div>
           </div>
 
           {/* Social Share Buttons */}
           <div className="flex items-center gap-2.5">
-            <span className="text-xs font-bold text-[#888] mr-1 hidden sm:inline">शेयर करें:</span>
+            <span className="text-xs font-bold text-[#888] mr-1 hidden sm:inline">
+              शेयर करें:
+            </span>
             <a
               href={`https://api.whatsapp.com/send?text=${encodeURIComponent(article.title + " - " + currentUrl)}`}
               target="_blank"
@@ -282,8 +328,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
         {(article.featured_image_caption || article.featured_image_credit) && (
           <div className="mb-10 text-center text-xs text-[#777]">
-            {article.featured_image_caption && <p className="italic">फोटो विवरण: {article.featured_image_caption}</p>}
-            {article.featured_image_credit && <p className="mt-1 font-semibold not-italic">फोटो क्रेडिट: {article.featured_image_credit}</p>}
+            {article.featured_image_caption && (
+              <p className="italic">
+                फोटो विवरण: {article.featured_image_caption}
+              </p>
+            )}
+            {article.featured_image_credit && (
+              <p className="mt-1 font-semibold not-italic">
+                फोटो क्रेडिट: {article.featured_image_credit}
+              </p>
+            )}
           </div>
         )}
 
@@ -321,13 +375,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             📰
           </div>
           <div className="text-center sm:text-left">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#8a4b1f]">लेखक / संपादकीय टीम</span>
-            <Link href={`/author/${article.author.slug || "507-head-team"}`} className="group">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#8a4b1f]">
+              लेखक / संपादकीय टीम
+            </span>
+            <Link
+              href={`/author/${article.author.slug || "507-head-team"}`}
+              className="group"
+            >
               <h3 className="text-xl font-bold text-[#222] mt-1 group-hover:text-[#8a4b1f] group-hover:underline">
                 {article.author.name}
               </h3>
             </Link>
-            <p className="mt-2 text-sm text-[#666] leading-relaxed">{article.author.bio}</p>
+            <p className="mt-2 text-sm text-[#666] leading-relaxed">
+              {article.author.bio}
+            </p>
             <div className="mt-3">
               <Link
                 href={`/author/${article.author.slug || "507-head-team"}`}
@@ -344,7 +405,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <section className="mt-16 border-t border-[#e5ddd3] pt-12">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#8a4b1f]">और भी पढ़ें</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#8a4b1f]">
+                  और भी पढ़ें
+                </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#222] mt-1">
                   इस विषय से संबंधित अन्य लेख
                 </h2>
@@ -398,11 +461,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mx-auto max-w-7xl px-4">
           <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
           <div className="mt-3 flex justify-center gap-5 text-xs">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">हमारे बारे में</Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">संपर्क</Link>
-            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">गोपनीयता नीति</Link>
-            <Link href="/terms" className="hover:text-[#8a4b1f]">नियम और शर्तें</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
+            <Link href="/about" className="hover:text-[#8a4b1f]">
+              हमारे बारे में
+            </Link>
+            <Link href="/contact" className="hover:text-[#8a4b1f]">
+              संपर्क
+            </Link>
+            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">
+              गोपनीयता नीति
+            </Link>
+            <Link href="/terms" className="hover:text-[#8a4b1f]">
+              नियम और शर्तें
+            </Link>
           </div>
         </div>
       </footer>

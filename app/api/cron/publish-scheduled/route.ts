@@ -10,10 +10,15 @@ export async function GET(request: Request) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceKey) {
-    return Response.json({ error: "Scheduled publishing is not configured." }, { status: 503 });
+    return Response.json(
+      { error: "Scheduled publishing is not configured." },
+      { status: 503 },
+    );
   }
 
-  const supabase = createClient(url, serviceKey, { auth: { persistSession: false } });
+  const supabase = createClient(url, serviceKey, {
+    auth: { persistSession: false },
+  });
   const now = new Date().toISOString();
   const { data: articles, error } = await supabase
     .from("articles")
@@ -22,7 +27,11 @@ export async function GET(request: Request) {
     .lte("scheduled_for", now)
     .select("id, slug");
 
-  if (error) return Response.json({ error: "Could not publish scheduled articles." }, { status: 500 });
+  if (error)
+    return Response.json(
+      { error: "Could not publish scheduled articles." },
+      { status: 500 },
+    );
 
   for (const article of articles ?? []) {
     await supabase.from("audit_logs").insert({

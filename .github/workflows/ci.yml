@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   verify:
-    name: Test, typecheck, lint, and build
+    name: Format, test, typecheck, lint, build, and E2E
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -32,8 +32,17 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Formatting
+        run: npm run format:check
+
       - name: Unit tests
         run: npm test
 
       - name: Production build
         run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: npm run test:e2e

@@ -61,7 +61,9 @@ export default async function Home() {
   ]);
   const reels = instagramReels.length > 0 ? instagramReels : fallbackReels;
   const featured =
-    allArticles.find((article) => article.slug === "thar-registan-507-head-itihas") ||
+    allArticles.find(
+      (article) => article.slug === "thar-registan-507-head-itihas",
+    ) ||
     allArticles.find((article) => article.is_featured) ||
     allArticles[0];
 
@@ -70,14 +72,15 @@ export default async function Home() {
   const seenLatestSlugs = new Set<string>();
   const latestArticles = allArticles
     .filter((article) => {
-      if (article.id === featured.id || article.slug === featured.slug) return false;
+      if (article.id === featured.id || article.slug === featured.slug)
+        return false;
       if (seenLatestSlugs.has(article.slug)) return false;
       seenLatestSlugs.add(article.slug);
       return true;
     })
     .sort(
       (a, b) =>
-        new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+        new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
     )
     .slice(0, 6);
   const heroSliderArticles = allArticles
@@ -85,11 +88,11 @@ export default async function Home() {
       (article) =>
         article.id !== featured.id &&
         article.slug !== featured.slug &&
-        article.category_slug !== "food"
+        article.category_slug !== "food",
     )
     .sort(
       (a, b) =>
-        new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+        new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
     )
     .slice(0, 4);
   const heroSlides = [featured, ...heroSliderArticles].map((article) => ({
@@ -122,7 +125,9 @@ export default async function Home() {
     <main className="public-page min-h-screen bg-[#fcf9f5] text-[#222222]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homepageJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
       {/* Topline Banner */}
       <div className="bg-[#6b3915] px-4 py-2 text-center text-xs sm:text-sm font-medium text-white tracking-wide">
@@ -194,7 +199,6 @@ export default async function Home() {
             >
               <SocialIcon name="youtube" className="h-4 w-4 sm:h-5 sm:w-5" />
             </a>
-
           </div>
         </div>
 
@@ -237,9 +241,7 @@ export default async function Home() {
               </Link>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#222] tracking-tight leading-tight hover:text-[#8a4b1f]">
-                <Link href={`/blog/${featured.slug}`}>
-                  {featured.title}
-                </Link>
+                <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
               </h1>
 
               <p className="text-base sm:text-lg text-[#666] leading-relaxed line-clamp-3">
@@ -331,20 +333,21 @@ export default async function Home() {
               <div className="flex flex-1 flex-col p-4 sm:p-6">
                 <div className="mb-3 flex items-center gap-2 text-xs text-[#888]">
                   <span>
-                    {new Date(article.published_at).toLocaleDateString("hi-IN", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
+                    {new Date(article.published_at).toLocaleDateString(
+                      "hi-IN",
+                      {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      },
+                    )}
                   </span>
                   <span>•</span>
                   <span>{article.reading_time_minutes} मिनट</span>
                 </div>
 
                 <h3 className="text-lg font-bold leading-snug line-clamp-2 text-[#222] group-hover:text-[#8a4b1f]">
-                  <Link href={`/blog/${article.slug}`}>
-                    {article.title}
-                  </Link>
+                  <Link href={`/blog/${article.slug}`}>{article.title}</Link>
                 </h3>
 
                 <p className="mt-3 text-sm leading-relaxed text-[#666] line-clamp-3 flex-1">
@@ -386,7 +389,13 @@ export default async function Home() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-xs font-bold text-[#8a4b1f] hover:underline hidden sm:inline-flex"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="inline">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="inline"
+              >
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
               </svg>
               @507head पर फॉलो करें ↗
@@ -425,10 +434,9 @@ export default async function Home() {
 
       {/* Category Blocks: 3 cards per category */}
       <section className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:space-y-12 sm:px-6 sm:py-12">
-
         {categories.map((cat) => {
           const catArticles = allArticles.filter(
-            (a) => a.category_slug === cat.slug
+            (a) => a.category_slug === cat.slug,
           );
           if (catArticles.length === 0) return null;
 
@@ -483,7 +491,7 @@ export default async function Home() {
                         <span className="text-[#888]">
                           {new Date(article.published_at).toLocaleDateString(
                             "hi-IN",
-                            { day: "numeric", month: "short" }
+                            { day: "numeric", month: "short" },
                           )}
                         </span>
                         <Link
@@ -508,7 +516,8 @@ export default async function Home() {
           <div>
             <h2 className="text-2xl font-black">507 हेड से जुड़े रहें</h2>
             <p className="mt-1 text-sm text-[#f7efe3]">
-              ताज़ा खबरों, कृषि सलाह और स्थानीय अपडेट्स के लिए हमारे सोशल मीडिया पर जुड़ें।
+              ताज़ा खबरों, कृषि सलाह और स्थानीय अपडेट्स के लिए हमारे सोशल मीडिया
+              पर जुड़ें।
             </p>
           </div>
 
@@ -528,7 +537,12 @@ export default async function Home() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-gradient-to-r hover:from-[#833ab4] hover:to-[#fd1d1d]"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
               </svg>
               Instagram @507head ↗
@@ -539,7 +553,12 @@ export default async function Home() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#FF0000]/70"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
               </svg>
               YouTube Channel ↗
@@ -567,13 +586,16 @@ export default async function Home() {
               </span>
             </Link>
             <p className="text-xs leading-relaxed text-[#666]">
-              बीकानेर के छतरगढ़ क्षेत्र से संचालित स्वतंत्र हिंदी न्यूज़ पोर्टल। थार रेगिस्तान, किसान, पशुपालन और मरुस्थलीय विरासत की सच्ची आवाज।
+              बीकानेर के छतरगढ़ क्षेत्र से संचालित स्वतंत्र हिंदी न्यूज़ पोर्टल।
+              थार रेगिस्तान, किसान, पशुपालन और मरुस्थलीय विरासत की सच्ची आवाज।
             </p>
           </div>
 
           {/* Col 2: Categories */}
           <div>
-            <h4 className="font-bold text-[#222] text-sm mb-4">प्रमुख श्रेणियां</h4>
+            <h4 className="font-bold text-[#222] text-sm mb-4">
+              प्रमुख श्रेणियां
+            </h4>
             <ul className="space-y-2 text-xs">
               {categories.map((c) => (
                 <li key={c.slug}>
@@ -590,7 +612,9 @@ export default async function Home() {
 
           {/* Col 3: 507 Head Links */}
           <div>
-            <h4 className="font-bold text-[#222] text-sm mb-4">507 Head लिंक</h4>
+            <h4 className="font-bold text-[#222] text-sm mb-4">
+              507 Head लिंक
+            </h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <Link href="/about" className="hover:text-[#8a4b1f]">
@@ -612,16 +636,19 @@ export default async function Home() {
                   नियम एवं शर्तें
                 </Link>
               </li>
-
             </ul>
           </div>
 
           {/* Col 4: Contact / Address */}
           <div>
-            <h4 className="font-bold text-[#222] text-sm mb-4">कार्यालय व संपर्क</h4>
+            <h4 className="font-bold text-[#222] text-sm mb-4">
+              कार्यालय व संपर्क
+            </h4>
             <p className="text-xs text-[#666] leading-relaxed">
-              507 Head संपादकीय डेस्क,<br />
-              छतरगढ़ तहसील, जिला बीकानेर,<br />
+              507 Head संपादकीय डेस्क,
+              <br />
+              छतरगढ़ तहसील, जिला बीकानेर,
+              <br />
               राजस्थान — 334021
             </p>
             <p className="mt-3 text-xs text-[#8a4b1f] font-semibold">
@@ -633,9 +660,7 @@ export default async function Home() {
         {/* Bottom Bar */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#777]">
           <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
-          <p>
-            डिजिटल राजस्थान • ग्रामीण पत्रकारिता की नई दिशा
-          </p>
+          <p>डिजिटल राजस्थान • ग्रामीण पत्रकारिता की नई दिशा</p>
         </div>
       </footer>
     </main>

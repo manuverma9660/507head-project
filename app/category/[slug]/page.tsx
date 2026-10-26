@@ -51,8 +51,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "होम", item: siteUrl },
-      { "@type": "ListItem", position: 2, name: "श्रेणियां", item: `${siteUrl}/#categories` },
-      { "@type": "ListItem", position: 3, name: category.name, item: categoryUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "श्रेणियां",
+        item: `${siteUrl}/#categories`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: category.name,
+        item: categoryUrl,
+      },
     ],
   };
 
@@ -60,7 +70,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
       {/* Header */}
       <header className="border-b border-[#e5ddd3] bg-white sticky top-0 z-40">
@@ -70,28 +82,47 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               507
             </span>
             <span className="leading-tight">
-              <strong className="block text-xl font-black text-[#222]">507 हेड</strong>
-              <small className="text-xs text-[#666]">जल, प्रकृति और जनजीवन</small>
+              <strong className="block text-xl font-black text-[#222]">
+                507 हेड
+              </strong>
+              <small className="text-xs text-[#666]">
+                जल, प्रकृति और जनजीवन
+              </small>
             </span>
           </Link>
 
           <nav className="hidden xl:flex items-center gap-6 text-sm font-semibold">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
             {categories.map((c) => (
               <Link
                 key={c.slug}
                 href={`/category/${c.slug}`}
-                className={c.slug === slug ? "text-[#8a4b1f] font-bold" : "hover:text-[#8a4b1f]"}
+                className={
+                  c.slug === slug
+                    ? "text-[#8a4b1f] font-bold"
+                    : "hover:text-[#8a4b1f]"
+                }
               >
                 {c.name}
               </Link>
             ))}
           </nav>
         </div>
-        <nav aria-label="श्रेणियाँ" className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden">
-          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">होम</Link>
+        <nav
+          aria-label="श्रेणियाँ"
+          className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden"
+        >
+          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">
+            होम
+          </Link>
           {categories.map((c) => (
-            <Link key={c.slug} href={`/category/${c.slug}`} className={`shrink-0 snap-start ${c.slug === slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}>
+            <Link
+              key={c.slug}
+              href={`/category/${c.slug}`}
+              className={`shrink-0 snap-start ${c.slug === slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}
+            >
               {c.name}
             </Link>
           ))}
@@ -102,7 +133,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <section className="bg-[#f7efe3] border-b border-[#e5ddd3] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex items-center gap-2 text-sm text-[#8a4b1f] mb-4">
-            <Link href="/" className="hover:underline">होम</Link>
+            <Link href="/" className="hover:underline">
+              होम
+            </Link>
             <span>›</span>
             <span>श्रेणियां</span>
             <span>›</span>
@@ -132,9 +165,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {articles.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-[#e5ddd3] bg-white p-12 text-center">
             <span className="text-4xl mb-4 block">📰</span>
-            <h2 className="text-xl font-bold">इस श्रेणी में अभी कोई लेख उपलब्ध नहीं है</h2>
+            <h2 className="text-xl font-bold">
+              इस श्रेणी में अभी कोई लेख उपलब्ध नहीं है
+            </h2>
             <p className="mt-2 text-[#666] text-sm">
-              संपादकीय टीम द्वारा इस श्रेणी में जल्द ही नए शोधपूर्ण लेख जोड़े जाएंगे।
+              संपादकीय टीम द्वारा इस श्रेणी में जल्द ही नए शोधपूर्ण लेख जोड़े
+              जाएंगे।
             </p>
             <Link
               href="/"
@@ -168,15 +204,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
                 <div className="flex flex-1 flex-col p-6">
                   <div className="flex items-center gap-2 text-xs text-[#888] mb-3">
-                    <span>{new Date(article.published_at).toLocaleDateString("hi-IN", { day: "numeric", month: "short", year: "numeric" })}</span>
+                    <span>
+                      {new Date(article.published_at).toLocaleDateString(
+                        "hi-IN",
+                        { day: "numeric", month: "short", year: "numeric" },
+                      )}
+                    </span>
                     <span>•</span>
                     <span>{article.reading_time_minutes} मिनट पठन</span>
                   </div>
 
                   <h2 className="text-xl font-bold leading-snug line-clamp-2 text-[#222] group-hover:text-[#8a4b1f]">
-                    <Link href={`/blog/${article.slug}`}>
-                      {article.title}
-                    </Link>
+                    <Link href={`/blog/${article.slug}`}>{article.title}</Link>
                   </h2>
 
                   <p className="mt-3 text-sm leading-relaxed text-[#666] line-clamp-3 flex-1">
@@ -206,11 +245,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <div className="mx-auto max-w-7xl px-4">
           <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
           <div className="mt-3 flex justify-center gap-5 text-xs">
-            <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">हमारे बारे में</Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">संपर्क</Link>
-            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">गोपनीयता नीति</Link>
-            <Link href="/terms" className="hover:text-[#8a4b1f]">नियम और शर्तें</Link>
+            <Link href="/" className="hover:text-[#8a4b1f]">
+              होम
+            </Link>
+            <Link href="/about" className="hover:text-[#8a4b1f]">
+              हमारे बारे में
+            </Link>
+            <Link href="/contact" className="hover:text-[#8a4b1f]">
+              संपर्क
+            </Link>
+            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">
+              गोपनीयता नीति
+            </Link>
+            <Link href="/terms" className="hover:text-[#8a4b1f]">
+              नियम और शर्तें
+            </Link>
           </div>
         </div>
       </footer>

@@ -73,12 +73,38 @@ export default async function AdminCategoriesPage({
 
         <section className="mb-8 hidden rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:p-6">
           <h2 className="text-lg font-bold">नई श्रेणी जोड़ें</h2>
-          <p className="mt-1 text-sm text-gray-600">यह श्रेणी सीधे Supabase में save होगी और वेबसाइट पर दिखेगी।</p>
-          <form action={createCategory} className="mt-5 grid gap-3 md:grid-cols-2">
-            <input name="name" required minLength={2} placeholder="नाम, जैसे स्थानीय समाचार" className="rounded-xl border border-[#e7ddd0] px-4 py-3" />
-            <input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="अंग्रेज़ी स्लग, जैसे local-news" className="rounded-xl border border-[#e7ddd0] px-4 py-3" />
-            <input name="description" placeholder="छोटा विवरण (optional)" className="rounded-xl border border-[#e7ddd0] px-4 py-3 md:col-span-2" />
-            <button type="submit" className="w-fit rounded-xl bg-[#8a4b1f] px-5 py-3 text-sm font-bold text-white hover:bg-[#6b3915]">श्रेणी जोड़ें</button>
+          <p className="mt-1 text-sm text-gray-600">
+            यह श्रेणी सीधे Supabase में save होगी और वेबसाइट पर दिखेगी।
+          </p>
+          <form
+            action={createCategory}
+            className="mt-5 grid gap-3 md:grid-cols-2"
+          >
+            <input
+              name="name"
+              required
+              minLength={2}
+              placeholder="नाम, जैसे स्थानीय समाचार"
+              className="rounded-xl border border-[#e7ddd0] px-4 py-3"
+            />
+            <input
+              name="slug"
+              required
+              pattern="[a-z0-9]+(-[a-z0-9]+)*"
+              placeholder="अंग्रेज़ी स्लग, जैसे local-news"
+              className="rounded-xl border border-[#e7ddd0] px-4 py-3"
+            />
+            <input
+              name="description"
+              placeholder="छोटा विवरण (optional)"
+              className="rounded-xl border border-[#e7ddd0] px-4 py-3 md:col-span-2"
+            />
+            <button
+              type="submit"
+              className="w-fit rounded-xl bg-[#8a4b1f] px-5 py-3 text-sm font-bold text-white hover:bg-[#6b3915]"
+            >
+              श्रेणी जोड़ें
+            </button>
           </form>
         </section>
 

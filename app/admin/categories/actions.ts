@@ -7,7 +7,9 @@ import { createClient } from "@/lib/supabase/server";
 
 async function getAdminSupabase() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) throw new Error("Admin login is required.");
   const { data: profile } = await supabase
     .from("staff_profiles")
@@ -20,7 +22,7 @@ async function getAdminSupabase() {
   return supabase;
 }
 
-export async function createCategory(_formData: FormData) {
+export async function createCategory() {
   await getAdminSupabase();
   // Taxonomy changes are deliberately not self-service. They require owner approval.
   redirect("/admin/categories?category_status=owner_approval_required");
@@ -53,7 +55,7 @@ export async function syncApprovedCategories() {
       is_active: true,
       show_on_home: true,
     })),
-    { onConflict: "slug" }
+    { onConflict: "slug" },
   );
 
   if (error) throw new Error(error.message);

@@ -7,17 +7,39 @@ import { Analytics } from "@vercel/analytics/next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getPublicSiteSettings();
-  const siteUrl = /^https:\/\//.test(settings.site_url) ? settings.site_url : "https://507head.com";
+  const siteUrl = /^https:\/\//.test(settings.site_url)
+    ? settings.site_url
+    : "https://507head.com";
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: settings.site_name, template: `%s | ${settings.site_name}` },
+    title: {
+      default: settings.site_name,
+      template: `%s | ${settings.site_name}`,
+    },
     description: settings.default_description,
     applicationName: settings.site_name,
-    openGraph: { title: settings.site_name, description: settings.default_description, siteName: settings.site_name, locale: "hi_IN", type: "website" },
-    twitter: { card: "summary_large_image", title: settings.site_name, description: settings.default_description },
+    openGraph: {
+      title: settings.site_name,
+      description: settings.default_description,
+      siteName: settings.site_name,
+      locale: "hi_IN",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: settings.site_name,
+      description: settings.default_description,
+    },
   };
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  return <html lang="hi"><body>{children}<Analytics /></body></html>;
+  return (
+    <html lang="hi">
+      <body>
+        {children}
+        <Analytics />
+      </body>
+    </html>
+  );
 }

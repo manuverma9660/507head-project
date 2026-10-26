@@ -4,22 +4,38 @@ import { CLOUDINARY_MEDIA_FOLDER, cloudinary } from "@/lib/cloudinary";
 
 async function getAdmin() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return { supabase, user: null };
-  const { data: profile } = await supabase.from("staff_profiles").select("role, is_active").eq("user_id", user.id).maybeSingle();
-  return { supabase, user: profile?.role === "admin" && profile.is_active ? user : null };
+  const { data: profile } = await supabase
+    .from("staff_profiles")
+    .select("role, is_active")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  return {
+    supabase,
+    user: profile?.role === "admin" && profile.is_active ? user : null,
+  };
 }
 
 export async function POST(request: Request) {
   const { supabase, user } = await getAdmin();
-  if (!user) return NextResponse.json({ error: "अनुमति नहीं है।" }, { status: 401 });
+  if (!user)
+    return NextResponse.json({ error: "अनुमति नहीं है।" }, { status: 401 });
 
   const body = await request.json().catch(() => ({}));
   const publicId = typeof body.publicId === "string" ? body.publicId : "";
-  if (!publicId.startsWith(`${CLOUDINARY_MEDIA_FOLDER}/`)) return NextResponse.json({ error: "अमान्य मीडिया फ़ाइल।" }, { status: 400 });
+  if (!publicId.startsWith(`${CLOUDINARY_MEDIA_FOLDER}/`))
+    return NextResponse.json(
+      { error: "अमान्य मीडिया फ़ाइल।" },
+      { status: 400 },
+    );
 
   try {
-    const asset = await cloudinary.api.resource(publicId, { image_metadata: true });
+    const asset = await cloudinary.api.resource(publicId, {
+      image_metadata: true,
+    });
     const payload = {
       provider: "cloudinary",
       public_id: asset.public_id,
@@ -49,11 +65,17 @@ export async function POST(request: Request) {
     if (error) throw error;
     return NextResponse.json({ asset: data });
   } catch (error) {
-    const detail = error instanceof Error
-      ? error.message
-      : typeof error === "object" && error !== null && "message" in error
-        ? String(error.message)
-        : "Unknown error";
-    return NextResponse.json({ error: `अपलोड Cloudinary पर हो गया, लेकिन Supabase metadata save नहीं हुआ: ${detail}` }, { status: 500 });
+    const detail =
+      error instanceof Error
+        ? error.message
+        : typeof error === "object" && error !== null && "message" in error
+          ? String(error.message)
+          : "Unknown error";
+    return NextResponse.json(
+      {
+        error: `अपलोड Cloudinary पर हो गया, लेकिन Supabase metadata save नहीं हुआ: ${detail}`,
+      },
+      { status: 500 },
+    );
   }
 }

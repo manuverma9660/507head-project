@@ -205,7 +205,10 @@ button {
   font-size: 16px;
   font-weight: 700;
   text-transform: lowercase;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
 }
 
 .social-link:hover {
@@ -394,7 +397,10 @@ button {
   border-radius: 6px;
   font-size: 15px;
   font-weight: 700;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
 }
 
 .primary-link {
@@ -472,7 +478,9 @@ button {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 3px 14px rgba(58, 39, 22, 0.035);
-  transition: box-shadow 180ms ease, transform 180ms ease;
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 .article-card:hover {
@@ -1183,8 +1191,6 @@ button {
   color: #fff !important;
 }
 
-
-
 .homepage {
   width: 100%;
   overflow: hidden;
@@ -1327,7 +1333,9 @@ button {
   font-size: 15px;
   font-weight: 700;
   text-align: center;
-  transition: background-color 160ms ease, color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
 .homepage .primary-button:hover {
@@ -1438,7 +1446,9 @@ button {
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 3px 14px rgba(58, 39, 22, 0.04);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .homepage .news-card:hover {

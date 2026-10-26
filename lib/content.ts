@@ -44,49 +44,56 @@ export const APPROVED_CATEGORIES: Category[] = [
     id: "cat-history",
     slug: "history",
     name: "इतिहास और विरासत",
-    description: "507 हेड, बीकानेर और थार मरुस्थल की ऐतिहासिक धरोहर, पुराने रास्ते और जनजीवन।",
+    description:
+      "507 हेड, बीकानेर और थार मरुस्थल की ऐतिहासिक धरोहर, पुराने रास्ते और जनजीवन।",
     sort_order: 1,
   },
   {
     id: "cat-farming",
     slug: "farming",
     name: "खेती-बाड़ी",
-    description: "परंपरागत मरुस्थलीय खेती, नहरी सिंचाई, आधुनिक तकनीकें और उन्नत फसलें।",
+    description:
+      "परंपरागत मरुस्थलीय खेती, नहरी सिंचाई, आधुनिक तकनीकें और उन्नत फसलें।",
     sort_order: 2,
   },
   {
     id: "cat-kisan",
     slug: "kisan",
     name: "किसान",
-    description: "गाँव और देश की रीढ़, किसानों का परिश्रम, अनुभव और संघर्ष की सच्ची कहानियाँ।",
+    description:
+      "गाँव और देश की रीढ़, किसानों का परिश्रम, अनुभव और संघर्ष की सच्ची कहानियाँ।",
     sort_order: 3,
   },
   {
     id: "cat-wisdom",
     slug: "wisdom",
     name: "बुजुर्गों की सीख",
-    description: "पीढ़ियों के गहरे अनुभव, लोक सूक्तियां और जीवन की व्यावहारिक समझ।",
+    description:
+      "पीढ़ियों के गहरे अनुभव, लोक सूक्तियां और जीवन की व्यावहारिक समझ।",
     sort_order: 4,
   },
   {
     id: "cat-heritage",
     slug: "heritage",
     name: "सांस्कृतिक विरासत",
-    description: "राजस्थानी लोक संस्कृति, पारंपरिक रीति-रिवाज, लोकगीत और स्थानीय कला।",
+    description:
+      "राजस्थानी लोक संस्कृति, पारंपरिक रीति-रिवाज, लोकगीत और स्थानीय कला।",
     sort_order: 5,
   },
   {
     id: "cat-pashupalan",
     slug: "pashupalan",
     name: "पशुपालन",
-    description: "राठी गाय, ऊँट, डेयरी व्यवसाय और मरुस्थल में पशुधन संरक्षण की जानकारी।",
+    description:
+      "राठी गाय, ऊँट, डेयरी व्यवसाय और मरुस्थल में पशुधन संरक्षण की जानकारी।",
     sort_order: 6,
   },
   {
     id: "cat-food",
     slug: "food",
     name: "खान-पान",
-    description: "पारंपरिक मरुस्थलीय व्यंजन, बाजरे की रोटी, कैर-सांगरी और पौष्टिक स्वाद।",
+    description:
+      "पारंपरिक मरुस्थलीय व्यंजन, बाजरे की रोटी, कैर-सांगरी और पौष्टिक स्वाद।",
     sort_order: 7,
   },
 ];
@@ -108,7 +115,9 @@ export async function getCategories(): Promise<Category[]> {
     if (error || !data) return APPROVED_CATEGORIES;
 
     const liveCategories = data;
-    const storedBySlug = new Map(liveCategories.map((category) => [category.slug, category]));
+    const storedBySlug = new Map(
+      liveCategories.map((category) => [category.slug, category]),
+    );
     const standardCategories = APPROVED_CATEGORIES.map((fallback) => {
       const stored = storedBySlug.get(fallback.slug);
       return stored
@@ -117,7 +126,10 @@ export async function getCategories(): Promise<Category[]> {
             id: String(stored.id),
             name: stored.name || fallback.name,
             description: stored.description || fallback.description,
-            sort_order: typeof stored.sort_order === "number" ? stored.sort_order : fallback.sort_order,
+            sort_order:
+              typeof stored.sort_order === "number"
+                ? stored.sort_order
+                : fallback.sort_order,
           }
         : fallback;
     });
@@ -133,7 +145,8 @@ export const DEFAULT_AUTHOR: Author = {
   slug: "507-head-team",
   name: "507 Head संपादकीय टीम",
   bio: "507 हेड और पश्चिमी राजस्थान के ग्रामीण जीवन, जल, संस्कृति और खेती की सच्ची रिपोर्टिंग।",
-  avatar_url: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80",
+  avatar_url:
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80",
 };
 
 export const INITIAL_ARTICLES: Article[] = [
@@ -141,11 +154,13 @@ export const INITIAL_ARTICLES: Article[] = [
     id: "art-1",
     slug: "thar-registan-507-head-itihas",
     title: "रेत के धोरों के बीच 507 हेड: इतिहास, नहरी क्रांति और बदलता परिवेश",
-    excerpt: "बीकानेर के छतरगढ़ क्षेत्र में 507 हेड केवल एक जल वितरण केंद्र नहीं, बल्कि मरुभूमि में जीवन और हरियाली की नई गाथा है।",
+    excerpt:
+      "बीकानेर के छतरगढ़ क्षेत्र में 507 हेड केवल एक जल वितरण केंद्र नहीं, बल्कि मरुभूमि में जीवन और हरियाली की नई गाथा है।",
     category_slug: "history",
     category_name: "इतिहास और विरासत",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://images.bhaskarassets.com/web2images/521/2025/08/11/orig_4-1-1-1-1-1-1-1-1-1-1-1_1754872440.jpg",
+    featured_image_url:
+      "https://images.bhaskarassets.com/web2images/521/2025/08/11/orig_4-1-1-1-1-1-1-1-1-1-1-1_1754872440.jpg",
     featured_image_alt: "थार मरुस्थल के रेतीले धोरे और सूर्यास्त का दृश्य",
     featured_image_caption: "507 हेड के आसपास फैले थार के विशाल धोरे",
     is_featured: true,
@@ -162,12 +177,15 @@ export const INITIAL_ARTICLES: Article[] = [
   {
     id: "art-2",
     slug: "nahari-kshetra-kheti-unnat-tarike",
-    title: "नहरी क्षेत्र में खेती: कम पानी में अधिक उपज के पारंपरिक व आधुनिक गुर",
-    excerpt: "नहरबंदी और सीमित जल उपलब्धता के बीच किसान कैसे मिट्टी की नमी सहेजकर बंपर पैदावार ले रहे हैं, जानिए इस रिपोर्ट में।",
+    title:
+      "नहरी क्षेत्र में खेती: कम पानी में अधिक उपज के पारंपरिक व आधुनिक गुर",
+    excerpt:
+      "नहरबंदी और सीमित जल उपलब्धता के बीच किसान कैसे मिट्टी की नमी सहेजकर बंपर पैदावार ले रहे हैं, जानिए इस रिपोर्ट में।",
     category_slug: "farming",
     category_name: "खेती-बाड़ी",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi5OaYV-_JlxDzp2JKqU7NJ9a4AXX-bggjKNeBXp1ZTg&s=10",
+    featured_image_url:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi5OaYV-_JlxDzp2JKqU7NJ9a4AXX-bggjKNeBXp1ZTg&s=10",
     featured_image_alt: "लहलहाते खेत और सुबह की ताजी धूप",
     featured_image_caption: "नहरी पानी से सींचे गए 507 हेड क्षेत्र के खेत",
     is_featured: false,
@@ -185,7 +203,8 @@ export const INITIAL_ARTICLES: Article[] = [
     id: "art-3",
     slug: "rathi-gaay-marusthal-ki-kamdhenu",
     title: "राठी गाय: थार मरुस्थल की कामधेनु और पशुपालकों की सच्ची पूंजी",
-    excerpt: "कम चारे और भीषण गर्मी में भी भरपूर दूध देने वाली राठी नस्ल आज पूरे देश के पशुपालकों की पहली पसंद बन रही है।",
+    excerpt:
+      "कम चारे और भीषण गर्मी में भी भरपूर दूध देने वाली राठी नस्ल आज पूरे देश के पशुपालकों की पहली पसंद बन रही है।",
     category_slug: "pashupalan",
     category_name: "पशुपालन",
     author: DEFAULT_AUTHOR,
@@ -207,11 +226,13 @@ export const INITIAL_ARTICLES: Article[] = [
     id: "art-4",
     slug: "bujurgon-ke-tajurbe-aur-paramparik-seekh",
     title: "बुजुर्गों की सीख: मौसम, मिट्टी और जिंदगी को परखने का अनमोल ज्ञान",
-    excerpt: "जब मौसम विभाग नहीं था, तब ग्रामीण बुजुर्ग बादलों की चाल, हवा के रुख और पक्षियों की बोली से पूरे साल का हाल बता देते थे।",
+    excerpt:
+      "जब मौसम विभाग नहीं था, तब ग्रामीण बुजुर्ग बादलों की चाल, हवा के रुख और पक्षियों की बोली से पूरे साल का हाल बता देते थे।",
     category_slug: "wisdom",
     category_name: "बुजुर्गों की सीख",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tsXyf-KOkWlFBzQTjJF-MK7S1p3MclAEMeOpgNJPPb_rMosdeOSRaH4R&s=10",
+    featured_image_url:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tsXyf-KOkWlFBzQTjJF-MK7S1p3MclAEMeOpgNJPPb_rMosdeOSRaH4R&s=10",
     featured_image_alt: "गाँव की चौपाल पर बैठे बुजुर्ग और पारंपरिक पगड़ी",
     featured_image_caption: "गाँव की चौपाल में जीवन के अनुभव साझा करते बुजुर्ग",
     is_featured: false,
@@ -228,12 +249,15 @@ export const INITIAL_ARTICLES: Article[] = [
   {
     id: "art-5",
     slug: "bajra-roti-sangri-marusthal-poshan",
-    title: "बाजरे का सोगरा और कैर-सांगरी: थार के पारम्परिक स्वाद में छुपा सेहत का राज",
-    excerpt: "मिट्टी के चूल्हे पर सिका कड़क सोगरा, शुद्ध मक्खन और सूखी सांगरी की सब्जी—यह केवल खाना नहीं, मरुभूमि का अमृत है।",
+    title:
+      "बाजरे का सोगरा और कैर-सांगरी: थार के पारम्परिक स्वाद में छुपा सेहत का राज",
+    excerpt:
+      "मिट्टी के चूल्हे पर सिका कड़क सोगरा, शुद्ध मक्खन और सूखी सांगरी की सब्जी—यह केवल खाना नहीं, मरुभूमि का अमृत है।",
     category_slug: "food",
     category_name: "खान-पान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAhYxoVz_zQeD-Ki_4T6gpbFKYqf4y9P11rJgGY23dB2kVAOvApsnqHwO&s=10",
+    featured_image_url:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAhYxoVz_zQeD-Ki_4T6gpbFKYqf4y9P11rJgGY23dB2kVAOvApsnqHwO&s=10",
     featured_image_alt: "पारंपरिक राजस्थानी थाली और बाजरे की रोटी",
     featured_image_caption: "पौष्टिकता से भरपूर पारंपरिक मरुस्थलीय खान-पान",
     is_featured: false,
@@ -251,11 +275,13 @@ export const INITIAL_ARTICLES: Article[] = [
     id: "art-6",
     slug: "thar-sanskriti-lokgeet-parampara",
     title: "धोरों में गूँजती मांड और लोकगीत: थार की समृद्ध सांस्कृतिक पहचान",
-    excerpt: "अलगोजा, कमायचा और खड़ताल की धुन पर जब रेगिस्तान में शाम ढलती है, तो सदियों पुरानी दास्तानें जीवंत हो उठती हैं।",
+    excerpt:
+      "अलगोजा, कमायचा और खड़ताल की धुन पर जब रेगिस्तान में शाम ढलती है, तो सदियों पुरानी दास्तानें जीवंत हो उठती हैं।",
     category_slug: "heritage",
     category_name: "सांस्कृतिक विरासत",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Rajasthan_Folk_Music.jpg/3840px-Rajasthan_Folk_Music.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
+    featured_image_url:
+      "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Rajasthan_Folk_Music.jpg/3840px-Rajasthan_Folk_Music.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
     featured_image_alt: "राजस्थानी लोक कलाकार और पारंपरिक संगीत वाद्ययंत्र",
     featured_image_caption: "थार की सांस्कृतिक विरासत को संजोते स्थानीय कलाकार",
     is_featured: false,
@@ -272,12 +298,15 @@ export const INITIAL_ARTICLES: Article[] = [
   {
     id: "art-7",
     slug: "kisan-mehanat-anubhav-desh-ki-shaan",
-    title: "रेगिस्तान के जांबाज किसान: रेत को सोना बनाने वाले अन्नदाताओं की दास्तान",
-    excerpt: "कड़ाके की धूप और ठंडी रातों में नहर के पानी का पहरा देने वाले 507 हेड के किसानों का त्याग और समर्पण।",
+    title:
+      "रेगिस्तान के जांबाज किसान: रेत को सोना बनाने वाले अन्नदाताओं की दास्तान",
+    excerpt:
+      "कड़ाके की धूप और ठंडी रातों में नहर के पानी का पहरा देने वाले 507 हेड के किसानों का त्याग और समर्पण।",
     category_slug: "kisan",
     category_name: "किसान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://sc0.blr1.cdn.digitaloceanspaces.com/article/196544-fiimlmpoxr-1702239573.jpg",
+    featured_image_url:
+      "https://sc0.blr1.cdn.digitaloceanspaces.com/article/196544-fiimlmpoxr-1702239573.jpg",
     featured_image_alt: "खेत में काम करता हुआ राजस्थानी किसान",
     featured_image_caption: "507 हेड के कर्मठ किसान की मेहनत का एक दृश्य",
     is_featured: false,
@@ -295,11 +324,13 @@ export const INITIAL_ARTICLES: Article[] = [
     id: "art-8",
     slug: "kinnu-anaar-kheti-bikaner-munafa",
     title: "बीकानेर क्षेत्र में किन्नू और अनार के बगीचे: बंपर मुनाफे की नई राह",
-    excerpt: "रेतीली जमीन पर बागवानी क्रांति: 507 हेड के किसान ड्रिप सिस्टम से मीठे किन्नू उगाकर लाखों कमा रहे हैं।",
+    excerpt:
+      "रेतीली जमीन पर बागवानी क्रांति: 507 हेड के किसान ड्रिप सिस्टम से मीठे किन्नू उगाकर लाखों कमा रहे हैं।",
     category_slug: "farming",
     category_name: "खेती-बाड़ी",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://media.istockphoto.com/id/1050650472/photo/ripe-pomegranate-fruits-on-the-branches-of-trees-in-the-garden-rows-of-pomegranate-trees-with.jpg?s=612x612&w=0&k=20&c=C_GX-u9pCaznrSdl2SGVAtVul8N5kFglGKyRy12ThbM=",
+    featured_image_url:
+      "https://media.istockphoto.com/id/1050650472/photo/ripe-pomegranate-fruits-on-the-branches-of-trees-in-the-garden-rows-of-pomegranate-trees-with.jpg?s=612x612&w=0&k=20&c=C_GX-u9pCaznrSdl2SGVAtVul8N5kFglGKyRy12ThbM=",
     featured_image_alt: "किन्नू और फलों का हरा-भरा बगीचा",
     featured_image_caption: "नहरी क्षेत्र में बागवानी का सफल मॉडल",
     is_featured: false,
@@ -316,11 +347,13 @@ export const INITIAL_ARTICLES: Article[] = [
     id: "art-9",
     slug: "untni-ka-doodh-marusthal-dairy",
     title: "ऊँटनी का दूध और मरुस्थलीय डेयरी: स्वास्थ्य और आमदनी का नया केंद्र",
-    excerpt: "औषधीय गुणों से भरपूर ऊँटनी के दूध की माँग देश-विदेश में बढ़ी, थार के पशुपालकों को मिल रहा नया बाजार।",
+    excerpt:
+      "औषधीय गुणों से भरपूर ऊँटनी के दूध की माँग देश-विदेश में बढ़ी, थार के पशुपालकों को मिल रहा नया बाजार।",
     category_slug: "pashupalan",
     category_name: "पशुपालन",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNh_R6xE4OQOOs7ty00IOmVb0YUMOh_NhST3yLBf-jA&s=10",
+    featured_image_url:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNh_R6xE4OQOOs7ty00IOmVb0YUMOh_NhST3yLBf-jA&s=10",
     featured_image_alt: "रेगिस्तान में ऊँटों का झुंड",
     featured_image_caption: "थार का जहाज: ऊँट संरक्षण और दुग्ध उत्पादन",
     is_featured: false,
@@ -336,14 +369,18 @@ export const INITIAL_ARTICLES: Article[] = [
   {
     id: "art-10",
     slug: "raat-ke-sannate-me-nahari-paani-ki-baari",
-    title: "रात के सन्नाटे में नहरी पानी की बारी: किसान के धैर्य और हौसले की दास्तान",
-    excerpt: "कड़ाके की ठंड और अंधेरी रातों में नहरी खाळे पर फावड़ा थामे किसान की पहरेदारी की वास्तविक रिपोर्ट।",
+    title:
+      "रात के सन्नाटे में नहरी पानी की बारी: किसान के धैर्य और हौसले की दास्तान",
+    excerpt:
+      "कड़ाके की ठंड और अंधेरी रातों में नहरी खाळे पर फावड़ा थामे किसान की पहरेदारी की वास्तविक रिपोर्ट।",
     category_slug: "kisan",
     category_name: "किसान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://www.shutterstock.com/editorial/image-editorial/MdTeE53aN8jbI02cMzE3NzA=/village-life-daily-farmers-farmer-irrigating-his-440nw-11666024d.jpg",
+    featured_image_url:
+      "https://www.shutterstock.com/editorial/image-editorial/MdTeE53aN8jbI02cMzE3NzA=/village-life-daily-farmers-farmer-irrigating-his-440nw-11666024d.jpg",
     featured_image_alt: "रात के समय खेत में पानी लगाता किसान",
-    featured_image_caption: "नहरी बारी के दौरान रात का सन्नाटा और किसान की मेहनत",
+    featured_image_caption:
+      "नहरी बारी के दौरान रात का सन्नाटा और किसान की मेहनत",
     is_featured: false,
     published_at: "2026-10-11T16:00:00.000Z",
     reading_time_minutes: 3,
@@ -357,12 +394,15 @@ export const INITIAL_ARTICLES: Article[] = [
   {
     id: "art-11",
     slug: "purane-kund-aur-tanke-jal-parampara",
-    title: "पानी की एक-एक बूँद का मान: पुराने कुंडों और टांकों की अनूठी मरुस्थलीय जल परंपरा",
-    excerpt: "आधुनिक पाइपलाइनों से सदियों पहले थार के लोगों ने छत और आगोर के हर कतरे को सहेजने का जो विज्ञान गढ़ा, वह आज भी प्रेरणा है।",
+    title:
+      "पानी की एक-एक बूँद का मान: पुराने कुंडों और टांकों की अनूठी मरुस्थलीय जल परंपरा",
+    excerpt:
+      "आधुनिक पाइपलाइनों से सदियों पहले थार के लोगों ने छत और आगोर के हर कतरे को सहेजने का जो विज्ञान गढ़ा, वह आज भी प्रेरणा है।",
     category_slug: "wisdom",
     category_name: "बुजुर्गों की सीख",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://media.assettype.com/indiawaterportal-hindi%2Fimport%2F5546%2F11475902195_41bed58549_o.jpg?w=640&auto=format%2Ccompress",
+    featured_image_url:
+      "https://media.assettype.com/indiawaterportal-hindi%2Fimport%2F5546%2F11475902195_41bed58549_o.jpg?w=640&auto=format%2Ccompress",
     featured_image_alt: "पारंपरिक राजस्थानी टांका और जल संचयन",
     featured_image_caption: "थार मरुस्थल में वर्षा जल संचयन की पारंपरिक तकनीक",
     is_featured: false,
@@ -378,12 +418,15 @@ export const INITIAL_ARTICLES: Article[] = [
   {
     id: "art-12",
     slug: "matira-kachri-chatni-marusthal-swad",
-    title: "मतीरे की सब्जी और काचरी की चटनी: गर्मियों में ठंडक और मरुस्थलीय स्वाद",
-    excerpt: "धोरों में बेल पर पकने वाले मतीरे और जंगली काचरी के औषधीय गुण और पारंपरिक जायके की अनूठी दास्तान।",
+    title:
+      "मतीरे की सब्जी और काचरी की चटनी: गर्मियों में ठंडक और मरुस्थलीय स्वाद",
+    excerpt:
+      "धोरों में बेल पर पकने वाले मतीरे और जंगली काचरी के औषधीय गुण और पारंपरिक जायके की अनूठी दास्तान।",
     category_slug: "food",
     category_name: "खान-पान",
     author: DEFAULT_AUTHOR,
-    featured_image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZ9sSvY4pB808MuwgpaxZV_4MOkbYGYjlhHJJezbbZI9AMnXsePaH5zIg&s=10",
+    featured_image_url:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZ9sSvY4pB808MuwgpaxZV_4MOkbYGYjlhHJJezbbZI9AMnXsePaH5zIg&s=10",
     featured_image_alt: "ताजी काचरी और देशी राजस्थानी सामग्री",
     featured_image_caption: "प्राकृतिक स्वाद और पोषण से भरपूर मरुस्थलीय उपज",
     is_featured: false,
@@ -399,18 +442,30 @@ export const INITIAL_ARTICLES: Article[] = [
 ];
 
 const CURATED_FEATURED_IMAGES: Record<string, string> = {
-  "rathi-gaay-marusthal-ki-kamdhenu": "https://img-cdn.krishijagran.com/68043/ty.jpeg",
-  "purane-kund-aur-tanke-jal-parampara": "https://media.assettype.com/indiawaterportal-hindi%2Fimport%2F5546%2F11475902195_41bed58549_o.jpg?w=640&auto=format%2Ccompress",
-  "raat-ke-sannate-me-nahari-paani-ki-baari": "https://www.shutterstock.com/editorial/image-editorial/MdTeE53aN8jbI02cMzE3NzA=/village-life-daily-farmers-farmer-irrigating-his-440nw-11666024d.jpg",
-  "kinnu-anaar-kheti-bikaner-munafa": "https://media.istockphoto.com/id/1050650472/photo/ripe-pomegranate-fruits-on-the-branches-of-trees-in-the-garden-rows-of-pomegranate-trees-with.jpg?s=612x612&w=0&k=20&c=C_GX-u9pCaznrSdl2SGVAtVul8N5kFglGKyRy12ThbM=",
-  "kisan-mehanat-anubhav-desh-ki-shaan": "https://sc0.blr1.cdn.digitaloceanspaces.com/article/196544-fiimlmpoxr-1702239573.jpg",
-  "thar-sanskriti-lokgeet-parampara": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Rajasthan_Folk_Music.jpg/3840px-Rajasthan_Folk_Music.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
-  "untni-ka-doodh-marusthal-dairy": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNh_R6xE4OQOOs7ty00IOmVb0YUMOh_NhST3yLBf-jA&s=10",
-  "thar-registan-507-head-itihas": "https://images.bhaskarassets.com/web2images/521/2025/08/11/orig_4-1-1-1-1-1-1-1-1-1-1-1_1754872440.jpg",
-  "nahari-kshetra-kheti-unnat-tarike": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi5OaYV-_JlxDzp2JKqU7NJ9a4AXX-bggjKNeBXp1ZTg&s=10",
-  "bujurgon-ke-tajurbe-aur-paramparik-seekh": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tsXyf-KOkWlFBzQTjJF-MK7S1p3MclAEMeOpgNJPPb_rMosdeOSRaH4R&s=10",
-  "bajra-roti-sangri-marusthal-poshan": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAhYxoVz_zQeD-Ki_4T6gpbFKYqf4y9P11rJgGY23dB2kVAOvApsnqHwO&s=10",
-  "matira-kachri-chatni-marusthal-swad": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZ9sSvY4pB808MuwgpaxZV_4MOkbYGYjlhHJJezbbZI9AMnXsePaH5zIg&s=10",
+  "rathi-gaay-marusthal-ki-kamdhenu":
+    "https://img-cdn.krishijagran.com/68043/ty.jpeg",
+  "purane-kund-aur-tanke-jal-parampara":
+    "https://media.assettype.com/indiawaterportal-hindi%2Fimport%2F5546%2F11475902195_41bed58549_o.jpg?w=640&auto=format%2Ccompress",
+  "raat-ke-sannate-me-nahari-paani-ki-baari":
+    "https://www.shutterstock.com/editorial/image-editorial/MdTeE53aN8jbI02cMzE3NzA=/village-life-daily-farmers-farmer-irrigating-his-440nw-11666024d.jpg",
+  "kinnu-anaar-kheti-bikaner-munafa":
+    "https://media.istockphoto.com/id/1050650472/photo/ripe-pomegranate-fruits-on-the-branches-of-trees-in-the-garden-rows-of-pomegranate-trees-with.jpg?s=612x612&w=0&k=20&c=C_GX-u9pCaznrSdl2SGVAtVul8N5kFglGKyRy12ThbM=",
+  "kisan-mehanat-anubhav-desh-ki-shaan":
+    "https://sc0.blr1.cdn.digitaloceanspaces.com/article/196544-fiimlmpoxr-1702239573.jpg",
+  "thar-sanskriti-lokgeet-parampara":
+    "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Rajasthan_Folk_Music.jpg/3840px-Rajasthan_Folk_Music.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
+  "untni-ka-doodh-marusthal-dairy":
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxNh_R6xE4OQOOs7ty00IOmVb0YUMOh_NhST3yLBf-jA&s=10",
+  "thar-registan-507-head-itihas":
+    "https://images.bhaskarassets.com/web2images/521/2025/08/11/orig_4-1-1-1-1-1-1-1-1-1-1-1_1754872440.jpg",
+  "nahari-kshetra-kheti-unnat-tarike":
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi5OaYV-_JlxDzp2JKqU7NJ9a4AXX-bggjKNeBXp1ZTg&s=10",
+  "bujurgon-ke-tajurbe-aur-paramparik-seekh":
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7tsXyf-KOkWlFBzQTjJF-MK7S1p3MclAEMeOpgNJPPb_rMosdeOSRaH4R&s=10",
+  "bajra-roti-sangri-marusthal-poshan":
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAhYxoVz_zQeD-Ki_4T6gpbFKYqf4y9P11rJgGY23dB2kVAOvApsnqHwO&s=10",
+  "matira-kachri-chatni-marusthal-swad":
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUZ9sSvY4pB808MuwgpaxZV_4MOkbYGYjlhHJJezbbZI9AMnXsePaH5zIg&s=10",
 };
 
 export async function getAllPublishedArticles(): Promise<Article[]> {
@@ -424,7 +479,9 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
 
     const { data: dbArticles } = await supabase
       .from("articles")
-      .select("id, slug, title, excerpt, body, body_json, featured_image_url, featured_image_alt, featured_image_caption, featured_image_credit, is_featured, published_at, updated_at, category_id, author_id, categories(id, name, slug)")
+      .select(
+        "id, slug, title, excerpt, body, body_json, featured_image_url, featured_image_alt, featured_image_caption, featured_image_credit, is_featured, published_at, updated_at, category_id, author_id, categories(id, name, slug)",
+      )
       .eq("status", "published")
       .order("published_at", { ascending: false });
 
@@ -447,16 +504,27 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
         const bodyArray = Array.isArray(item.body)
           ? item.body
           : typeof item.body === "string"
-          ? item.body.split("\n\n").filter(Boolean)
-          : [];
+            ? item.body.split("\n\n").filter(Boolean)
+            : [];
 
-        const catObj = item.categories as { id?: string; name?: string; slug?: string } | null;
-        let matchedSlug = catObj?.slug ? (CATEGORY_LOOKUP[catObj.slug.toLowerCase()]?.slug || catObj.slug) : null;
-        let matchedName = catObj?.name ? (CATEGORY_LOOKUP[catObj.slug?.toLowerCase() || ""]?.name || catObj.name) : null;
+        const catObj = item.categories as {
+          id?: string;
+          name?: string;
+          slug?: string;
+        } | null;
+        let matchedSlug = catObj?.slug
+          ? CATEGORY_LOOKUP[catObj.slug.toLowerCase()]?.slug || catObj.slug
+          : null;
+        let matchedName = catObj?.name
+          ? CATEGORY_LOOKUP[catObj.slug?.toLowerCase() || ""]?.name ||
+            catObj.name
+          : null;
 
         // If category is null in DB, check INITIAL_ARTICLES matching by slug
         if (!matchedSlug) {
-          const initMatch = INITIAL_ARTICLES.find((init) => init.slug === item.slug);
+          const initMatch = INITIAL_ARTICLES.find(
+            (init) => init.slug === item.slug,
+          );
           if (initMatch) {
             matchedSlug = initMatch.category_slug;
             matchedName = initMatch.category_name;
@@ -465,26 +533,67 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
 
         // Smart keyword detection for any unassigned articles
         if (!matchedSlug) {
-          const t = (item.title + " " + (item.excerpt || "") + " " + (item.body || "")).toLowerCase();
-          if (t.includes("गाय") || t.includes("पशु") || t.includes("ऊँट") || t.includes("डेयरी") || t.includes("दूध")) {
+          const t = (
+            item.title +
+            " " +
+            (item.excerpt || "") +
+            " " +
+            (item.body || "")
+          ).toLowerCase();
+          if (
+            t.includes("गाय") ||
+            t.includes("पशु") ||
+            t.includes("ऊँट") ||
+            t.includes("डेयरी") ||
+            t.includes("दूध")
+          ) {
             matchedSlug = "pashupalan";
             matchedName = "पशुपालन";
-          } else if (t.includes("खेती") || t.includes("फसल") || t.includes("सिंचाई") || t.includes("किन्नू") || t.includes("अनार")) {
+          } else if (
+            t.includes("खेती") ||
+            t.includes("फसल") ||
+            t.includes("सिंचाई") ||
+            t.includes("किन्नू") ||
+            t.includes("अनार")
+          ) {
             matchedSlug = "farming";
             matchedName = "खेती-बाड़ी";
           } else if (t.includes("किसान") || t.includes("अन्नदाता")) {
             matchedSlug = "kisan";
             matchedName = "किसान";
-          } else if (t.includes("खान") || t.includes("बाजरा") || t.includes("सांगरी") || t.includes("सोगरा") || t.includes("काचरी") || t.includes("मतीरा")) {
+          } else if (
+            t.includes("खान") ||
+            t.includes("बाजरा") ||
+            t.includes("सांगरी") ||
+            t.includes("सोगरा") ||
+            t.includes("काचरी") ||
+            t.includes("मतीरा")
+          ) {
             matchedSlug = "food";
             matchedName = "खान-पान";
-          } else if (t.includes("बुजुर्ग") || t.includes("सीख") || t.includes("चौपाल")) {
+          } else if (
+            t.includes("बुजुर्ग") ||
+            t.includes("सीख") ||
+            t.includes("चौपाल")
+          ) {
             matchedSlug = "wisdom";
             matchedName = "बुजुर्गों की सीख";
-          } else if (t.includes("विरासत") || t.includes("लोकगीत") || t.includes("संगीत") || t.includes("संस्कृति") || t.includes("मांड")) {
+          } else if (
+            t.includes("विरासत") ||
+            t.includes("लोकगीत") ||
+            t.includes("संगीत") ||
+            t.includes("संस्कृति") ||
+            t.includes("मांड")
+          ) {
             matchedSlug = "heritage";
             matchedName = "सांस्कृतिक विरासत";
-          } else if (t.includes("इतिहास") || t.includes("धरोहर") || t.includes("कुंड") || t.includes("टांके") || t.includes("507 हेड")) {
+          } else if (
+            t.includes("इतिहास") ||
+            t.includes("धरोहर") ||
+            t.includes("कुंड") ||
+            t.includes("टांके") ||
+            t.includes("507 हेड")
+          ) {
             matchedSlug = "history";
             matchedName = "इतिहास और विरासत";
           } else {
@@ -497,9 +606,14 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
           id: String(item.id),
           slug: item.slug,
           title: item.title,
-          excerpt: item.excerpt || (bodyArray[0] ? bodyArray[0].slice(0, 150) + "..." : ""),
+          excerpt:
+            item.excerpt ||
+            (bodyArray[0] ? bodyArray[0].slice(0, 150) + "..." : ""),
           body: bodyArray.length ? bodyArray : [item.title],
-          rich_body: typeof item.body_json === "object" && item.body_json ? parseRichText(JSON.stringify(item.body_json)) : null,
+          rich_body:
+            typeof item.body_json === "object" && item.body_json
+              ? parseRichText(JSON.stringify(item.body_json))
+              : null,
           category_slug: matchedSlug || "news",
           category_name: matchedName || "ताज़ा खबरें",
           author: DEFAULT_AUTHOR,
@@ -520,7 +634,7 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
       // Combine with initial articles to ensure all 7 categories are rich
       const dbSlugs = new Set(mappedDbArticles.map((a) => a.slug));
       const cleanDbArticles = mappedDbArticles.filter(
-        (a) => a.title !== "testing" && a.title !== "shiksha"
+        (a) => a.title !== "testing" && a.title !== "shiksha",
       );
       const combined = [...cleanDbArticles];
       for (const initial of INITIAL_ARTICLES) {
@@ -548,10 +662,14 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   };
   const requestedSlug = normalizeSlug(slug);
 
-  return all.find((article) => normalizeSlug(article.slug) === requestedSlug) ?? null;
+  return (
+    all.find((article) => normalizeSlug(article.slug) === requestedSlug) ?? null
+  );
 }
 
-export async function getArticlesByCategory(categorySlug: string): Promise<Article[]> {
+export async function getArticlesByCategory(
+  categorySlug: string,
+): Promise<Article[]> {
   const all = await getAllPublishedArticles();
   return all.filter((article) => article.category_slug === categorySlug);
 }
@@ -568,18 +686,18 @@ export async function getFeaturedArticle(): Promise<Article> {
 export async function getRelatedArticles(
   categorySlug: string,
   excludeArticleId: string,
-  limit: number = 3
+  limit: number = 3,
 ): Promise<Article[]> {
   const all = await getAllPublishedArticles();
   const related = all.filter(
     (article) =>
-      article.category_slug === categorySlug && article.id !== excludeArticleId
+      article.category_slug === categorySlug && article.id !== excludeArticleId,
   );
 
   if (related.length < limit) {
     const others = all.filter(
       (article) =>
-        article.id !== excludeArticleId && !related.includes(article)
+        article.id !== excludeArticleId && !related.includes(article),
     );
     return [...related, ...others].slice(0, limit);
   }
@@ -626,11 +744,14 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
   return DEFAULT_AUTHOR;
 }
 
-export async function getArticlesByAuthor(authorSlug: string): Promise<Article[]> {
+export async function getArticlesByAuthor(
+  authorSlug: string,
+): Promise<Article[]> {
   const all = await getAllPublishedArticles();
   return all.filter(
     (article) =>
       article.author.slug === authorSlug ||
-      (authorSlug.includes("507-head") && article.author.slug.includes("507-head"))
+      (authorSlug.includes("507-head") &&
+        article.author.slug.includes("507-head")),
   );
 }

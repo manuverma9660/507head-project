@@ -12,7 +12,9 @@ function value(formData: FormData, name: string) {
   return typeof item === "string" ? item.trim() : "";
 }
 
-export async function submitContact(formData: FormData): Promise<ContactResult> {
+export async function submitContact(
+  formData: FormData,
+): Promise<ContactResult> {
   const name = value(formData, "name");
   const email = value(formData, "email").toLowerCase();
   const topic = value(formData, "topic");
@@ -28,19 +30,33 @@ export async function submitContact(formData: FormData): Promise<ContactResult> 
     return { success: false, message: "कृपया सही ईमेल पता लिखें।" };
   }
   if (message.length < 10 || message.length > 3000) {
-    return { success: false, message: "संदेश 10 से 3000 अक्षरों के बीच होना चाहिए।" };
+    return {
+      success: false,
+      message: "संदेश 10 से 3000 अक्षरों के बीच होना चाहिए।",
+    };
   }
 
   const supabase = await createClient();
   const requestHeaders = await headers();
-  const ip = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  const fingerprint = createHash("sha256").update(`${ip}|${requestHeaders.get("user-agent") ?? ""}`).digest("hex");
-  const { data: allowed, error: rateLimitError } = await supabase.rpc("allow_contact_submission", { p_fingerprint: fingerprint });
+  const ip =
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const fingerprint = createHash("sha256")
+    .update(`${ip}|${requestHeaders.get("user-agent") ?? ""}`)
+    .digest("hex");
+  const { data: allowed, error: rateLimitError } = await supabase.rpc(
+    "allow_contact_submission",
+    { p_fingerprint: fingerprint },
+  );
   if (rateLimitError) {
     console.error("Contact rate-limit check failed:", rateLimitError.message);
-    return { success: false, message: "Contact inbox ka Supabase setup abhi complete nahi hai. SQL migration run karke phir try karein." };
+    return {
+      success: false,
+      message:
+        "Contact inbox ka Supabase setup abhi complete nahi hai. SQL migration run karke phir try karein.",
+    };
   }
-  if (rateLimitError || !allowed) return { success: false, message: "कृपया कुछ देर बाद फिर प्रयास करें।" };
+  if (rateLimitError || !allowed)
+    return { success: false, message: "कृपया कुछ देर बाद फिर प्रयास करें।" };
   const { error } = await supabase.from("contact_submissions").insert({
     name,
     email,
@@ -59,8 +75,14 @@ export async function submitContact(formData: FormData): Promise<ContactResult> 
 
   if (error) {
     console.error("Contact submission failed:", error.message);
-    return { success: false, message: "संदेश भेजा नहीं जा सका। कृपया थोड़ी देर बाद कोशिश करें।" };
+    return {
+      success: false,
+      message: "संदेश भेजा नहीं जा सका। कृपया थोड़ी देर बाद कोशिश करें।",
+    };
   }
 
-  return { success: true, message: "धन्यवाद। आपका संदेश संपादकीय टीम तक पहुँच गया है।" };
+  return {
+    success: true,
+    message: "धन्यवाद। आपका संदेश संपादकीय टीम तक पहुँच गया है।",
+  };
 }

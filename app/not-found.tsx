@@ -10,7 +10,8 @@ export default function NotFound() {
         <p className="mt-5 text-6xl font-black text-[#8a4b1f]">404</p>
         <h1 className="mt-4 text-2xl font-bold">यह पेज नहीं मिला</h1>
         <p className="mt-3 text-sm leading-6 text-gray-600">
-          संभव है कि लिंक बदल गया हो या पेज उपलब्ध नहीं है। होम पेज से फिर से शुरू करें।
+          संभव है कि लिंक बदल गया हो या पेज उपलब्ध नहीं है। होम पेज से फिर से
+          शुरू करें।
         </p>
         <Link
           href="/"

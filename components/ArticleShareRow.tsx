@@ -11,7 +11,10 @@ export default function ArticleShareRow({ title, url }: ArticleShareRowProps) {
     "flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]";
 
   return (
-    <div className="flex flex-wrap items-center gap-2.5 border-y border-[#e5ddd3] py-6" aria-label="लेख साझा करें">
+    <div
+      className="flex flex-wrap items-center gap-2.5 border-y border-[#e5ddd3] py-6"
+      aria-label="लेख साझा करें"
+    >
       <span className="mr-1 text-xs font-bold text-[#888]">शेयर करें:</span>
       <a
         href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} - ${url}`)}`}
