@@ -267,29 +267,42 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
     }
   }
 
-  const { data: insertedArticle, error: insertError } = await supabase
+  const articlePayload: Record<string, unknown> = {
+    title,
+    slug: createArticleSlug(title),
+    created_by: user.id,
+    excerpt: excerpt || null,
+    body,
+    body_json: richText,
+    status,
+    category_id: categoryId,
+    featured_image_url: featuredImageUrl || null,
+    featured_image_alt: featuredImageAlt || null,
+    featured_image_caption: featuredImageCaption || null,
+    featured_image_credit: featuredImageCredit || null,
+    tags,
+    author_id: authorId,
+    published_at: status === "published" ? new Date().toISOString() : null,
+    scheduled_for: status === "scheduled" ? scheduledFor?.toISOString() : null,
+  };
+
+  let { data: insertedArticle, error: insertError } = await supabase
     .from("articles")
-    .insert({
-      title,
-      slug: createArticleSlug(title),
-      created_by: user.id,
-      excerpt: excerpt || null,
-      body,
-      body_json: richText,
-      status,
-      category_id: categoryId,
-      featured_image_url: featuredImageUrl || null,
-      featured_image_alt: featuredImageAlt || null,
-      featured_image_caption: featuredImageCaption || null,
-      featured_image_credit: featuredImageCredit || null,
-      tags,
-      author_id: authorId,
-      published_at: status === "published" ? new Date().toISOString() : null,
-      scheduled_for:
-        status === "scheduled" ? scheduledFor?.toISOString() : null,
-    })
+    .insert(articlePayload)
     .select("id")
     .single();
+
+  if (
+    insertError?.message.includes("'tags'") ||
+    insertError?.message.includes('"tags"')
+  ) {
+    delete articlePayload.tags;
+    ({ data: insertedArticle, error: insertError } = await supabase
+      .from("articles")
+      .insert(articlePayload)
+      .select("id")
+      .single());
+  }
 
   if (insertError) {
     return {
