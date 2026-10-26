@@ -5,15 +5,6 @@ export default function CategoryLoading() {
       aria-live="polite"
       className="min-h-screen bg-[#fcf9f5] text-[#222222]"
     >
-      <div className="border-b border-[#e5ddd3] bg-white">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-4 sm:px-6">
-          <div className="h-10 w-10 animate-pulse rounded-lg bg-[#8a4b1f]/20" />
-          <div className="space-y-2">
-            <div className="h-4 w-24 animate-pulse rounded bg-[#e5ddd3]" />
-            <div className="h-3 w-40 animate-pulse rounded bg-[#f0e7dd]" />
-          </div>
-        </div>
-      </div>
       <section className="border-b border-[#e5ddd3] bg-[#f7efe3] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="text-sm font-semibold text-[#8a4b1f]">
