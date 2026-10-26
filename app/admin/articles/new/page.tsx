@@ -107,10 +107,11 @@ export default function NewArticlePage() {
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 minLength={3}
-                maxLength={120}
+                maxLength={40}
                 placeholder="लेख का शीर्षक लिखें"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
+              <p className="mt-1 text-xs text-gray-500">(3 से 40 अक्षर)</p>
             </div>
 
             {/* Excerpt */}
@@ -128,6 +129,7 @@ export default function NewArticlePage() {
                 placeholder="लेख का संक्षिप्त विवरण (SEO और preview के लिए)"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
+              <p className="mt-1 text-xs text-gray-500">(अधिकतम 160 अक्षर)</p>
             </div>
 
             {/* Category */}
@@ -264,6 +266,7 @@ export default function NewArticlePage() {
                 placeholder="थार, किसान, बीकानेर (comma से अलग करें)"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
+              <p className="mt-1 text-xs text-gray-500">(अधिकतम 5 टैग)</p>
             </div>
 
             {/* Hidden reading time */}

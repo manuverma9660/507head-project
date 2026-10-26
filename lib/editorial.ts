@@ -15,7 +15,7 @@ export const articleInputSchema = z.object({
     .string()
     .trim()
     .min(3, "Title must be at least 3 characters.")
-    .max(120, "Title must be at most 120 characters."),
+    .max(40, "Title must be at most 40 characters."),
   excerpt: z
     .string()
     .trim()

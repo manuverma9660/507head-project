@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { articleInputSchema, validateArticleInput } from "../lib/editorial";
 
 const validInput = {
-  title: "यह परीक्षण शीर्षक ठीक चालीस अक्षरों से अधिक लंबा होना चाहिए",
+  title: "यह एक सही परीक्षण लेख है",
   excerpt: "यह संक्षिप्त विवरण है।",
   body: "पूर्ण लेख सामग्री।",
   categorySlug: "history",
