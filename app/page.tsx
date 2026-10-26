@@ -26,6 +26,16 @@ const INSTAGRAM_URL = "https://www.instagram.com/507head/";
 const FACEBOOK_URL = "https://www.facebook.com/507Head/";
 const YOUTUBE_URL = "https://www.youtube.com/channel/UC0QF1fncNE4Z8G8ryNa4DiQ";
 
+// The homepage hero is editorially curated. New articles remain in the
+// article listings and never enter this slider automatically.
+const HERO_ARTICLE_SLUGS = [
+  "thar-registan-507-head-itihas",
+  "nahari-kshetra-kheti-unnat-tarike",
+  "rathi-gaay-marusthal-ki-kamdhenu",
+  "thar-sanskriti-lokgeet-parampara",
+  "kisan-mehanat-anubhav-desh-ki-shaan",
+];
+
 const fallbackReels = [
   {
     title: "507 हेड — थार रेगिस्तान की अनूठी झलक",
@@ -83,19 +93,10 @@ export default async function Home() {
         new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
     )
     .slice(0, 6);
-  const heroSliderArticles = allArticles
-    .filter(
-      (article) =>
-        article.id !== featured.id &&
-        article.slug !== featured.slug &&
-        article.category_slug !== "food",
-    )
-    .sort(
-      (a, b) =>
-        new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
-    )
-    .slice(0, 4);
-  const heroSlides = [featured, ...heroSliderArticles].map((article) => ({
+  const heroSliderArticles = HERO_ARTICLE_SLUGS.map((slug) =>
+    allArticles.find((article) => article.slug === slug),
+  ).filter((article): article is (typeof allArticles)[number] => Boolean(article));
+  const heroSlides = (heroSliderArticles.length ? heroSliderArticles : [featured]).map((article) => ({
     image: article.featured_image_url,
     title: article.title,
     excerpt: article.excerpt,
