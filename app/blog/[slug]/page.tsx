@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import {
   getArticleBySlug,
   getRelatedArticles,
-  APPROVED_CATEGORIES,
 } from "@/lib/content";
 import ArticleBody from "@/components/ArticleBody";
 import ArticleShareRow from "@/components/ArticleShareRow";
@@ -160,61 +159,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
 
       {/* Header */}
-      <header className="border-b border-[#e5ddd3] bg-white sticky top-0 z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#8a4b1f] text-base font-black text-white">
-              507
-            </span>
-            <span className="leading-tight">
-              <strong className="block text-xl font-black text-[#222]">
-                507 हेड
-              </strong>
-              <small className="text-xs text-[#666]">
-                जल, प्रकृति और जनजीवन
-              </small>
-            </span>
-          </Link>
-
-          <nav className="hidden xl:flex items-center gap-5 text-sm font-semibold">
-            <Link href="/" className="hover:text-[#8a4b1f]">
-              होम
-            </Link>
-            {APPROVED_CATEGORIES.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/category/${c.slug}`}
-                className={
-                  c.slug === article.category_slug
-                    ? "text-[#8a4b1f] font-bold"
-                    : "hover:text-[#8a4b1f]"
-                }
-              >
-                {c.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-        <nav
-          aria-label="श्रेणियाँ"
-          className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden"
-        >
-          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">
-            होम
-          </Link>
-          {APPROVED_CATEGORIES.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/category/${c.slug}`}
-              className={`shrink-0 snap-start ${c.slug === article.category_slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}
-            >
-              {c.name}
-            </Link>
-          ))}
-        </nav>
-      </header>
-
-      {/* Main Article Container */}
+{/* Main Article Container */}
       <article className="mx-auto max-w-4xl px-4 py-8 sm:px-6 md:py-12">
         {/* Breadcrumb */}
         <nav
@@ -418,30 +363,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </section>
         )}
       </article>
-
-      {/* Footer */}
-      <footer className="border-t border-[#e5ddd3] bg-white py-10 text-center text-sm text-[#666] mt-16">
-        <div className="mx-auto max-w-7xl px-4">
-          <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
-          <div className="mt-3 flex justify-center gap-5 text-xs">
-            <Link href="/" className="hover:text-[#8a4b1f]">
-              होम
-            </Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">
-              हमारे बारे में
-            </Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">
-              संपर्क
-            </Link>
-            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">
-              गोपनीयता नीति
-            </Link>
-            <Link href="/terms" className="hover:text-[#8a4b1f]">
-              नियम और शर्तें
-            </Link>
-          </div>
-        </div>
-      </footer>
-    </main>
+</main>
   );
 }

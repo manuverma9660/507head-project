@@ -12,37 +12,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
       {/* Top Header */}
-      <header className="border-b border-[#e5ddd3] bg-white sticky top-0 z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#8a4b1f] text-base font-black text-white">
-              507
-            </span>
-            <span className="leading-tight">
-              <strong className="block text-xl font-black text-[#222]">
-                507 हेड
-              </strong>
-              <small className="text-xs text-[#666]">
-                जल, प्रकृति और जनजीवन
-              </small>
-            </span>
-          </Link>
-
-          <nav className="flex items-center gap-5 text-sm font-semibold">
-            <Link href="/" className="hover:text-[#8a4b1f]">
-              होम
-            </Link>
-            <Link href="/about" className="text-[#8a4b1f] font-bold">
-              हमारे बारे में
-            </Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">
-              संपर्क
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      {/* Hero Section */}
+{/* Hero Section */}
       <section className="bg-[#f7efe3] border-b border-[#e5ddd3] py-14 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <span className="inline-block rounded-full bg-[#8a4b1f]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#8a4b1f] mb-4">
@@ -180,30 +150,6 @@ export default function AboutPage() {
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-[#e5ddd3] bg-white py-10 text-center text-sm text-[#666]">
-        <div className="mx-auto max-w-7xl px-4">
-          <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
-          <div className="mt-3 flex justify-center gap-5 text-xs">
-            <Link href="/" className="hover:text-[#8a4b1f]">
-              होम
-            </Link>
-            <Link href="/about" className="hover:text-[#8a4b1f]">
-              हमारे बारे में
-            </Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">
-              संपर्क
-            </Link>
-            <Link href="/privacy-policy" className="hover:text-[#8a4b1f]">
-              गोपनीयता नीति
-            </Link>
-            <Link href="/terms" className="hover:text-[#8a4b1f]">
-              नियम और शर्तें
-            </Link>
-          </div>
-        </div>
-      </footer>
-    </main>
+</main>
   );
 }

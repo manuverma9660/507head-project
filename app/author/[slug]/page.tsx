@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import {
   getAuthorBySlug,
   getArticlesByAuthor,
-  APPROVED_CATEGORIES,
 } from "@/lib/content";
 
 export const instant = false;
@@ -78,40 +77,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       />
 
       {/* Main Header */}
-      <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
-          <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#8a4b1f] text-lg font-black text-white shadow-sm">
-              507
-            </span>
-            <span className="leading-tight">
-              <strong className="block text-2xl font-black text-[#222] tracking-tight">
-                507 हेड
-              </strong>
-              <small className="text-xs text-[#777] font-semibold">
-                जल, प्रकृति और जनजीवन
-              </small>
-            </span>
-          </Link>
-
-          <nav className="hidden xl:flex items-center gap-5 text-sm font-semibold text-[#444]">
-            <Link href="/" className="hover:text-[#8a4b1f]">
-              होम
-            </Link>
-            {APPROVED_CATEGORIES.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className="hover:text-[#8a4b1f]"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
-
-      {/* Author Hero Profile Header */}
+{/* Author Hero Profile Header */}
       <section className="border-b border-[#e5ddd3] bg-gradient-to-b from-[#f7efe3] to-[#fcf9f5] py-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           {/* Breadcrumbs */}
@@ -259,16 +225,6 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           </div>
         )}
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-[#e5ddd3] bg-white pt-12 pb-8 text-[#555]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center text-xs text-[#777]">
-          <p>© 2026 507 हेड। सर्वाधिकार सुरक्षित।</p>
-          <p className="mt-1">
-            डिजिटल राजस्थान • ग्रामीण पत्रकारिता की नई दिशा
-          </p>
-        </div>
-      </footer>
-    </main>
+</main>
   );
 }

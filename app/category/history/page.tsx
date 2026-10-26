@@ -40,45 +40,7 @@ const stories = [
 export default function HistoryPage() {
   return (
     <main className="min-h-screen bg-[#fffdf9] text-stone-900">
-      <div className="legacy-public-topline bg-[#6b3915] px-4 py-2 text-center text-sm text-white">
-        507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ
-      </div>
-
-      <header className="border-b border-[#e5ddd3] bg-white">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
-          <Link href="/" className="block">
-            <span className="block text-3xl font-extrabold tracking-tight text-[#8a4b1f]">
-              507 HEAD
-            </span>
-            <span className="mt-1 block text-xs text-stone-600 sm:text-sm">
-              गाँव की बात, गाँव की पहचान
-            </span>
-          </Link>
-
-          <nav
-            aria-label="मुख्य नेविगेशन"
-            className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-semibold text-stone-700"
-          >
-            <Link href="/" className="hover:text-[#8a4b1f]">
-              होम
-            </Link>
-            <Link href="/#latest" className="hover:text-[#8a4b1f]">
-              ताज़ा लेख
-            </Link>
-            <Link href="/#categories" className="text-[#8a4b1f]">
-              श्रेणियाँ
-            </Link>
-            <Link href="/#about" className="hover:text-[#8a4b1f]">
-              हमारे बारे में
-            </Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">
-              संपर्क
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      <section className="border-b border-[#e5ddd3] bg-[#f7efe3]">
+<section className="border-b border-[#e5ddd3] bg-[#f7efe3]">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
           <Link
             href="/#categories"
@@ -239,38 +201,6 @@ export default function HistoryPage() {
           </Link>
         </div>
       </section>
-
-      <footer className="border-t border-[#e5ddd3] bg-white">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <div>
-            <Link href="/" className="text-xl font-extrabold text-[#8a4b1f]">
-              507 HEAD
-            </Link>
-            <p className="mt-1 text-sm text-stone-600">
-              गाँव की बात, गाँव की पहचान।
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-stone-600">
-            <Link href="/about" className="hover:text-[#8a4b1f]">
-              हमारे बारे में
-            </Link>
-            <Link href="/contact" className="hover:text-[#8a4b1f]">
-              संपर्क
-            </Link>
-            <Link href="/privacy" className="hover:text-[#8a4b1f]">
-              गोपनीयता नीति
-            </Link>
-            <Link href="/terms" className="hover:text-[#8a4b1f]">
-              नियम और शर्तें
-            </Link>
-          </div>
-        </div>
-
-        <div className="border-t border-[#e5ddd3] px-4 py-5 text-center text-xs text-stone-500">
-          © 2026 507 HEAD. सर्वाधिकार सुरक्षित।
-        </div>
-      </footer>
-    </main>
+</main>
   );
 }
