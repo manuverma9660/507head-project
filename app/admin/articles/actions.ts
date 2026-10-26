@@ -2,7 +2,7 @@
 
 import { revalidatePath, updateTag } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { isFixedCategorySlug, validateArticleInput } from "@/lib/editorial";
+import { validateArticleInput } from "@/lib/editorial";
 import { recordArticleHistory } from "@/lib/editorial-history";
 import { parseRichText, richTextSummary } from "@/lib/rich-text";
 
@@ -117,7 +117,13 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
     ? richTextSummary(richText)
     : getTextValue(formData, "content") || getTextValue(formData, "body");
   const excerpt = getTextValue(formData, "excerpt");
-  const categorySlug = getTextValue(formData, "category_slug");
+  const selectedCategorySlug = getTextValue(formData, "category_slug");
+  const customCategoryName = getTextValue(formData, "custom_category_name");
+  const customCategorySlug = getTextValue(formData, "custom_category_slug");
+  const categorySlug =
+    selectedCategorySlug === "__new__"
+      ? customCategorySlug
+      : selectedCategorySlug;
   const featuredImageUrl = getTextValue(formData, "featured_image_url");
   const featuredImageAlt =
     getTextValue(formData, "featured_image_alt") || title;
@@ -212,7 +218,7 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
 
   let categoryId: string | null = null;
   if (categorySlug) {
-    if (!isFixedCategorySlug(categorySlug)) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(categorySlug)) {
       return {
         success: false,
         message:
@@ -225,7 +231,7 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
       .eq("slug", categorySlug)
       .maybeSingle();
 
-    if (!catData?.id) {
+    if (!catData?.id && selectedCategorySlug !== "__new__") {
       return {
         success: false,
         message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।",
@@ -235,12 +241,22 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
     if (catData?.id) {
       categoryId = catData.id;
     } else {
+      if (role !== "admin") {
+        return {
+          success: false,
+          message: "नई श्रेणी केवल admin जोड़ सकता है।",
+        };
+      }
+      if (customCategoryName.length < 2) {
+        return { success: false, message: "नई श्रेणी का नाम भरें।" };
+      }
       const { data: newCat } = await supabase
         .from("categories")
         .insert({
-          name: CAT_NAMES[categorySlug] || categorySlug,
+          name: customCategoryName || CAT_NAMES[categorySlug] || categorySlug,
           slug: categorySlug,
-          description: CAT_NAMES[categorySlug] || categorySlug,
+          description:
+            customCategoryName || CAT_NAMES[categorySlug] || categorySlug,
           sort_order: 1,
           is_active: true,
           show_on_home: true,
@@ -395,7 +411,7 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
 
   const categorySlug = getTextValue(formData, "category_slug");
   if (categorySlug) {
-    if (!isFixedCategorySlug(categorySlug)) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(categorySlug)) {
       return {
         success: false,
         message:

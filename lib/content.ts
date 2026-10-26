@@ -114,26 +114,13 @@ export async function getCategories(): Promise<Category[]> {
 
     if (error || !data) return APPROVED_CATEGORIES;
 
-    const liveCategories = data;
-    const storedBySlug = new Map(
-      liveCategories.map((category) => [category.slug, category]),
-    );
-    const standardCategories = APPROVED_CATEGORIES.map((fallback) => {
-      const stored = storedBySlug.get(fallback.slug);
-      return stored
-        ? {
-            ...fallback,
-            id: String(stored.id),
-            name: stored.name || fallback.name,
-            description: stored.description || fallback.description,
-            sort_order:
-              typeof stored.sort_order === "number"
-                ? stored.sort_order
-                : fallback.sort_order,
-          }
-        : fallback;
-    });
-    return standardCategories.sort((a, b) => a.sort_order - b.sort_order);
+    return data.map((category) => ({
+      id: String(category.id),
+      slug: category.slug,
+      name: category.name,
+      description: category.description || "",
+      sort_order: category.sort_order,
+    }));
   } catch (error) {
     console.error("Error fetching categories from Supabase:", error);
     return APPROVED_CATEGORIES;

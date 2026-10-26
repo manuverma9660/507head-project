@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  articleInputSchema,
-  FIXED_CATEGORY_SLUGS,
-  isFixedCategorySlug,
-  validateArticleInput,
-} from "../lib/editorial";
+import { articleInputSchema, validateArticleInput } from "../lib/editorial";
 
 const validInput = {
   title: "यह परीक्षण शीर्षक ठीक चालीस अक्षरों से अधिक लंबा होना चाहिए",
@@ -15,10 +10,13 @@ const validInput = {
 };
 
 describe("editorial validation", () => {
-  it("keeps exactly the seven approved category slugs", () => {
-    expect(FIXED_CATEGORY_SLUGS).toHaveLength(7);
-    expect(isFixedCategorySlug("history")).toBe(true);
-    expect(isFixedCategorySlug("news")).toBe(false);
+  it("accepts an existing or custom category slug", () => {
+    expect(
+      validateArticleInput({ ...validInput, categorySlug: "history" }),
+    ).toBeNull();
+    expect(
+      validateArticleInput({ ...validInput, categorySlug: "recipes" }),
+    ).toBeNull();
   });
 
   it("accepts a handbook-compliant article", () => {
@@ -27,12 +25,10 @@ describe("editorial validation", () => {
   });
 
   it("rejects invalid title, description, category, and tag count", () => {
-    expect(
-      validateArticleInput({ ...validInput, title: "छोटा" }),
-    ).not.toBeNull();
+    expect(validateArticleInput({ ...validInput, title: "अ" })).not.toBeNull();
     expect(validateArticleInput({ ...validInput, excerpt: "" })).not.toBeNull();
     expect(
-      validateArticleInput({ ...validInput, categorySlug: "news" }),
+      validateArticleInput({ ...validInput, categorySlug: "Hindi Recipes" }),
     ).not.toBeNull();
     expect(
       validateArticleInput({

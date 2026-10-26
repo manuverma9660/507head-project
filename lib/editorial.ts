@@ -1,36 +1,28 @@
 import { z } from "zod";
 
-export const FIXED_CATEGORY_SLUGS = [
-  "history",
-  "farming",
-  "kisan",
-  "wisdom",
-  "heritage",
-  "pashupalan",
-  "food",
-] as const;
-
-export type FixedCategorySlug = (typeof FIXED_CATEGORY_SLUGS)[number];
-
-export function isFixedCategorySlug(value: string): value is FixedCategorySlug {
-  return FIXED_CATEGORY_SLUGS.includes(value as FixedCategorySlug);
-}
+const categorySlugSchema = z
+  .string()
+  .trim()
+  .min(1, "Category is required.")
+  .max(80, "Category slug must be at most 80 characters.")
+  .regex(
+    /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+    "Category slug must use lowercase English letters, numbers, and hyphens only.",
+  );
 
 export const articleInputSchema = z.object({
   title: z
     .string()
     .trim()
-    .min(40, "Title must be at least 40 characters.")
-    .max(70, "Title must be at most 70 characters."),
+    .min(3, "Title must be at least 3 characters.")
+    .max(120, "Title must be at most 120 characters."),
   excerpt: z
     .string()
     .trim()
     .min(1, "Excerpt is required.")
     .max(160, "Excerpt must be at most 160 characters."),
   body: z.string().trim().min(1, "Article body is required."),
-  categorySlug: z.enum(FIXED_CATEGORY_SLUGS, {
-    error: "Choose one of the seven approved categories.",
-  }),
+  categorySlug: categorySlugSchema,
   tags: z.array(z.string().trim().min(1)).max(5, "Use at most five tags."),
 });
 

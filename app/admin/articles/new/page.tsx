@@ -23,6 +23,7 @@ const CATEGORIES = [
   { slug: "history", name: "इतिहास और विरासत" },
   { slug: "heritage", name: "सांस्कृतिक विरासत" },
   { slug: "food", name: "खान-पान" },
+  { slug: "__new__", name: "नई श्रेणी जोड़ें" },
 ];
 
 export default function NewArticlePage() {
@@ -65,7 +66,7 @@ export default function NewArticlePage() {
           router.push("/admin/articles");
         }
       } catch {
-        setMessage("समाचार सेव नहीं हुआ। दोबारा कोशिश करें।");
+        setMessage("लेख सेव नहीं हुआ। दोबारा कोशिश करें।");
       }
     });
   }
@@ -92,22 +93,22 @@ export default function NewArticlePage() {
           <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">
             507 HEAD · Editorial
           </p>
-          <h1 className="mt-2 text-3xl font-bold">नया समाचार</h1>
+          <h1 className="mt-2 text-3xl font-bold">नया लेख</h1>
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {/* Title */}
             <div>
               <label className="mb-2 block font-semibold">
-                समाचार का शीर्षक <span className="text-red-500">*</span>
+                लेख का शीर्षक <span className="text-red-500">*</span>
               </label>
               <input
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                minLength={40}
-                maxLength={70}
-                placeholder="समाचार का शीर्षक लिखें"
+                minLength={3}
+                maxLength={120}
+                placeholder="लेख का शीर्षक लिखें"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
             </div>
@@ -124,7 +125,7 @@ export default function NewArticlePage() {
                 required
                 rows={2}
                 maxLength={160}
-                placeholder="समाचार का संक्षिप्त विवरण (SEO और preview के लिए)"
+                placeholder="लेख का संक्षिप्त विवरण (SEO और preview के लिए)"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
             </div>
@@ -146,6 +147,24 @@ export default function NewArticlePage() {
                   </option>
                 ))}
               </select>
+              {categorySlug === "__new__" && (
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
+                  <input
+                    name="custom_category_name"
+                    required
+                    minLength={2}
+                    placeholder="नई श्रेणी का नाम, जैसे रेसिपी"
+                    className="rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
+                  />
+                  <input
+                    name="custom_category_slug"
+                    required
+                    pattern="[a-z0-9]+(-[a-z0-9]+)*"
+                    placeholder="English URL नाम, जैसे recipes"
+                    className="rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Featured Image URL */}
@@ -207,7 +226,7 @@ export default function NewArticlePage() {
 
             <div>
               <label className="mb-2 block font-semibold">
-                समाचार की सामग्री <span className="text-red-500">*</span>
+                लेख की सामग्री <span className="text-red-500">*</span>
               </label>
               <RichTextEditor
                 onChange={(document: RichTextDocument, plainText) => {
@@ -227,7 +246,7 @@ export default function NewArticlePage() {
                 rows={14}
                 hidden
                 disabled
-                placeholder="पूरा समाचार यहाँ लिखें..."
+                placeholder="पूरा लेख यहाँ लिखें..."
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 font-mono text-sm outline-none focus:border-[#8a4b1f]"
               />
               <p className="mt-1 text-xs text-gray-500">
@@ -364,7 +383,7 @@ export default function NewArticlePage() {
                     />
                   )}
                   <div className="mt-6 space-y-4 whitespace-pre-wrap leading-8 text-[#29231e]">
-                    {content || "समाचार की सामग्री यहाँ दिखाई देगी।"}
+                    {content || "लेख की सामग्री यहाँ दिखाई देगी।"}
                   </div>
                 </article>
               </div>
