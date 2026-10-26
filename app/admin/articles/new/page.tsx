@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { createArticle } from "../actions";
 import type { RichTextDocument } from "@/lib/rich-text";
@@ -40,7 +39,6 @@ export default function NewArticlePage() {
   const [message, setMessage] = useState("");
   const [showPreview, setShowPreview] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -63,7 +61,7 @@ export default function NewArticlePage() {
         setMessage(result.message);
 
         if (result.success) {
-          router.push("/admin/articles");
+          window.location.assign("/admin/articles");
         }
       } catch {
         setMessage("लेख सेव नहीं हुआ। दोबारा कोशिश करें।");
