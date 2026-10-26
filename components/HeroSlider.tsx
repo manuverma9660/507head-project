@@ -26,7 +26,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
   const slide = slides[active];
 
   return (
-    <section className="border-b border-[#e5ddd3] bg-[#24160d]">
+    <section className="group/hero border-b border-[#e5ddd3] bg-[#24160d]">
       <div className="relative isolate min-h-[500px] overflow-hidden sm:min-h-[520px]">
         {slides.map((item, index) => (
           <RemoteArticleImage key={item.image} src={item.image} alt="" className={`object-cover transition-opacity duration-700 ${index === active ? "opacity-100" : "opacity-0"}`} />
@@ -40,7 +40,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
             <Link href={slide.href} className="mt-7 inline-flex items-center rounded-xl bg-[#a7521d] px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#8a4218]">पूरा लेख पढ़ें <span className="ml-2" aria-hidden>→</span></Link>
           </div>
         </div>
-        <div className="absolute bottom-16 left-1/2 flex -translate-x-1/2 items-center gap-3 sm:bottom-20">
+        <div className="absolute bottom-16 left-1/2 flex -translate-x-1/2 items-center gap-3 opacity-100 transition-opacity duration-200 md:pointer-events-none md:opacity-0 md:group-hover/hero:pointer-events-auto md:group-hover/hero:opacity-100 md:group-focus-within/hero:pointer-events-auto md:group-focus-within/hero:opacity-100 sm:bottom-20">
           <button type="button" aria-label="Previous slide" onClick={() => setActive((active - 1 + total) % total)} className="grid h-10 w-10 place-items-center rounded-full border border-white/50 bg-black/25 text-xl text-white backdrop-blur transition hover:bg-white hover:text-black">‹</button>
           <button type="button" aria-label="Next slide" onClick={() => setActive((active + 1) % total)} className="grid h-10 w-10 place-items-center rounded-full border border-white/50 bg-black/25 text-xl text-white backdrop-blur transition hover:bg-white hover:text-black">›</button>
         </div>
