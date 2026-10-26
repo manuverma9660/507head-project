@@ -60,7 +60,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm font-semibold">
+          <nav className="hidden xl:flex items-center gap-6 text-sm font-semibold">
             <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
             {categories.map((c) => (
               <Link
@@ -73,6 +73,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ))}
           </nav>
         </div>
+        <nav aria-label="श्रेणियाँ" className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden">
+          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">होम</Link>
+          {categories.map((c) => (
+            <Link key={c.slug} href={`/category/${c.slug}`} className={`shrink-0 snap-start ${c.slug === slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}>
+              {c.name}
+            </Link>
+          ))}
+        </nav>
       </header>
 
       {/* Category Hero Banner */}

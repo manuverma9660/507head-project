@@ -109,16 +109,16 @@ export default async function Home() {
 
       {/* Main Header */}
       <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3.5 sm:gap-4 sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-4 sm:px-6 sm:py-3.5">
           <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#8a4b1f] text-lg font-black text-white shadow-sm">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#8a4b1f] text-base font-black text-white shadow-sm sm:h-11 sm:w-11 sm:text-lg">
               507
             </span>
             <span className="min-w-0 leading-tight">
-              <strong className="block text-xl font-black text-[#222] tracking-tight sm:text-2xl">
+              <strong className="block text-lg font-black text-[#222] tracking-tight sm:text-2xl">
                 507 हेड
               </strong>
-              <small className="text-xs text-[#777] font-semibold">
+              <small className="hidden text-xs font-semibold text-[#777] min-[390px]:block">
                 जल, प्रकृति और जनजीवन
               </small>
             </span>
@@ -148,9 +148,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
             >
-              <SocialIcon name="facebook" className="h-5 w-5" />
+              <SocialIcon name="facebook" className="h-4 w-4 sm:h-5 sm:w-5" />
             </a>
             {/* Instagram */}
             <a
@@ -158,9 +158,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
             >
-              <SocialIcon name="instagram" className="h-5 w-5" />
+              <SocialIcon name="instagram" className="h-4 w-4 sm:h-5 sm:w-5" />
             </a>
             {/* YouTube */}
             <a
@@ -168,9 +168,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
             >
-              <SocialIcon name="youtube" className="h-5 w-5" />
+              <SocialIcon name="youtube" className="h-4 w-4 sm:h-5 sm:w-5" />
             </a>
 
           </div>

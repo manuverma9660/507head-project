@@ -154,7 +154,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold">
+          <nav className="hidden xl:flex items-center gap-5 text-sm font-semibold">
             <Link href="/" className="hover:text-[#8a4b1f]">होम</Link>
             {APPROVED_CATEGORIES.map((c) => (
               <Link
@@ -167,6 +167,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             ))}
           </nav>
         </div>
+        <nav aria-label="श्रेणियाँ" className="flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden">
+          <Link href="/" className="shrink-0 snap-start text-[#8a4b1f]">होम</Link>
+          {APPROVED_CATEGORIES.map((c) => (
+            <Link key={c.slug} href={`/category/${c.slug}`} className={`shrink-0 snap-start ${c.slug === article.category_slug ? "text-[#8a4b1f]" : "hover:text-[#8a4b1f]"}`}>
+              {c.name}
+            </Link>
+          ))}
+        </nav>
       </header>
 
       {/* Main Article Container */}
