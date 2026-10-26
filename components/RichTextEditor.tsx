@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableCell,
 } from "@tiptap/extension-table";
-import type { RichTextDocument } from "@/lib/rich-text";
+import { parseRichText, type RichTextDocument } from "@/lib/rich-text";
 
 type Props = {
   onChange: (document: RichTextDocument, plainText: string) => void;
@@ -36,6 +36,8 @@ function getPlainText(document: RichTextDocument) {
 }
 
 export default function RichTextEditor({ onChange, content = "" }: Props) {
+  const initialContent =
+    typeof content === "string" ? parseRichText(content) ?? content : content;
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
@@ -51,7 +53,7 @@ export default function RichTextEditor({ onChange, content = "" }: Props) {
       TableHeader,
       TableCell,
     ],
-    content,
+    content: initialContent,
     editorProps: {
       attributes: {
         class:

@@ -475,11 +475,26 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
     ? tagsRaw.split(",").map((tag) => tag.trim()).filter(Boolean)
     : [];
 
-  const { data, error: updateError } = await supabase
+  let { data, error: updateError } = await supabase
     .from("articles")
     .update(updatePayload)
     .eq("id", id)
     .select("id");
+
+  // Older production databases may not yet have the tags column. Save the
+  // rest of the edit instead of blocking the whole article update; the
+  // accompanying migration adds tags for future saves.
+  const tagsColumnMissing =
+    updateError?.message.includes("'tags'") ||
+    updateError?.message.includes('"tags"');
+  if (tagsColumnMissing) {
+    delete updatePayload.tags;
+    ({ data, error: updateError } = await supabase
+      .from("articles")
+      .update(updatePayload)
+      .eq("id", id)
+      .select("id"));
+  }
 
   if (updateError) {
     return {
