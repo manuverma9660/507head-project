@@ -59,6 +59,8 @@ create table if not exists public.articles (
   created_by uuid references auth.users(id) on delete set null,
   featured_image_url text,
   featured_image_alt text,
+  featured_image_caption text,
+  featured_image_credit text,
   is_featured boolean not null default false,
   tags text[] not null default '{}',
   published_at timestamptz,

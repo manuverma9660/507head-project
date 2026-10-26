@@ -99,9 +99,31 @@ export default async function Home() {
     href: `/blog/${article.slug}`,
     category: article.category_name,
   }));
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://507head.com";
+  const homepageJsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "507 Head",
+      url: siteUrl,
+      inLanguage: "hi-IN",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "507 Head",
+      url: siteUrl,
+      logo: `${siteUrl}/logo.png`,
+      email: "info.507head@gmail.com",
+    },
+  ];
 
   return (
     <main className="public-page min-h-screen bg-[#fcf9f5] text-[#222222]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd).replace(/</g, "\\u003c") }}
+      />
       {/* Topline Banner */}
       <div className="bg-[#6b3915] px-4 py-2 text-center text-xs sm:text-sm font-medium text-white tracking-wide">
         507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर

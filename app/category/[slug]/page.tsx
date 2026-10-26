@@ -44,9 +44,24 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const articles = await getArticlesByCategory(slug);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://507head.com";
+  const categoryUrl = `${siteUrl}/category/${category.slug}/`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "होम", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "श्रेणियां", item: `${siteUrl}/#categories` },
+      { "@type": "ListItem", position: 3, name: category.name, item: categoryUrl },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }}
+      />
       {/* Header */}
       <header className="border-b border-[#e5ddd3] bg-white sticky top-0 z-40">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">

@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { createHash } from "crypto";
+import { sendContactEmails } from "@/lib/transactional-email";
 
 type ContactResult = { success: boolean; message: string };
 
@@ -46,6 +47,15 @@ export async function submitContact(formData: FormData): Promise<ContactResult> 
     topic: topic || null,
     message,
   });
+
+  if (!error) {
+    try {
+      await sendContactEmails({ name, email, topic, message });
+    } catch (emailError) {
+      // The message is already stored; provider outages must not discard it.
+      console.error("Contact email delivery failed:", emailError);
+    }
+  }
 
   if (error) {
     console.error("Contact submission failed:", error.message);

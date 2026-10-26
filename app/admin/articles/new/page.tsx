@@ -188,6 +188,24 @@ export default function NewArticlePage() {
 
             {/* Main Content */}
             <div>
+              <label className="mb-2 block font-semibold">Image Caption</label>
+              <input
+                name="featured_image_caption"
+                placeholder="फोटो में क्या दिख रहा है"
+                className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block font-semibold">Image Credit</label>
+              <input
+                name="featured_image_credit"
+                placeholder="उदा. फोटो: 507 Head / नाम"
+                className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
+              />
+            </div>
+
+            <div>
               <label className="mb-2 block font-semibold">
                 समाचार की सामग्री <span className="text-red-500">*</span>
               </label>

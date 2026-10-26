@@ -71,7 +71,7 @@ export default async function AdminCategoriesPage({
 
         <CategoryStatusNotice status={category_status} />
 
-        <section className="mb-8 rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:p-6">
+        <section className="mb-8 hidden rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:p-6">
           <h2 className="text-lg font-bold">नई श्रेणी जोड़ें</h2>
           <p className="mt-1 text-sm text-gray-600">यह श्रेणी सीधे Supabase में save होगी और वेबसाइट पर दिखेगी।</p>
           <form action={createCategory} className="mt-5 grid gap-3 md:grid-cols-2">

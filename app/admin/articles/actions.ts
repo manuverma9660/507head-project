@@ -3,7 +3,7 @@
 
 import { revalidatePath, updateTag } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { validateArticleInput } from "@/lib/editorial";
+import { isFixedCategorySlug, validateArticleInput } from "@/lib/editorial";
 import { recordArticleHistory } from "@/lib/editorial-history";
 import { parseRichText, richTextSummary } from "@/lib/rich-text";
 
@@ -114,6 +114,8 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
   const categorySlug = getTextValue(formData, "category_slug");
   const featuredImageUrl = getTextValue(formData, "featured_image_url");
   const featuredImageAlt = getTextValue(formData, "featured_image_alt") || title;
+  const featuredImageCaption = getTextValue(formData, "featured_image_caption");
+  const featuredImageCredit = getTextValue(formData, "featured_image_credit");
   const tagsRaw = getTextValue(formData, "tags");
   const status = getArticleStatus(getTextValue(formData, "status"));
   const scheduledFor = getScheduledFor(formData);
@@ -188,11 +190,18 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
 
   let categoryId: string | null = null;
   if (categorySlug) {
+    if (!isFixedCategorySlug(categorySlug)) {
+      return { success: false, message: "केवल सात approved categories उपलब्ध हैं। नई category के लिए owner approval चाहिए।" };
+    }
     const { data: catData } = await supabase
       .from("categories")
       .select("id")
       .eq("slug", categorySlug)
       .maybeSingle();
+
+    if (!catData?.id) {
+      return { success: false, message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।" };
+    }
 
     if (catData?.id) {
       categoryId = catData.id;
@@ -226,6 +235,8 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
       category_id: categoryId,
       featured_image_url: featuredImageUrl || null,
       featured_image_alt: featuredImageAlt || null,
+      featured_image_caption: featuredImageCaption || null,
+      featured_image_credit: featuredImageCredit || null,
       author_id: authorId,
       published_at: status === "published" ? new Date().toISOString() : null,
       scheduled_for: status === "scheduled" ? scheduledFor?.toISOString() : null,
@@ -314,6 +325,8 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
   const excerpt = getTextValue(formData, "excerpt");
   const featuredImageUrl = getTextValue(formData, "featured_image_url");
   const featuredImageAlt = getTextValue(formData, "featured_image_alt");
+  const featuredImageCaption = getTextValue(formData, "featured_image_caption");
+  const featuredImageCredit = getTextValue(formData, "featured_image_credit");
 
   const updatePayload: Record<string, unknown> = {
     title,
@@ -335,14 +348,23 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
   if (featuredImageAlt) {
     updatePayload.featured_image_alt = featuredImageAlt;
   }
+  updatePayload.featured_image_caption = featuredImageCaption || null;
+  updatePayload.featured_image_credit = featuredImageCredit || null;
 
   const categorySlug = getTextValue(formData, "category_slug");
   if (categorySlug) {
+    if (!isFixedCategorySlug(categorySlug)) {
+      return { success: false, message: "केवल सात approved categories उपलब्ध हैं। नई category के लिए owner approval चाहिए।" };
+    }
     const { data: catData } = await supabase
       .from("categories")
       .select("id")
       .eq("slug", categorySlug)
       .maybeSingle();
+
+    if (!catData?.id) {
+      return { success: false, message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।" };
+    }
 
     if (catData?.id) {
       updatePayload.category_id = catData.id;

@@ -20,66 +20,10 @@ async function getAdminSupabase() {
   return supabase;
 }
 
-export async function createCategory(formData: FormData) {
-  const supabase = await getAdminSupabase();
-  const name = String(formData.get("name") || "").trim();
-  const slug = String(formData.get("slug") || "").trim().toLowerCase();
-  const description = String(formData.get("description") || "").trim();
-
-  if (name.length < 2 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-    redirect("/admin/categories?category_status=invalid");
-  }
-
-  const { data: existing } = await supabase
-    .from("categories")
-    .select("id")
-    .eq("slug", slug)
-    .maybeSingle();
-
-  if (existing) {
-    const { error: updateError } = await supabase
-      .from("categories")
-      .update({
-        name,
-        description: description || name,
-        is_active: true,
-        show_on_home: true,
-      })
-      .eq("id", existing.id);
-    if (updateError) throw new Error(updateError.message);
-
-    updateTag("categories");
-    revalidatePath("/");
-    revalidatePath("/admin/categories");
-    revalidatePath("/sitemap.xml");
-    redirect("/admin/categories?category_status=updated");
-  }
-
-  const { data: lastCategory } = await supabase
-    .from("categories")
-    .select("sort_order")
-    .order("sort_order", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  const sortOrder = Number(lastCategory?.sort_order || 0) + 1;
-  const { error } = await supabase.from("categories").insert({
-    name,
-    slug,
-    description: description || name,
-    sort_order: sortOrder,
-    is_active: true,
-    show_on_home: true,
-  });
-  if (error) {
-    if (error.code === "23505") redirect("/admin/categories?category_status=exists");
-    throw new Error(error.message);
-  }
-
-  updateTag("categories");
-  revalidatePath("/");
-  revalidatePath("/admin/categories");
-  revalidatePath("/sitemap.xml");
-  redirect("/admin/categories?category_status=created");
+export async function createCategory(_formData: FormData) {
+  await getAdminSupabase();
+  // Taxonomy changes are deliberately not self-service. They require owner approval.
+  redirect("/admin/categories?category_status=owner_approval_required");
 }
 
 export async function syncApprovedCategories() {

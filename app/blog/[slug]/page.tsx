@@ -130,6 +130,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     month: "long",
     year: "numeric",
   });
+  const formattedUpdatedDate = new Date(article.updated_at || article.published_at).toLocaleDateString("hi-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
@@ -225,6 +230,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               >
                 {article.author.name}
               </Link>
+              <span className="mt-0.5 block text-xs text-[#777]">Updated: {formattedUpdatedDate}</span>
               <span className="text-xs text-[#777]">{formattedDate} • {article.reading_time_minutes} मिनट पठन</span>
             </div>
           </div>
@@ -274,10 +280,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             className="object-cover"
           />
         </div>
-        {article.featured_image_caption && (
-          <p className="text-xs text-[#777] text-center mb-10 italic">
-            फोटो विवरण: {article.featured_image_caption}
-          </p>
+        {(article.featured_image_caption || article.featured_image_credit) && (
+          <div className="mb-10 text-center text-xs text-[#777]">
+            {article.featured_image_caption && <p className="italic">फोटो विवरण: {article.featured_image_caption}</p>}
+            {article.featured_image_credit && <p className="mt-1 font-semibold not-italic">फोटो क्रेडिट: {article.featured_image_credit}</p>}
+          </div>
         )}
 
         {/* Semantic Article Body */}

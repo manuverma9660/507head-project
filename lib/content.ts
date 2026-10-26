@@ -31,6 +31,7 @@ export interface Article {
   featured_image_url: string;
   featured_image_alt: string;
   featured_image_caption?: string;
+  featured_image_credit?: string;
   is_featured: boolean;
   published_at: string;
   updated_at?: string;
@@ -91,10 +92,7 @@ export const APPROVED_CATEGORIES: Category[] = [
 ];
 
 /**
- * The database is the live source for category labels, ordering and visibility.
- * The approved list remains a safe fallback and prevents accidental categories
- * created by old editor versions (for example `kheti` / `shikhsa`) from leaking
- * into the public navigation.
+ * Only the handbook's seven approved categories are ever returned publicly.
  */
 export async function getCategories(): Promise<Category[]> {
   try {
@@ -123,18 +121,7 @@ export async function getCategories(): Promise<Category[]> {
           }
         : fallback;
     });
-    const standardSlugs = new Set(APPROVED_CATEGORIES.map((category) => category.slug));
-    const customCategories: Category[] = liveCategories
-      .filter((category) => !standardSlugs.has(category.slug))
-      .map((category) => ({
-        id: String(category.id),
-        slug: category.slug,
-        name: category.name,
-        description: category.description || "",
-        sort_order: typeof category.sort_order === "number" ? category.sort_order : 999,
-      }));
-
-    return [...standardCategories, ...customCategories].sort((a, b) => a.sort_order - b.sort_order);
+    return standardCategories.sort((a, b) => a.sort_order - b.sort_order);
   } catch (error) {
     console.error("Error fetching categories from Supabase:", error);
     return APPROVED_CATEGORIES;
@@ -437,7 +424,7 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
 
     const { data: dbArticles } = await supabase
       .from("articles")
-      .select("id, slug, title, excerpt, body, body_json, featured_image_url, featured_image_alt, is_featured, published_at, updated_at, category_id, author_id, categories(id, name, slug)")
+      .select("id, slug, title, excerpt, body, body_json, featured_image_url, featured_image_alt, featured_image_caption, featured_image_credit, is_featured, published_at, updated_at, category_id, author_id, categories(id, name, slug)")
       .eq("status", "published")
       .order("published_at", { ascending: false });
 
@@ -521,6 +508,8 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
             item.featured_image_url ||
             "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1400&q=85",
           featured_image_alt: item.featured_image_alt || item.title,
+          featured_image_caption: item.featured_image_caption || undefined,
+          featured_image_credit: item.featured_image_credit || undefined,
           is_featured: Boolean(item.is_featured),
           published_at: item.published_at || new Date().toISOString(),
           reading_time_minutes: 4,
