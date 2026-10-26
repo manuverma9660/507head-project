@@ -8,9 +8,7 @@ import {
   APPROVED_CATEGORIES,
 } from "@/lib/content";
 import ArticleBody from "@/components/ArticleBody";
-import SocialIcon from "@/components/SocialIcon";
 import ArticleShareRow from "@/components/ArticleShareRow";
-import CopyArticleLinkButton from "@/components/CopyArticleLinkButton";
 
 export const instant = false;
 
@@ -277,41 +275,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {formattedDate} • {article.reading_time_minutes} मिनट पठन
               </span>
             </div>
-          </div>
-
-          {/* Social Share Buttons */}
-          <div className="flex items-center gap-2.5">
-            <span className="text-xs font-bold text-[#888] mr-1 hidden sm:inline">
-              शेयर करें:
-            </span>
-            <a
-              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(article.title + " - " + currentUrl)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="व्हाट्सएप पर शेयर करें"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
-            >
-              <SocialIcon name="whatsapp" className="h-5 w-5" />
-            </a>
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="फेसबुक पर शेयर करें"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
-            >
-              <SocialIcon name="facebook" className="h-5 w-5" />
-            </a>
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X पर शेयर करें"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
-            >
-              <SocialIcon name="x" className="h-5 w-5" />
-            </a>
-            <CopyArticleLinkButton url={currentUrl} />
           </div>
         </div>
 
