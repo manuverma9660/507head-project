@@ -550,7 +550,16 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const all = await getAllPublishedArticles();
-  return all.find((article) => article.slug === slug) ?? null;
+  const normalizeSlug = (value: string) => {
+    try {
+      return decodeURIComponent(value).normalize("NFC").replace(/\/+$/, "");
+    } catch {
+      return value.normalize("NFC").replace(/\/+$/, "");
+    }
+  };
+  const requestedSlug = normalizeSlug(slug);
+
+  return all.find((article) => normalizeSlug(article.slug) === requestedSlug) ?? null;
 }
 
 export async function getArticlesByCategory(categorySlug: string): Promise<Article[]> {

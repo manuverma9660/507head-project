@@ -30,7 +30,8 @@
     "dompurify": "^3.4.17",
     "next": "16.4.2",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "react-icons": "^5.7.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

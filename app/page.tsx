@@ -5,6 +5,7 @@ import { getAllPublishedArticles, getCategories } from "@/lib/content";
 import { getLatestInstagramReels } from "@/lib/instagram";
 import SocialIcon from "@/components/SocialIcon";
 import HeroSlider from "@/components/HeroSlider";
+import RemoteArticleImage from "@/components/RemoteArticleImage";
 
 export const instant = false;
 
@@ -79,7 +80,19 @@ export default async function Home() {
         new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
     )
     .slice(0, 6);
-  const heroSlides = [featured, ...latestArticles.slice(0, 4)].map((article) => ({
+  const heroSliderArticles = allArticles
+    .filter(
+      (article) =>
+        article.id !== featured.id &&
+        article.slug !== featured.slug &&
+        article.category_slug !== "food"
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+    )
+    .slice(0, 4);
+  const heroSlides = [featured, ...heroSliderArticles].map((article) => ({
     image: article.featured_image_url,
     title: article.title,
     excerpt: article.excerpt,
@@ -135,9 +148,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
             >
-              <SocialIcon name="facebook" className="h-10 w-10" />
+              <SocialIcon name="facebook" className="h-5 w-5" />
             </a>
             {/* Instagram */}
             <a
@@ -145,9 +158,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
             >
-              <SocialIcon name="instagram" className="h-10 w-10" />
+              <SocialIcon name="instagram" className="h-5 w-5" />
             </a>
             {/* YouTube */}
             <a
@@ -155,9 +168,9 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
             >
-              <SocialIcon name="youtube" className="h-10 w-10" />
+              <SocialIcon name="youtube" className="h-5 w-5" />
             </a>
 
           </div>
@@ -243,12 +256,9 @@ export default async function Home() {
                 href={`/blog/${featured.slug}`}
                 className="group relative block aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white shadow-md"
               >
-                <Image
+                <RemoteArticleImage
                   src={featured.featured_image_url}
                   alt={featured.featured_image_alt}
-                  fill
-                  priority
-                  sizes="(max-width: 767px) 100vw, 50vw"
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
                 <span className="absolute bottom-3 left-3 rounded-lg bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
@@ -286,11 +296,9 @@ export default async function Home() {
                 href={`/blog/${article.slug}`}
                 className="relative aspect-[16/9] w-full overflow-hidden bg-[#eee]"
               >
-                <Image
+                <RemoteArticleImage
                   src={article.featured_image_url}
                   alt={article.featured_image_alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
                 <span className="absolute top-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
@@ -430,11 +438,9 @@ export default async function Home() {
                       href={`/blog/${article.slug}`}
                       className="relative aspect-[16/9] w-full overflow-hidden bg-[#eee]"
                     >
-                      <Image
+                      <RemoteArticleImage
                         src={article.featured_image_url}
                         alt={article.featured_image_alt}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 33vw"
                         className="object-cover transition duration-300 group-hover:scale-105"
                       />
                     </Link>

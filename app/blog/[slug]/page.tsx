@@ -227,27 +227,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="व्हाट्सएप पर शेयर करें"
-              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
             >
-              <SocialIcon name="whatsapp" className="h-10 w-10" />
+              <SocialIcon name="whatsapp" className="h-5 w-5" />
             </a>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="फेसबुक पर शेयर करें"
-              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
             >
-              <SocialIcon name="facebook" className="h-10 w-10" />
+              <SocialIcon name="facebook" className="h-5 w-5" />
             </a>
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(currentUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X पर शेयर करें"
-              className="block transition duration-200 hover:-translate-y-0.5 hover:brightness-125"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]"
             >
-              <SocialIcon name="x" className="h-10 w-10" />
+              <SocialIcon name="x" className="h-5 w-5" />
             </a>
           </div>
         </div>

@@ -72,6 +72,11 @@ const nextConfig: NextConfig = {
         hostname: "img-cdn.krishijagran.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.ammakithaali.com",
+        pathname: "/**",
+      },
     ],
   },
   cacheComponents: true,
