@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import { getArticleBySlug, getRelatedArticles, APPROVED_CATEGORIES } from "@/lib/content";
 import ArticleBody from "@/components/ArticleBody";
 import SocialIcon from "@/components/SocialIcon";
+import ArticleShareRow from "@/components/ArticleShareRow";
+import CopyArticleLinkButton from "@/components/CopyArticleLinkButton";
 
 export const instant = false;
 
@@ -257,6 +259,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             >
               <SocialIcon name="x" className="h-5 w-5" />
             </a>
+            <CopyArticleLinkButton url={currentUrl} />
           </div>
         </div>
 
@@ -280,6 +283,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Semantic Article Body */}
         <div className="space-y-6 text-lg sm:text-[19px] leading-[1.85] text-[#2c2c2c] pt-2">
           <ArticleBody richBody={article.rich_body} fallback={article.body} />
+        </div>
+
+        <div className="mt-12">
+          <ArticleShareRow title={article.title} url={currentUrl} />
         </div>
 
         {/* Tags Row */}
