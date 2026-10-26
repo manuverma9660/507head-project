@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// This authenticated preview intentionally waits for the session and article
+// data, so it must not be validated as an instant/static-shell route.
+export const instant = false;
+
 type PreviewPageProps = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ revision?: string }>;
