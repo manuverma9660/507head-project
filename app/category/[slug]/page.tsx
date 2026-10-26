@@ -184,6 +184,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {articles.map((article) => (
               <article
                 key={article.id}
+                data-article-href={`/blog/${article.slug}`}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition hover:-translate-y-1 hover:shadow-lg"
               >
                 <Link

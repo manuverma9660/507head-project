@@ -74,6 +74,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 {results.map((article) => (
                   <article
                     key={article.id}
+                    data-article-href={`/blog/${article.slug}`}
                     className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm"
                   >
                     <p className="text-xs font-bold text-[#8a4b1f]">

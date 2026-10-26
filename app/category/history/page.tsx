@@ -40,7 +40,7 @@ const stories = [
 export default function HistoryPage() {
   return (
     <main className="min-h-screen bg-[#fffdf9] text-stone-900">
-      <div className="bg-[#6b3915] px-4 py-2 text-center text-sm text-white">
+      <div className="legacy-public-topline bg-[#6b3915] px-4 py-2 text-center text-sm text-white">
         507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ
       </div>
 

@@ -1139,6 +1139,17 @@ button {
   }
 }
 
+/* Shared homepage chrome is rendered once by the root layout on all public routes. */
+.public-site-content > main > header,
+.public-site-content > main > footer,
+.public-site-content .legacy-public-topline {
+  display: none;
+}
+
+[data-article-href] {
+  cursor: pointer;
+}
+
 @media (max-width: 360px) {
   .site-container {
     width: calc(100% - 24px);

@@ -199,6 +199,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
             {articles.map((article) => (
               <article
                 key={article.id}
+                data-article-href={`/blog/${article.slug}`}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-lg"
               >
                 <Link

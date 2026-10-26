@@ -4,6 +4,7 @@ import "@fontsource/mukta/700.css";
 import "./globals.css";
 import { getPublicSiteSettings } from "@/lib/site-settings";
 import { Analytics } from "@vercel/analytics/next";
+import PublicSiteChrome from "@/components/PublicSiteChrome";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getPublicSiteSettings();
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="hi">
       <body>
-        {children}
+        <PublicSiteChrome>{children}</PublicSiteChrome>
         <Analytics />
       </body>
     </html>

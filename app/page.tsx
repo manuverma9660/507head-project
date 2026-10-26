@@ -130,7 +130,7 @@ export default async function Home() {
         }}
       />
       {/* Topline Banner */}
-      <div className="bg-[#6b3915] px-4 py-2 text-center text-xs sm:text-sm font-medium text-white tracking-wide">
+      <div className="legacy-public-topline bg-[#6b3915] px-4 py-2 text-center text-xs sm:text-sm font-medium text-white tracking-wide">
         507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर
       </div>
 
@@ -312,8 +312,9 @@ export default async function Home() {
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {latestArticles.map((article) => (
-            <article
-              key={article.id}
+              <article
+                key={article.id}
+                data-article-href={`/blog/${article.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <Link
@@ -462,6 +463,7 @@ export default async function Home() {
                 {catArticles.slice(0, 3).map((article) => (
                   <article
                     key={article.id}
+                    data-article-href={`/blog/${article.slug}`}
                     className="group flex flex-col overflow-hidden rounded-xl border border-[#e5ddd3] bg-white transition hover:-translate-y-1 hover:shadow-md"
                   >
                     <Link

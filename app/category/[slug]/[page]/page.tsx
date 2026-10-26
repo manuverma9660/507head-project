@@ -68,6 +68,7 @@ export default async function CategoryPaginationPage({
           {currentArticles.map((article) => (
             <article
               key={article.id}
+              data-article-href={`/blog/${article.slug}`}
               className="overflow-hidden rounded-2xl border border-[#e7ddd0] bg-white shadow-sm"
             >
               <Link
