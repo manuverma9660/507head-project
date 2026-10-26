@@ -69,7 +69,7 @@ export default function ArticleManager({
     if (busy) return;
 
     if (!title.trim() || !excerpt.trim() || !content.trim()) {
-      setMessage("शीर्षक और समाचार की सामग्री भरना ज़रूरी है।");
+      setMessage("शीर्षक और लेख की सामग्री भरना ज़रूरी है।");
       return;
     }
 
@@ -105,7 +105,7 @@ export default function ArticleManager({
           router.refresh();
         }
       } catch {
-        setMessage("समाचार सेव करते समय त्रुटि हुई।");
+        setMessage("लेख सेव करते समय त्रुटि हुई।");
       } finally {
         setBusy(false);
       }
@@ -127,7 +127,7 @@ export default function ArticleManager({
           router.refresh();
         }
       } catch {
-        setMessage("समाचार Publish नहीं हुआ।");
+        setMessage("लेख Publish नहीं हुआ।");
       } finally {
         setBusy(false);
       }
@@ -135,7 +135,7 @@ export default function ArticleManager({
   }
 
   function handleUnpublish(id: string) {
-    if (busy || !id || !window.confirm("क्या इस समाचार को Draft में वापस करना है?")) return;
+    if (busy || !id || !window.confirm("क्या इस लेख को Draft में वापस करना है?")) return;
     setBusy(true);
     setMessage("");
 
@@ -145,7 +145,7 @@ export default function ArticleManager({
         setMessage(result.message);
         if (result.success) router.refresh();
       } catch {
-        setMessage("समाचार unpublish नहीं हुआ।");
+        setMessage("लेख unpublish नहीं हुआ।");
       } finally {
         setBusy(false);
       }
@@ -155,7 +155,7 @@ export default function ArticleManager({
   function handleDelete(id: string) {
     if (busy || !id) return;
 
-    if (!window.confirm("क्या आप इस समाचार को डिलीट करना चाहते हैं?")) {
+    if (!window.confirm("क्या आप इस लेख को डिलीट करना चाहते हैं?")) {
       return;
     }
 
@@ -178,7 +178,7 @@ export default function ArticleManager({
           router.refresh();
         }
       } catch {
-        setMessage("समाचार Delete नहीं हुआ।");
+        setMessage("लेख Delete नहीं हुआ।");
       } finally {
         setBusy(false);
       }
@@ -222,7 +222,7 @@ export default function ArticleManager({
         className="scroll-mt-6 rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm md:p-7"
       >
         <h2 className="text-xl font-bold">
-          {editingId ? "समाचार एडिट करें" : "नया समाचार बनाएँ"}
+          {editingId ? "लेख एडिट करें" : "नया लेख बनाएँ"}
         </h2>
 
         <form
@@ -234,7 +234,7 @@ export default function ArticleManager({
               htmlFor="article-title"
               className="mb-2 block text-sm font-semibold"
             >
-              समाचार का शीर्षक <span className="text-red-500">*</span>
+              लेख का शीर्षक <span className="text-red-500">*</span>
             </label>
             <input
               id="article-title"
@@ -244,7 +244,7 @@ export default function ArticleManager({
               maxLength={70}
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              placeholder="समाचार का शीर्षक लिखें"
+              placeholder="लेख का शीर्षक लिखें"
               className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
             />
           </div>
@@ -272,7 +272,7 @@ export default function ArticleManager({
               <option value="food">🍲 खान-पान</option>
             </select>
             <p className="mt-1 text-xs text-gray-500">
-              समाचार वेबसाइट पर इसी चुनी गई श्रेणी के ब्लॉक में दिखेगा।
+              लेख वेबसाइट पर इसी चुनी गई श्रेणी के ब्लॉक में दिखेगा।
             </p>
           </div>
 
@@ -281,7 +281,7 @@ export default function ArticleManager({
               htmlFor="article-content"
               className="mb-2 block text-sm font-semibold"
             >
-              समाचार की सामग्री <span className="text-red-500">*</span>
+              लेख की सामग्री <span className="text-red-500">*</span>
             </label>
             <textarea
               id="article-content"
@@ -290,7 +290,7 @@ export default function ArticleManager({
               rows={7}
               value={content}
               onChange={(event) => setContent(event.target.value)}
-              placeholder="समाचार यहाँ लिखें..."
+              placeholder="लेख यहाँ लिखें..."
               className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
             />
           </div>
@@ -364,12 +364,12 @@ export default function ArticleManager({
       <section className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm md:p-7">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h2 className="text-xl font-bold">
-            सभी समाचार ({filtered.length})
+            सभी लेख ({filtered.length})
           </h2>
 
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <input
-              aria-label="शीर्षक से समाचार खोजें"
+              aria-label="शीर्षक से लेख खोजें"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="शीर्षक से खोजें..."
@@ -394,7 +394,7 @@ export default function ArticleManager({
             </select>
 
             <select
-              aria-label="समाचार की स्थिति"
+              aria-label="लेख की स्थिति"
               value={filter}
               onChange={(event) =>
                 setFilter(event.target.value as ArticleStatus)
@@ -525,7 +525,7 @@ export default function ArticleManager({
                     colSpan={4}
                     className="px-3 py-12 text-center text-gray-500"
                   >
-                    कोई समाचार नहीं मिला। Search या Filter बदलकर देखें।
+                    कोई लेख नहीं मिला। Search या Filter बदलकर देखें।
                   </td>
                 </tr>
               )}

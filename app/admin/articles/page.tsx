@@ -101,10 +101,10 @@ export default async function ArticlesPage() {
               507 HEAD · Content Management
             </p>
             <h1 className="mt-2 text-3xl font-bold md:text-4xl">
-              Articles Management
+              लेख
             </h1>
             <p className="mt-2 text-gray-600">
-              समाचार बनाएँ, Draft सेव करें और प्रकाशित करें।
+              लेख बनाएँ, Draft सेव करें और प्रकाशित करें।
             </p>
           </div>
 
@@ -112,13 +112,13 @@ export default async function ArticlesPage() {
             href="/admin/articles/new"
             className="inline-flex items-center rounded-xl bg-[#8a4b1f] px-5 py-3 font-semibold text-white hover:bg-[#6b3915]"
           >
-            + नया समाचार
+            + नया लेख
           </Link>
         </header>
 
         {error && articlesList.length === 0 ? (
           <section className="mt-8 rounded-xl border border-red-200 bg-white p-5 text-red-700">
-            समाचार लोड नहीं हुए: {error.message}
+            लेख लोड नहीं हुए: {error.message}
           </section>
         ) : (
           <section className="mt-8">
