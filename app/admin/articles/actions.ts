@@ -452,7 +452,11 @@ export async function publishArticle(id: string): Promise<ActionResult> {
 
   const { data, error: updateError } = await supabase
     .from("articles")
-    .update({ status: "published" })
+    .update({
+      status: "published",
+      published_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    })
     .eq("id", articleId)
     .select("id, title, slug, excerpt, body, status, category_id, author_id, featured_image_url, featured_image_alt, published_at, updated_at");
 

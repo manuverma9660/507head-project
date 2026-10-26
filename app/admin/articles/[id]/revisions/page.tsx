@@ -54,6 +54,9 @@ export default async function ArticleRevisionsPage({ params }: RevisionPageProps
         <Link href="/admin/articles" className="text-sm font-semibold text-[#8a4b1f] hover:underline">
           ← Articles पर वापस जाएँ
         </Link>
+        <Link href={`/admin/articles/${id}/preview`} className="ml-5 text-sm font-semibold text-[#8a4b1f] hover:underline">
+          Preview current version
+        </Link>
         <header className="mt-8">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#8a4b1f]">507 Head · Editorial</p>
           <h1 className="mt-2 text-3xl font-bold">Revision History</h1>
@@ -78,6 +81,9 @@ export default async function ArticleRevisionsPage({ params }: RevisionPageProps
                     {revision.change_summary ?? "Article changed"}
                     {snapshot?.status ? ` · ${snapshot.status}` : ""}
                   </p>
+                  <Link href={`/admin/articles/${id}/preview?revision=${revision.id}`} className="mt-3 inline-block text-xs font-bold text-[#8a4b1f] hover:underline">
+                    Preview this revision
+                  </Link>
                   <form action={handleRestoreRevision} className="mt-4">
                     <input type="hidden" name="revision_id" value={revision.id} />
                     <button className="rounded-lg border border-[#8a4b1f] px-3 py-2 text-xs font-bold text-[#8a4b1f] hover:bg-[#f7efe3]">

@@ -3,7 +3,7 @@ alter table public.articles
 
 -- This project uses the article_status PostgreSQL enum. Extend it without
 -- changing existing draft or published values.
-alter type public.article_status add value if not exists 'review';
+alter type public.article_status add value if not exists 'in_review';
 alter type public.article_status add value if not exists 'scheduled';
 
 create index if not exists articles_scheduled_for_idx
