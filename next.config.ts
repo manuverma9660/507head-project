@@ -76,6 +76,16 @@ const nextConfig: NextConfig = {
         hostname: "www.ammakithaali.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "mahadhan.co.in",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.mahadhan.co.in",
+        pathname: "/**",
+      },
     ],
   },
   cacheComponents: true,
