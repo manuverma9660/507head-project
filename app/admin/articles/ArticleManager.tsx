@@ -1,8 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import type { RichTextDocument } from "@/lib/rich-text";
 import {
   createArticle,
   updateArticle,
@@ -11,16 +13,41 @@ import {
   unpublishArticle,
 } from "./actions";
 
+const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
+  ssr: false,
+  loading: () => <div className="min-h-72 animate-pulse rounded-xl bg-[#f7f3ed]" />,
+});
+
+const CATEGORIES = [
+  { slug: "news", name: "ताज़ा खबरें और रिपोर्ट" },
+  { slug: "farming", name: "खेती-बाड़ी" },
+  { slug: "pashupalan", name: "पशुपालन" },
+  { slug: "kisan", name: "किसान" },
+  { slug: "wisdom", name: "बुजुर्गों की सीख" },
+  { slug: "history", name: "इतिहास और विरासत" },
+  { slug: "heritage", name: "सांस्कृतिक विरासत" },
+  { slug: "food", name: "खान-पान" },
+  { slug: "__new__", name: "नई श्रेणी जोड़ें" },
+];
+
 type Article = {
   id?: string | number;
   title?: string | null;
   excerpt?: string | null;
   body?: string | null;
+  body_json?: RichTextDocument | null;
   status?: string | null;
   category_slug?: string | null;
   category_name?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
+  featured_image_url?: string | null;
+  featured_image_alt?: string | null;
+  featured_image_caption?: string | null;
+  featured_image_credit?: string | null;
+  tags?: string[] | null;
+  scheduled_for?: string | null;
+  reading_time_minutes?: number | null;
 };
 
 type ArticleStatus = "all" | "draft" | "in_review" | "published" | "scheduled";
@@ -33,6 +60,17 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
   const [excerpt, setExcerpt] = useState("");
   const [categorySlug, setCategorySlug] = useState("history");
   const [content, setContent] = useState("");
+  const [contentJson, setContentJson] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageAlt, setImageAlt] = useState("");
+  const [imageCaption, setImageCaption] = useState("");
+  const [imageCredit, setImageCredit] = useState("");
+  const [tags, setTags] = useState("");
+  const [customCategoryName, setCustomCategoryName] = useState("");
+  const [customCategorySlug, setCustomCategorySlug] = useState("");
+  const [scheduledFor, setScheduledFor] = useState("");
+  const [readingTime, setReadingTime] = useState("3");
+  const [showPreview, setShowPreview] = useState(false);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<ArticleStatus>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
@@ -59,7 +97,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
     [articles, search, filter, categoryFilter],
   );
 
-  function handleSave(status: "draft" | "in_review" | "published") {
+  function handleSave(status: "draft" | "in_review" | "published" | "scheduled") {
     if (busy) return;
 
     if (!title.trim() || !excerpt.trim() || !content.trim()) {
@@ -72,6 +110,16 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
     formData.set("excerpt", excerpt.trim());
     formData.set("category_slug", categorySlug);
     formData.set("content", content.trim());
+    formData.set("content_json", contentJson);
+    formData.set("featured_image_url", imageUrl.trim());
+    formData.set("featured_image_alt", imageAlt.trim());
+    formData.set("featured_image_caption", imageCaption.trim());
+    formData.set("featured_image_credit", imageCredit.trim());
+    formData.set("tags", tags);
+    formData.set("custom_category_name", customCategoryName.trim());
+    formData.set("custom_category_slug", customCategorySlug.trim());
+    formData.set("scheduled_for", scheduledFor);
+    formData.set("reading_time_minutes", readingTime);
     formData.set("status", status);
 
     if (editingId) {
@@ -94,6 +142,16 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
           setTitle("");
           setExcerpt("");
           setContent("");
+          setContentJson("");
+          setImageUrl("");
+          setImageAlt("");
+          setImageCaption("");
+          setImageCredit("");
+          setTags("");
+          setCustomCategoryName("");
+          setCustomCategorySlug("");
+          setScheduledFor("");
+          setReadingTime("3");
           setCategorySlug("history");
           setFormOpen(false);
           router.refresh();
@@ -192,6 +250,16 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
     setExcerpt(String(article.excerpt ?? ""));
     setCategorySlug(article.category_slug || "history");
     setContent(String(article.body ?? ""));
+    setContentJson(article.body_json ? JSON.stringify(article.body_json) : "");
+    setImageUrl(String(article.featured_image_url ?? ""));
+    setImageAlt(String(article.featured_image_alt ?? ""));
+    setImageCaption(String(article.featured_image_caption ?? ""));
+    setImageCredit(String(article.featured_image_credit ?? ""));
+    setTags(Array.isArray(article.tags) ? article.tags.join(", ") : "");
+    setCustomCategoryName("");
+    setCustomCategorySlug("");
+    setScheduledFor(article.scheduled_for ? article.scheduled_for.slice(0, 16) : "");
+    setReadingTime(String(article.reading_time_minutes ?? Math.max(1, Math.round(String(article.body ?? "").trim().split(/\s+/).length / 200))));
     setMessage("");
     setFormOpen(true);
 
@@ -209,6 +277,16 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
     setExcerpt("");
     setCategorySlug("history");
     setContent("");
+    setContentJson("");
+    setImageUrl("");
+    setImageAlt("");
+    setImageCaption("");
+    setImageCredit("");
+    setTags("");
+    setCustomCategoryName("");
+    setCustomCategorySlug("");
+    setScheduledFor("");
+    setReadingTime("3");
     setMessage("");
     setFormOpen(false);
   }
@@ -261,21 +339,37 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
                 onChange={(e) => setCategorySlug(e.target.value)}
                 className="w-full rounded-xl border border-[#e7ddd0] bg-white px-4 py-3 outline-none focus:border-[#8a4b1f]"
               >
-                <option value="news">
-                  📢 ताज़ा खबरें और रिपोर्ट (लेटेस्ट अपडेट्स)
-                </option>
-                <option value="farming">🌾 खेती-बाड़ी</option>
-                <option value="pashupalan">🐄 पशुपालन</option>
-                <option value="kisan">🚜 किसान</option>
-                <option value="wisdom">🧓 बुजुर्गों की सीख</option>
-                <option value="history">🏛️ इतिहास और विरासत</option>
-                <option value="heritage">🎭 सांस्कृतिक विरासत</option>
-                <option value="food">🍲 खान-पान</option>
+                {CATEGORIES.map((category) => (
+                  <option key={category.slug} value={category.slug}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
               <p className="mt-1 text-xs text-gray-500">
                 लेख वेबसाइट पर इसी चुनी गई श्रेणी के ब्लॉक में दिखेगा।
               </p>
+              {categorySlug === "__new__" && (
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
+                  <input value={customCategoryName} onChange={(event) => setCustomCategoryName(event.target.value)} required minLength={2} placeholder="नई श्रेणी का नाम" className="rounded-xl border border-[#e7ddd0] px-4 py-3" />
+                  <input value={customCategorySlug} onChange={(event) => setCustomCategorySlug(event.target.value)} required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="English URL name, जैसे recipes" className="rounded-xl border border-[#e7ddd0] px-4 py-3" />
+                </div>
+              )}
             </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold">Featured Image URL</label>
+              <input type="url" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} placeholder="https://..." className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
+              {imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={imageUrl} alt="Preview" className="mt-3 h-40 w-full rounded-xl border border-[#e7ddd0] object-cover" onError={(event) => { event.currentTarget.style.display = "none"; }} />
+              )}
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              <div><label className="mb-2 block text-sm font-semibold">Image Alt Text</label><input value={imageAlt} onChange={(event) => setImageAlt(event.target.value)} placeholder="इमेज का विवरण" className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3" /></div>
+              <div><label className="mb-2 block text-sm font-semibold">Image Caption</label><input value={imageCaption} onChange={(event) => setImageCaption(event.target.value)} placeholder="फोटो में क्या दिख रहा है" className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3" /></div>
+            </div>
+            <div><label className="mb-2 block text-sm font-semibold">Image Credit</label><input value={imageCredit} onChange={(event) => setImageCredit(event.target.value)} placeholder="फोटो: 507 Head / नाम" className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3" /></div>
 
             <div>
               <label
@@ -284,16 +378,26 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
               >
                 लेख की सामग्री <span className="text-red-500">*</span>
               </label>
-              <textarea
-                id="article-content"
-                name="content"
-                required
-                rows={7}
-                value={content}
-                onChange={(event) => setContent(event.target.value)}
-                placeholder="लेख यहाँ लिखें..."
-                className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
+              <RichTextEditor
+                key={editingId || "new"}
+                content={contentJson || content}
+                onChange={(document, plainText) => {
+                  setContentJson(JSON.stringify(document));
+                  setContent(plainText);
+                  setReadingTime(String(Math.max(1, Math.round(plainText.trim().split(/\s+/).filter(Boolean).length / 200))));
+                }}
               />
+              <p className="mt-1 text-xs text-gray-500">अनुमानित पठन समय: ~{readingTime} मिनट</p>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold">Tags</label>
+              <input value={tags} onChange={(event) => setTags(event.target.value)} placeholder="थार, किसान, बीकानेर (comma से अलग करें)" className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3" />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold">Schedule date and time</label>
+              <input type="datetime-local" value={scheduledFor} onChange={(event) => setScheduledFor(event.target.value)} className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3" />
             </div>
 
             <div>
@@ -315,6 +419,13 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
             </div>
 
             <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => setShowPreview(true)}
+                className="rounded-xl border border-[#8a4b1f] px-5 py-3 font-semibold text-[#8a4b1f]"
+              >
+                Preview देखें
+              </button>
               <button
                 type="button"
                 disabled={busy}
@@ -342,6 +453,10 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
                 Send for review
               </button>
 
+              <button type="button" disabled={busy || !scheduledFor} onClick={() => void handleSave("scheduled")} className="rounded-xl bg-[#6b3915] px-5 py-3 font-semibold text-white disabled:opacity-50">
+                Schedule
+              </button>
+
               {editingId && (
                 <button
                   type="button"
@@ -363,6 +478,27 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
             >
               {message}
             </p>
+          )}
+
+          {showPreview && (
+            <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 p-4">
+              <div className="mx-auto my-8 max-w-3xl rounded-2xl bg-white p-6 shadow-xl md:p-10">
+                <div className="flex items-center justify-between border-b border-[#e7ddd0] pb-4">
+                  <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">Draft Preview</p>
+                  <button type="button" onClick={() => setShowPreview(false)} className="rounded-lg px-3 py-2 font-bold text-[#8a4b1f] hover:bg-[#f7efe3]">बंद करें</button>
+                </div>
+                <article className="mx-auto max-w-2xl py-8">
+                  <p className="text-sm font-bold text-[#8a4b1f]">{categorySlug}</p>
+                  <h3 className="mt-3 text-3xl font-bold leading-tight">{title || "शीर्षक लिखें"}</h3>
+                  {excerpt && <p className="mt-4 text-lg text-gray-600">{excerpt}</p>}
+                  {imageUrl && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={imageUrl} alt={imageAlt || title} className="mt-6 aspect-video w-full rounded-xl object-cover" />
+                  )}
+                  <div className="mt-6 whitespace-pre-wrap leading-8">{content || "लेख की सामग्री यहाँ दिखाई देगी।"}</div>
+                </article>
+              </div>
+            </div>
           )}
         </section>
       )}

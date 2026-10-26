@@ -282,6 +282,7 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
       featured_image_alt: featuredImageAlt || null,
       featured_image_caption: featuredImageCaption || null,
       featured_image_credit: featuredImageCredit || null,
+      tags,
       author_id: authorId,
       published_at: status === "published" ? new Date().toISOString() : null,
       scheduled_for:
@@ -410,8 +411,12 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
   updatePayload.featured_image_credit = featuredImageCredit || null;
 
   const categorySlug = getTextValue(formData, "category_slug");
-  if (categorySlug) {
-    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(categorySlug)) {
+  const customCategoryName = getTextValue(formData, "custom_category_name");
+  const customCategorySlug = getTextValue(formData, "custom_category_slug");
+  const resolvedCategorySlug =
+    categorySlug === "__new__" ? customCategorySlug : categorySlug;
+  if (resolvedCategorySlug) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(resolvedCategorySlug)) {
       return {
         success: false,
         message:
@@ -421,10 +426,10 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
     const { data: catData } = await supabase
       .from("categories")
       .select("id")
-      .eq("slug", categorySlug)
+      .eq("slug", resolvedCategorySlug)
       .maybeSingle();
 
-    if (!catData?.id) {
+    if (!catData?.id && categorySlug !== "__new__") {
       return {
         success: false,
         message: "चुनी हुई fixed category अभी Supabase में configured नहीं है।",
@@ -434,6 +439,9 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
     if (catData?.id) {
       updatePayload.category_id = catData.id;
     } else {
+      if (role !== "admin" || customCategoryName.length < 2) {
+        return { success: false, message: "नई श्रेणी का नाम भरें; इसे केवल admin जोड़ सकता है।" };
+      }
       const CAT_NAMES: Record<string, string> = {
         news: "ताज़ा खबरें और रिपोर्ट",
         farming: "खेती-बाड़ी",
@@ -447,9 +455,9 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
       const { data: newCat } = await supabase
         .from("categories")
         .insert({
-          name: CAT_NAMES[categorySlug] || categorySlug,
-          slug: categorySlug,
-          description: CAT_NAMES[categorySlug] || categorySlug,
+          name: customCategoryName || CAT_NAMES[resolvedCategorySlug] || resolvedCategorySlug,
+          slug: resolvedCategorySlug,
+          description: customCategoryName || CAT_NAMES[resolvedCategorySlug] || resolvedCategorySlug,
           sort_order: 1,
           is_active: true,
           show_on_home: true,
@@ -461,6 +469,11 @@ export async function updateArticle(formData: FormData): Promise<ActionResult> {
       }
     }
   }
+
+  const tagsRaw = getTextValue(formData, "tags");
+  updatePayload.tags = tagsRaw
+    ? tagsRaw.split(",").map((tag) => tag.trim()).filter(Boolean)
+    : [];
 
   const { data, error: updateError } = await supabase
     .from("articles")

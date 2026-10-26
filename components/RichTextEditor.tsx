@@ -14,6 +14,7 @@ import type { RichTextDocument } from "@/lib/rich-text";
 
 type Props = {
   onChange: (document: RichTextDocument, plainText: string) => void;
+  content?: RichTextDocument | string | null;
 };
 
 function getPlainText(document: RichTextDocument) {
@@ -34,7 +35,7 @@ function getPlainText(document: RichTextDocument) {
     .trim();
 }
 
-export default function RichTextEditor({ onChange }: Props) {
+export default function RichTextEditor({ onChange, content = "" }: Props) {
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
@@ -50,7 +51,7 @@ export default function RichTextEditor({ onChange }: Props) {
       TableHeader,
       TableCell,
     ],
-    content: "",
+    content,
     editorProps: {
       attributes: {
         class:
