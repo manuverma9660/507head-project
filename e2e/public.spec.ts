@@ -19,6 +19,13 @@ test("home page has no serious accessibility violations", async ({ page }) => {
   ).toEqual([]);
 });
 
+test("category links open their category page", async ({ page }) => {
+  await page.goto("/");
+  await page.locator('a[href="/category/history/"]').first().click();
+  await expect(page).toHaveURL(/\/category\/history\/$/);
+  await expect(page.locator("h1")).toContainText("इतिहास");
+});
+
 test("contact form keeps invalid submissions in the browser", async ({
   page,
 }) => {
