@@ -1242,7 +1242,7 @@ button {
 
 /* Keep the supplied logo artwork in the established site tone. */
 .public-site-shell .logo-handbook-tone {
-  filter: sepia(0.72) saturate(0.95) hue-rotate(338deg) contrast(0.94);
+  filter: sepia(1) saturate(4.4) hue-rotate(344deg) brightness(0.68) contrast(1.12);
 }
 
 .homepage {

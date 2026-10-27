@@ -423,7 +423,7 @@ export default async function Home() {
               href={FACEBOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#1877F2]/80"
+              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-white hover:text-black"
             >
               <SocialIcon name="facebook" className="h-3.5 w-3.5" />
               Facebook ↗
@@ -432,7 +432,7 @@ export default async function Home() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-gradient-to-r hover:from-[#833ab4] hover:to-[#fd1d1d]"
+              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-white hover:text-black"
             >
               <svg
                 width="14"
@@ -448,7 +448,7 @@ export default async function Home() {
               href={YOUTUBE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#FF0000]/70"
+              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-white hover:text-black"
             >
               <svg
                 width="14"
