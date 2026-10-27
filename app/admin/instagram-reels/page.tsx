@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { addInstagramReel, deleteInstagramReel } from "./actions";
+import StatusNotice from "./StatusNotice";
 
 export const instant = false;
 
@@ -63,11 +64,7 @@ export default async function InstagramReelsPage({
           </Link>
         </div>
 
-        {status && (
-          <p className={`mt-6 rounded-xl px-4 py-3 text-sm ${["added", "deleted"].includes(status) ? "bg-green-50 text-green-800" : "bg-red-50 text-red-800"}`}>
-            {messages[status] || "कुछ गलत हो गया।"}
-          </p>
-        )}
+        {status && <StatusNotice status={status} message={messages[status] || "कुछ गलत हो गया।"} />}
 
         <form action={addInstagramReel} className="mt-7 grid gap-4 rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:grid-cols-2 md:p-7">
           <label className="grid gap-2 md:col-span-2"><span className="text-sm font-bold">Instagram Reel URL *</span><input name="reel_url" required placeholder="https://www.instagram.com/reel/.../" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
