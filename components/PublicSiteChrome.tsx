@@ -52,7 +52,7 @@ function Header({
               alt="507 हेड"
               width={96}
               height={96}
-              className="h-10 w-10 shrink-0 rounded-xl object-cover shadow-sm sepia-[.72] saturate-[.8] hue-rotate-[-12deg] sm:h-11 sm:w-11"
+                className="h-12 w-12 shrink-0 rounded-xl object-cover shadow-sm sepia-[.72] saturate-[.8] hue-rotate-[-12deg] sm:h-14 sm:w-14"
             />
             <span className="min-w-0 leading-tight">
               <strong className="block text-lg font-black tracking-tight text-[#222] sm:text-2xl">
@@ -135,7 +135,7 @@ function Footer({
               alt="507 हेड"
               width={96}
               height={96}
-              className="h-10 w-10 rounded-lg object-cover sepia-[.72] saturate-[.8] hue-rotate-[-12deg]"
+                className="h-12 w-12 rounded-lg object-cover sepia-[.72] saturate-[.8] hue-rotate-[-12deg]"
             />
             <span className="leading-tight">
               <strong className="block text-xl font-black text-[#222]">
