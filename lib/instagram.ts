@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from "next/cache";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export type InstagramReel = {
   id: string;
@@ -60,4 +61,31 @@ export async function getLatestInstagramReels(): Promise<InstagramReel[]> {
   } catch {
     return [];
   }
+}
+
+export async function getHomepageInstagramReels(): Promise<InstagramReel[]> {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("instagram-reels");
+
+  const supabase = createPublicClient();
+  if (supabase) {
+    const { data } = await supabase
+      .from("instagram_reels")
+      .select("id, reel_url, title, thumbnail_url")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false })
+      .limit(12);
+    if (data?.length) {
+      return data.map((reel) => ({
+        id: String(reel.id),
+        title: reel.title,
+        image: reel.thumbnail_url || "",
+        url: reel.reel_url,
+      }));
+    }
+  }
+
+  return getLatestInstagramReels();
 }

@@ -54,6 +54,12 @@ const sections = [
     href: "/admin/contact-submissions",
     icon: "✉️",
   },
+  {
+    title: "Instagram Reels",
+    description: "Add reel URLs and show them in the homepage carousel.",
+    href: "/admin/instagram-reels",
+    icon: "📹",
+  },
 ];
 
 export default async function AdminDashboardPage() {

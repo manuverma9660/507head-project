@@ -1,11 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { getAllPublishedArticles, getCategories } from "@/lib/content";
-import { getLatestInstagramReels } from "@/lib/instagram";
+import { getHomepageInstagramReels } from "@/lib/instagram";
 import SocialIcon from "@/components/SocialIcon";
 import HeroSlider from "@/components/HeroSlider";
 import RemoteArticleImage from "@/components/RemoteArticleImage";
+import InstagramReelCarousel from "@/components/InstagramReelCarousel";
 
 export const instant = false;
 
@@ -66,10 +66,12 @@ const fallbackReels = [
 export default async function Home() {
   const [allArticles, instagramReels, categories] = await Promise.all([
     getAllPublishedArticles(),
-    getLatestInstagramReels(),
+    getHomepageInstagramReels(),
     getCategories(),
   ]);
-  const reels = instagramReels.length > 0 ? instagramReels : fallbackReels;
+  const reels = instagramReels.length > 0
+    ? instagramReels
+    : fallbackReels.map((reel, index) => ({ ...reel, id: `fallback-${index}` }));
   const featured =
     allArticles.find(
       (article) => article.slug === "thar-registan-507-head-itihas",
@@ -314,33 +316,7 @@ export default async function Home() {
             </a>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {reels.map((reel) => (
-              <a
-                key={reel.title}
-                href={reel.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative aspect-[9/16] overflow-hidden rounded-xl border border-[#e5ddd3] bg-black shadow-sm"
-              >
-                <Image
-                  src={reel.image}
-                  alt={reel.title}
-                  fill
-                  unoptimized
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                  className="object-cover opacity-85 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <span className="text-lg">▶</span>
-                  <p className="mt-1 text-xs font-bold line-clamp-2 leading-tight">
-                    {reel.title}
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
+          <InstagramReelCarousel reels={reels} />
         </div>
       </section>
 
