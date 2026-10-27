@@ -35,11 +35,16 @@ export default async function InstagramReelsPage({
   if (profile?.role !== "admin" || profile.is_active !== true)
     redirect("/admin/login");
 
-  const { data: reels } = await supabase
-    .from("instagram_reels")
-    .select("id, reel_url, title, thumbnail_url, created_at")
-    .order("sort_order", { ascending: true })
-    .order("created_at", { ascending: false });
+  const { data: settings } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", "site")
+    .maybeSingle();
+  const settingValue = settings?.value;
+  const reels =
+    settingValue && typeof settingValue === "object" && !Array.isArray(settingValue)
+      ? ((settingValue as { instagram_reels?: Array<{ id: string; reel_url: string; title: string }> }).instagram_reels ?? [])
+      : [];
 
   return (
     <main className="min-h-screen bg-[#f7f3ed] p-6 text-[#29231e] md:p-10">

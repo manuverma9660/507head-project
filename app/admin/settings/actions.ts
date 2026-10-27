@@ -56,9 +56,19 @@ export async function saveSiteSettings(formData: FormData) {
     redirect("/admin/settings?error=invalid");
   }
 
+  const { data: existing } = await supabase
+    .from("site_settings")
+    .select("value")
+    .eq("key", "site")
+    .maybeSingle();
+  const existingValue =
+    existing?.value && typeof existing.value === "object" && !Array.isArray(existing.value)
+      ? existing.value
+      : {};
   const { error } = await supabase.from("site_settings").upsert({
     key: "site",
     value: {
+      ...existingValue,
       site_name: siteName,
       site_url: siteUrl,
       contact_email: contactEmail,

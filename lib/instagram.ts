@@ -71,19 +71,29 @@ export async function getHomepageInstagramReels(): Promise<InstagramReel[]> {
   const supabase = createPublicClient();
   if (supabase) {
     const { data } = await supabase
-      .from("instagram_reels")
-      .select("id, reel_url, title, thumbnail_url")
-      .eq("is_active", true)
-      .order("sort_order", { ascending: true })
-      .order("created_at", { ascending: false })
-      .limit(12);
-    if (data?.length) {
-      return data.map((reel) => ({
-        id: String(reel.id),
-        title: reel.title,
-        image: reel.thumbnail_url || "",
-        url: reel.reel_url,
-      }));
+      .from("site_settings")
+      .select("value")
+      .eq("key", "site")
+      .maybeSingle();
+    const value = data?.value;
+    const savedReels =
+      value && typeof value === "object" && !Array.isArray(value)
+        ? (value as { instagram_reels?: unknown }).instagram_reels
+        : null;
+    if (Array.isArray(savedReels)) {
+      const reels = savedReels
+        .filter(
+          (reel): reel is Record<string, unknown> =>
+            Boolean(reel) && typeof reel === "object" && !Array.isArray(reel),
+        )
+        .map((reel) => ({
+          id: typeof reel.id === "string" ? reel.id : "",
+          title: typeof reel.title === "string" ? reel.title : "Instagram Reel",
+          image: typeof reel.thumbnail_url === "string" ? reel.thumbnail_url : "",
+          url: typeof reel.reel_url === "string" ? reel.reel_url : "",
+        }))
+        .filter((reel) => reel.id && reel.url);
+      if (reels.length) return reels;
     }
   }
 
