@@ -56,7 +56,7 @@ export default function NewArticlePage() {
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
     const status =
       submitter instanceof HTMLButtonElement &&
-      ["draft", "in_review", "published", "scheduled"].includes(submitter.value)
+        ["draft", "in_review", "published", "scheduled"].includes(submitter.value)
         ? submitter.value
         : "draft";
 
@@ -119,7 +119,7 @@ export default function NewArticlePage() {
                 placeholder="लेख का शीर्षक लिखें"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
-              <p className="mt-1 text-xs text-gray-500">(40-70 characters recommended)</p>
+              <p className="mt-1 text-xs text-gray-500">(5-15 characters recommended)</p>
             </div>
 
             <div>
@@ -137,7 +137,7 @@ export default function NewArticlePage() {
                 placeholder="jaise: bajra-kheti-ke-tarike"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
-              <p className="mt-1 text-xs text-gray-500">3-6 English words, lowercase aur hyphen ke saath.</p>
+              <p className="mt-1 text-xs text-gray-500">3 English words, lowercase aur hyphen ke saath.</p>
             </div>
 
             {/* Excerpt */}
