@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SocialIcon from "@/components/SocialIcon";
 
 type NavigationCategory = { slug: string; name: string };
@@ -35,6 +35,17 @@ function Header({
 }: {
   categories?: NavigationCategory[];
 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+
   return (
     <>
       <div className="bg-[#6b3915] px-4 py-2 text-center text-xs font-medium tracking-wide text-white sm:text-sm">
@@ -52,7 +63,7 @@ function Header({
               alt="507 हेड"
               width={96}
               height={96}
-                className="h-12 w-12 shrink-0 rounded-xl object-cover shadow-sm sm:h-14 sm:w-14"
+                className="logo-handbook-tone h-12 w-12 shrink-0 rounded-xl object-cover shadow-sm sm:h-14 sm:w-14"
             />
             <span className="min-w-0 leading-tight">
               <strong className="block text-lg font-black tracking-tight text-[#222] sm:text-2xl">
@@ -78,7 +89,7 @@ function Header({
               </Link>
             ))}
           </nav>
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
+          <div className="hidden shrink-0 items-center gap-3 xl:flex">
             {socials.map(([name, href, label]) => (
               <a
                 key={name}
@@ -92,10 +103,62 @@ function Header({
               </a>
             ))}
           </div>
+          <button
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-site-menu"
+            aria-label={menuOpen ? "मेनू बंद करें" : "मेनू खोलें"}
+            onClick={() => setMenuOpen((isOpen) => !isOpen)}
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#e5ddd3] text-[#6b3915] transition hover:bg-[#f7efe3] focus:outline-none focus:ring-2 focus:ring-[#245d92] focus:ring-offset-2 xl:hidden"
+          >
+            {menuOpen ? "×" : "☰"}
+          </button>
         </div>
+        {menuOpen ? (
+          <div
+            id="mobile-site-menu"
+            className="border-t border-[#e5ddd3] bg-[#f7efe3] px-4 py-4 shadow-lg xl:hidden"
+          >
+            <nav aria-label="Mobile navigation" className="grid gap-1">
+              <Link
+                href="/"
+                prefetch
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-4 py-3 text-sm font-bold text-[#8a4b1f] transition hover:bg-white"
+              >
+                होम
+              </Link>
+              {categories.map(({ slug, name }) => (
+                <Link
+                  key={slug}
+                  href={`/category/${slug}`}
+                  prefetch
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg px-4 py-3 text-sm font-semibold text-[#444] transition hover:bg-white hover:text-[#8a4b1f]"
+                >
+                  {name}
+                </Link>
+              ))}
+            </nav>
+            <div className="mt-4 flex gap-3 border-t border-[#e5ddd3] pt-4">
+              {socials.map(([name, href, label]) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8a4b1f] bg-white text-[#6b3915] transition hover:bg-[#8a4b1f] hover:text-white"
+                >
+                  <SocialIcon name={name} className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <nav
           aria-label="श्रेणियाँ"
-          className="no-scrollbar flex snap-x snap-mandatory items-center gap-3 overflow-x-auto border-t border-[#f0e7dd] px-4 py-2.5 text-xs font-bold text-[#555] xl:hidden"
+          className="hidden"
         >
           <Link
             href="/"
@@ -135,7 +198,7 @@ function Footer({
               alt="507 हेड"
               width={96}
               height={96}
-                className="h-12 w-12 rounded-lg object-cover"
+                className="logo-handbook-tone h-12 w-12 rounded-lg object-cover"
             />
             <span className="leading-tight">
               <strong className="block text-xl font-black text-[#222]">

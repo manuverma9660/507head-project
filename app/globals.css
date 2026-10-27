@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --brand: #087f8c;
-  --brand-dark: #075c67;
-  --sand: #e4f5f7;
+  --brand: #8a4b1f;
+  --brand-dark: #6b3915;
+  --sand: #f7efe3;
   --text: #222222;
   --muted: #666666;
   --surface: #ffffff;
-  --border: #cde7ea;
-  --focus: #087f8c;
+  --border: #e5ddd3;
+  --focus: #245d92;
   --container: 1140px;
   --radius: 12px;
   --shadow: 0 8px 24px rgba(58, 39, 22, 0.07);
@@ -36,7 +36,7 @@ body {
   margin: 0;
   min-width: 0;
   overflow-x: clip;
-  background: var(--surface);
+  background: var(--sand);
   color: var(--text);
   font-size: 17px;
   line-height: 1.65;
@@ -62,6 +62,16 @@ button:focus-visible {
 img {
   display: block;
   max-width: 100%;
+}
+
+/* Keep horizontally scrollable rails usable without exposing a browser scrollbar. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Keep long Hindi labels, URLs and data tables inside small viewports. */
@@ -1195,36 +1205,41 @@ button {
   color: #fff !important;
 }
 
-/* Public pages use the teal palette from the 507 Head logo. */
+/* Public pages use the handbook's desert palette. */
 .public-site-shell {
-  --brand: #087f8c;
-  --brand-dark: #075c67;
-  --sand: #e4f5f7;
-  --border: #cde7ea;
+  --brand: #8a4b1f;
+  --brand-dark: #6b3915;
+  --sand: #f7efe3;
+  --border: #e5ddd3;
 }
 
 .public-site-shell .bg-\[\#6b3915\],
 .public-site-shell .bg-\[\#8a4b1f\] {
-  background-color: #087f8c !important;
+  background-color: #8a4b1f !important;
 }
 
 .public-site-shell .bg-\[\#f7efe3\],
 .public-site-shell .bg-\[\#fcf9f5\] {
-  background-color: #e4f5f7 !important;
+  background-color: #f7efe3 !important;
 }
 
 .public-site-shell .text-\[\#8a4b1f\] {
-  color: #087f8c !important;
+  color: #8a4b1f !important;
 }
 
 .public-site-shell .border-\[\#e5ddd3\],
 .public-site-shell .border-\[\#f0e7dd\] {
-  border-color: #cde7ea !important;
+  border-color: #e5ddd3 !important;
 }
 
 .public-site-shell .hover\:text-\[\#8a4b1f\]:hover,
 .public-site-shell .group:hover .group-hover\:text-\[\#8a4b1f\] {
-  color: #087f8c !important;
+  color: #8a4b1f !important;
+}
+
+/* Preserve the approved mark while harmonising its teal artwork with the desert palette. */
+.public-site-shell .logo-handbook-tone {
+  filter: sepia(0.72) saturate(0.95) hue-rotate(338deg) contrast(0.94);
 }
 
 .homepage {

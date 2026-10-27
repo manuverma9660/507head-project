@@ -53,7 +53,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
             </p>
             <Link
               href={slide.href}
-              className="mt-7 inline-flex items-center rounded-xl bg-[#0a92a0] px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#056a75]"
+              className="mt-7 inline-flex items-center rounded-xl bg-[#8a4b1f] px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#6b3915]"
             >
               पूरा लेख पढ़ें{" "}
               <span className="ml-2" aria-hidden>
