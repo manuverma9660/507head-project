@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import SocialIcon from "@/components/SocialIcon";
@@ -46,9 +47,13 @@ function Header({
             prefetch
             className="flex min-w-0 items-center gap-2 sm:gap-3"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#8a4b1f] text-base font-black text-white shadow-sm sm:h-11 sm:w-11 sm:text-lg">
-              507
-            </span>
+            <Image
+              src="/images/507-head-logo.jfif"
+              alt="507 हेड"
+              width={96}
+              height={96}
+              className="h-10 w-10 shrink-0 rounded-xl object-cover shadow-sm sepia-[.72] saturate-[.8] hue-rotate-[-12deg] sm:h-11 sm:w-11"
+            />
             <span className="min-w-0 leading-tight">
               <strong className="block text-lg font-black tracking-tight text-[#222] sm:text-2xl">
                 507 हेड
@@ -125,9 +130,13 @@ function Footer({
       <div className="mx-auto grid max-w-7xl gap-10 border-b border-[#f0e7dd] px-4 pb-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#8a4b1f] text-base font-black text-white">
-              507
-            </span>
+            <Image
+              src="/images/507-head-logo.jfif"
+              alt="507 हेड"
+              width={96}
+              height={96}
+              className="h-10 w-10 rounded-lg object-cover sepia-[.72] saturate-[.8] hue-rotate-[-12deg]"
+            />
             <span className="leading-tight">
               <strong className="block text-xl font-black text-[#222]">
                 507 हेड
