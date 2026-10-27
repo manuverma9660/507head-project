@@ -56,7 +56,7 @@ export default async function InstagramReelsPage({
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#8a4b1f]">Social media</p>
             <h1 className="mt-2 text-3xl font-bold md:text-4xl">Instagram Reels</h1>
-            <p className="mt-2 text-sm text-[#665a50]">Reel URL डालें। Cover image optional है; खाली रहने पर Instagram embed दिखेगा।</p>
+            <p className="mt-2 text-sm text-[#665a50]">Reel URL डालें। आपकी connected Instagram Reel का cover अपने-आप आएगा; चाहें तो cover image URL भी डाल सकते हैं।</p>
           </div>
           <Link href="/" target="_blank" className="rounded-xl border border-[#8a4b1f] px-4 py-2 text-sm font-bold text-[#8a4b1f]">
             Homepage देखें ↗

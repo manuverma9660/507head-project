@@ -3,6 +3,7 @@
 import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getInstagramReelMetadata } from "@/lib/instagram";
 
 async function getAdmin() {
   const supabase = await createClient();
@@ -102,12 +103,18 @@ async function saveReels(
 export async function addInstagramReel(formData: FormData) {
   const { supabase, user } = await getAdmin();
   const reelUrl = text(formData, "reel_url");
-  const title = text(formData, "title") || "Instagram Reel";
+  const inputTitle = text(formData, "title");
   const thumbnailUrl = text(formData, "thumbnail_url");
   if (!isInstagramReelUrl(reelUrl))
     redirect("/admin/instagram-reels?status=invalid_reel");
   if (thumbnailUrl && !isHttpsUrl(thumbnailUrl))
     redirect("/admin/instagram-reels?status=invalid_cover");
+
+  const metadata = thumbnailUrl || inputTitle
+    ? {}
+    : await getInstagramReelMetadata(reelUrl);
+  const title = inputTitle || metadata.title || "Instagram Reel";
+  const coverImage = thumbnailUrl || metadata.image || null;
 
   try {
     await saveReels(supabase, user.id, (reels) => [
@@ -115,7 +122,7 @@ export async function addInstagramReel(formData: FormData) {
         id: crypto.randomUUID(),
         reel_url: reelUrl.replace(/\/$/, ""),
         title: title.slice(0, 120),
-        thumbnail_url: thumbnailUrl || null,
+        thumbnail_url: coverImage,
         created_at: new Date().toISOString(),
       },
       ...reels,
