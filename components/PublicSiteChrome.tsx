@@ -59,7 +59,7 @@ function Header({
             className="flex min-w-0 items-center gap-2 sm:gap-3"
           >
             <Image
-              src="/images/507-head-logo.jfif"
+              src="/images/507-head-logo-brown.png"
               alt="507 हेड"
               width={96}
               height={96}
@@ -194,7 +194,7 @@ function Footer({
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/images/507-head-logo.jfif"
+              src="/images/507-head-logo-brown.png"
               alt="507 हेड"
               width={96}
               height={96}
