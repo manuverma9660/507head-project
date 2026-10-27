@@ -137,7 +137,7 @@ export default function NewArticlePage() {
                 placeholder="jaise: bajra-kheti-ke-tarike"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
-              <p className="mt-1 text-xs text-gray-500">3 English words, lowercase aur hyphen ke saath.</p>
+              <p className="mt-1 text-xs text-gray-500">3-6 English words, lowercase aur hyphen ke saath.</p>
             </div>
 
             {/* Excerpt */}
