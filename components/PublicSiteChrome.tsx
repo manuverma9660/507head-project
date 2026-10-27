@@ -51,7 +51,7 @@ function Header({
       <div className="bg-[#6b3915] px-4 py-2 text-center text-xs font-medium tracking-wide text-white sm:text-sm">
         507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर
       </div>
-      <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-[#F7F6EE]/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-4 sm:px-6 sm:py-3.5">
           <Link
             href="/"
@@ -63,7 +63,7 @@ function Header({
               alt="507 हेड"
               width={96}
               height={96}
-                className="logo-handbook-tone h-12 w-12 shrink-0 rounded-xl object-cover shadow-sm sm:h-14 sm:w-14"
+                className="logo-handbook-tone h-12 w-12 shrink-0 rounded-xl bg-white object-cover shadow-sm sm:h-14 sm:w-14"
             />
             <span className="min-w-0 leading-tight">
               <strong className="block text-lg font-black tracking-tight text-[#8a4b1f] sm:text-2xl">
@@ -198,7 +198,7 @@ function Footer({
               alt="507 हेड"
               width={96}
               height={96}
-                className="logo-handbook-tone h-12 w-12 rounded-lg object-cover"
+                className="logo-handbook-tone h-12 w-12 rounded-lg bg-white object-cover"
             />
             <span className="leading-tight">
               <strong className="block text-xl font-black text-[#222]">
