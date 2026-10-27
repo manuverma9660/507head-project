@@ -38,7 +38,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
       {/* Top Header */}
 {/* Hero Banner */}
-      <section className="bg-[#f7efe3] border-b border-[#e5ddd3] py-12 sm:py-16">
+      <section className="bg-[#F7F4DE] border-b border-[#e5ddd3] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <span className="inline-block rounded-full bg-[#8a4b1f]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#8a4b1f] mb-3">
             संपादकीय संपर्क
@@ -69,7 +69,7 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-4 text-sm">
-              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-white">
+              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-[#F7F6EE]">
                 <span className="text-xl">📧</span>
                 <div>
                   <strong className="block text-[#222]">ईमेल</strong>
@@ -82,7 +82,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-white">
+              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-[#F7F6EE]">
                 <span className="text-xl">📱</span>
                 <div>
                   <strong className="block text-[#222]">
@@ -92,7 +92,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-white">
+              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-[#F7F6EE]">
                 <span className="text-xl">🕒</span>
                 <div>
                   <strong className="block text-[#222]">कार्य समय</strong>
@@ -105,7 +105,7 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="rounded-2xl border border-[#e5ddd3] bg-white p-8 shadow-sm">
+          <div className="rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] p-8 shadow-sm">
             {submitted ? (
               <div className="p-8 text-center space-y-4">
                 <span className="text-5xl block">✅</span>

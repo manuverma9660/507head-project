@@ -3,10 +3,10 @@
 :root {
   --brand: #8a4b1f;
   --brand-dark: #6b3915;
-  --sand: #f7efe3;
+  --sand: #F7F4DE;
   --text: #222222;
   --muted: #666666;
-  --surface: #ffffff;
+  --surface: #F7F6EE;
   --border: #e5ddd3;
   --focus: #245d92;
   --container: 1140px;
@@ -128,7 +128,7 @@ button {
 }
 
 .site-header {
-  background: #fff;
+  background: #F7F6EE;
   border-bottom: 1px solid var(--border);
 }
 
@@ -483,7 +483,7 @@ button {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  background: #fff;
+  background: #F7F6EE;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -574,7 +574,7 @@ button {
 .follow-secondary {
   border: 1px solid var(--brand);
   color: var(--brand-dark);
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .outline-link:hover,
@@ -594,7 +594,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .reel-image {
@@ -656,7 +656,7 @@ button {
   padding: 23px;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .category-heading {
@@ -725,7 +725,7 @@ button {
 
 .follow-actions .primary-link {
   color: var(--brand-dark);
-  background: #fff;
+  background: #F7F6EE;
   border-color: #fff;
 }
 
@@ -743,7 +743,7 @@ button {
 
 .follow-actions .follow-secondary:hover {
   color: var(--brand-dark);
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .gallery-grid {
@@ -757,7 +757,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .gallery-image {
@@ -1209,7 +1209,7 @@ button {
 .public-site-shell {
   --brand: #8a4b1f;
   --brand-dark: #6b3915;
-  --sand: #f7efe3;
+  --sand: #F7F4DE;
   --border: #e5ddd3;
 }
 
@@ -1221,9 +1221,9 @@ button {
   background-color: #8a4b1f !important;
 }
 
-.public-site-shell .bg-\[\#f7efe3\],
+.public-site-shell .bg-\[\#F7F4DE\],
 .public-site-shell .bg-\[\#fcf9f5\] {
-  background-color: #f7efe3 !important;
+  background-color: #F7F4DE !important;
 }
 
 .public-site-shell .text-\[\#8a4b1f\] {
@@ -1260,7 +1260,7 @@ button {
 .homepage .site-header {
   position: relative;
   z-index: 5;
-  background: #fff;
+  background: #F7F6EE;
   border-bottom: 1px solid var(--border);
 }
 
@@ -1498,7 +1498,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: #F7F6EE;
   box-shadow: 0 3px 14px rgba(58, 39, 22, 0.04);
   transition:
     transform 180ms ease,
@@ -1610,7 +1610,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .homepage .category-image {
@@ -1644,7 +1644,7 @@ button {
 
 .homepage .videos-section,
 .homepage .gallery-section {
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .homepage .reels-grid {
@@ -1660,7 +1660,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .homepage .reel-image {
@@ -1706,7 +1706,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: #fff;
+  background: #F7F6EE;
 }
 
 .homepage .gallery-image {
@@ -1780,7 +1780,7 @@ button {
 
 .homepage .social-links .social-link:hover {
   border-color: #fff;
-  background: #fff;
+  background: #F7F6EE;
   color: var(--brand-dark);
 }
 

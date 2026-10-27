@@ -53,7 +53,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             name="q"
             defaultValue={query}
             placeholder="विषय, श्रेणी या शब्द लिखें"
-            className="min-h-11 flex-1 rounded-xl border border-[#d8c8b5] bg-white px-4 text-sm outline-none focus:border-[#8a4b1f] focus:ring-2 focus:ring-[#245d92]"
+            className="min-h-11 flex-1 rounded-xl border border-[#d8c8b5] bg-[#F7F6EE] px-4 text-sm outline-none focus:border-[#8a4b1f] focus:ring-2 focus:ring-[#245d92]"
           />
           <button className="min-h-11 rounded-xl bg-[#8a4b1f] px-5 text-sm font-bold text-white hover:bg-[#6b3915]">
             खोजें
@@ -66,7 +66,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               “{query}” के लिए {results.length} परिणाम मिले।
             </p>
             {results.length === 0 ? (
-              <p className="mt-8 rounded-2xl border border-[#e7ddd0] bg-white p-8 text-center text-sm text-gray-600">
+              <p className="mt-8 rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-8 text-center text-sm text-gray-600">
                 कोई प्रकाशित लेख नहीं मिला। दूसरा शब्द आज़माएँ।
               </p>
             ) : (
@@ -75,7 +75,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   <article
                     key={article.id}
                     data-article-href={`/blog/${article.slug}`}
-                    className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm"
+                    className="rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-5 shadow-sm"
                   >
                     <p className="text-xs font-bold text-[#8a4b1f]">
                       {article.category_name}

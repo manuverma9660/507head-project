@@ -90,7 +90,7 @@ function renderNode(node: RichTextNode, key: string): ReactNode {
       return (
         <th
           key={key}
-          className="border border-[#e5ddd3] bg-[#f7efe3] p-3 text-left font-bold"
+          className="border border-[#e5ddd3] bg-[#F7F4DE] p-3 text-left font-bold"
         >
           {children}
         </th>

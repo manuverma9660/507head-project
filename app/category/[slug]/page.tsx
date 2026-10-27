@@ -75,7 +75,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         }}
       />
       {/* Category Hero Banner */}
-      <section className="bg-[#f7efe3] border-b border-[#e5ddd3] py-10 sm:py-14">
+      <section className="bg-[#F7F4DE] border-b border-[#e5ddd3] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex items-center gap-2 text-sm text-[#8a4b1f] mb-4">
             <Link href="/" className="hover:underline">
@@ -108,7 +108,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       {/* Articles Grid */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         {articles.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#e5ddd3] bg-white p-12 text-center">
+          <div className="rounded-2xl border border-dashed border-[#e5ddd3] bg-[#F7F6EE] p-12 text-center">
             <span className="text-4xl mb-4 block">📰</span>
             <h2 className="text-xl font-bold">
               इस श्रेणी में अभी कोई लेख उपलब्ध नहीं है
@@ -130,7 +130,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <article
                 key={article.id}
                 data-article-href={`/blog/${article.slug}`}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition hover:-translate-y-1 hover:shadow-lg"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] transition hover:-translate-y-1 hover:shadow-lg"
               >
                 <Link
                   href={`/blog/${article.slug}`}

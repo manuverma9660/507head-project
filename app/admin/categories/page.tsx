@@ -71,7 +71,7 @@ export default async function AdminCategoriesPage({
 
         <CategoryStatusNotice status={category_status} />
 
-        <section className="mb-8 hidden rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:p-6">
+        <section className="mb-8 hidden rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-5 shadow-sm md:p-6">
           <h2 className="text-lg font-bold">नई श्रेणी जोड़ें</h2>
           <p className="mt-1 text-sm text-gray-600">
             यह श्रेणी सीधे Supabase में save होगी और वेबसाइट पर दिखेगी।
@@ -108,9 +108,9 @@ export default async function AdminCategoriesPage({
           </form>
         </section>
 
-        <div className="overflow-x-auto rounded-2xl border border-[#e8dac9] bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] shadow-sm">
           <table className="w-full min-w-[760px] text-left text-sm">
-            <thead className="border-b border-[#e8dac9] bg-[#f7efe3] text-xs font-bold uppercase tracking-wider text-[#6b3915]">
+            <thead className="border-b border-[#e8dac9] bg-[#F7F4DE] text-xs font-bold uppercase tracking-wider text-[#6b3915]">
               <tr>
                 <th className="px-6 py-4">क्रम</th>
                 <th className="px-6 py-4">श्रेणी का नाम</th>

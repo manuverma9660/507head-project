@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f7f3ed] px-6 text-center text-[#29231e]">
-      <section className="max-w-lg rounded-2xl border border-[#e7ddd0] bg-white p-8 shadow-sm md:p-12">
+      <section className="max-w-lg rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-8 shadow-sm md:p-12">
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#8a4b1f]">
           507 Head
         </p>

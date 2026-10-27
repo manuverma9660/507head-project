@@ -139,7 +139,7 @@ export default async function Home() {
       />
 {/* Featured Story Hero */}
       <HeroSlider slides={heroSlides} />
-      <section className="hidden border-b border-[#e5ddd3] bg-gradient-to-b from-[#f7efe3] to-[#fcf9f5] py-10 sm:py-16">
+      <section className="hidden border-b border-[#e5ddd3] bg-gradient-to-b from-[#F7F4DE] to-[#fcf9f5] py-10 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-4 flex items-center gap-2">
             <span className="flex h-2.5 w-2.5 rounded-full bg-[#8a4b1f] animate-pulse" />
@@ -196,7 +196,7 @@ export default async function Home() {
             <div className="md:col-span-6">
               <Link
                 href={`/blog/${featured.slug}`}
-                className="group relative block aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white shadow-md"
+                className="group relative block aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] shadow-md"
               >
                 <RemoteArticleImage
                   src={featured.featured_image_url}
@@ -233,7 +233,7 @@ export default async function Home() {
               <article
                 key={article.id}
                 data-article-href={`/blog/${article.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] transition duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <Link
                 href={`/blog/${article.slug}`}
@@ -291,7 +291,7 @@ export default async function Home() {
       </section>
 
       {/* Reel Thumbnail Strip (Static Thumbnails linking to Instagram) */}
-      <section className="border-y border-[#e5ddd3] bg-white py-12">
+      <section className="border-y border-[#e5ddd3] bg-[#F7F6EE] py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -336,7 +336,7 @@ export default async function Home() {
           return (
             <div
               key={cat.slug}
-              className={`relative isolate py-10 sm:py-12 ${WHITE_CATEGORY_BACKGROUND_SLUGS.has(cat.slug) ? "before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-screen before:-translate-x-1/2 before:bg-white" : ""}`}
+              className={`relative isolate py-10 sm:py-12 ${WHITE_CATEGORY_BACKGROUND_SLUGS.has(cat.slug) ? "before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-screen before:-translate-x-1/2 before:bg-[#F7F6EE]" : ""}`}
             >
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#8a4b1f] pb-3">
                 <div className="flex items-center gap-3">
@@ -347,7 +347,7 @@ export default async function Home() {
                 </div>
                 <Link
                   href={`/category/${cat.slug}`}
-                  className="inline-flex items-center gap-1 rounded-full bg-[#f7efe3] px-3.5 py-1.5 text-xs font-bold text-[#8a4b1f] transition hover:bg-[#8a4b1f] hover:text-white"
+                  className="inline-flex items-center gap-1 rounded-full bg-[#F7F4DE] px-3.5 py-1.5 text-xs font-bold text-[#8a4b1f] transition hover:bg-[#8a4b1f] hover:text-white"
                 >
                   <span>सभी खबरें देखें</span>
                   <span aria-hidden="true">→</span>
@@ -359,7 +359,7 @@ export default async function Home() {
                   <article
                     key={article.id}
                     data-article-href={`/blog/${article.slug}`}
-                    className="group flex flex-col overflow-hidden rounded-xl border border-[#e5ddd3] bg-white transition hover:-translate-y-1 hover:shadow-md"
+                    className="group flex flex-col overflow-hidden rounded-xl border border-[#e5ddd3] bg-[#F7F6EE] transition hover:-translate-y-1 hover:shadow-md"
                   >
                     <Link
                       href={`/blog/${article.slug}`}
@@ -412,7 +412,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h2 className="text-2xl font-black">507 हेड से जुड़े रहें</h2>
-            <p className="mt-1 text-sm text-[#f7efe3]">
+            <p className="mt-1 text-sm text-[#F7F4DE]">
               ताज़ा खबरों, कृषि सलाह और स्थानीय अपडेट्स के लिए हमारे सोशल मीडिया
               पर जुड़ें।
             </p>
@@ -423,7 +423,7 @@ export default async function Home() {
               href={FACEBOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-white hover:text-black"
+              className="flex items-center gap-2 rounded-xl bg-[#F7F6EE]/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#F7F6EE] hover:text-black"
             >
               <SocialIcon name="facebook" className="h-3.5 w-3.5" />
               Facebook ↗
@@ -432,7 +432,7 @@ export default async function Home() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-white hover:text-black"
+              className="flex items-center gap-2 rounded-xl bg-[#F7F6EE]/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#F7F6EE] hover:text-black"
             >
               <svg
                 width="14"
@@ -448,7 +448,7 @@ export default async function Home() {
               href={YOUTUBE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-white hover:text-black"
+              className="flex items-center gap-2 rounded-xl bg-[#F7F6EE]/10 px-5 py-2.5 text-xs font-bold backdrop-blur-sm transition hover:bg-[#F7F6EE] hover:text-black"
             >
               <svg
                 width="14"

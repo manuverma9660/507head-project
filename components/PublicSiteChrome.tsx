@@ -51,7 +51,7 @@ function Header({
       <div className="bg-[#6b3915] px-4 py-2 text-center text-xs font-medium tracking-wide text-white sm:text-sm">
         507 HEAD — अपनी मिट्टी, अपनी पहचान, अपनी कहानियाँ • छतरगढ़, बीकानेर
       </div>
-      <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-white/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-[#e5ddd3] bg-[#F7F6EE]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-1.5 px-3 py-3 sm:gap-4 sm:px-6 sm:py-3.5">
           <Link
             href="/"
@@ -97,7 +97,7 @@ function Header({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-[#F7F6EE] text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
               >
                 <SocialIcon name={name} className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
@@ -109,7 +109,7 @@ function Header({
             aria-controls="mobile-site-menu"
             aria-label={menuOpen ? "मेनू बंद करें" : "मेनू खोलें"}
             onClick={() => setMenuOpen((isOpen) => !isOpen)}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#e5ddd3] text-[#6b3915] transition hover:bg-[#f7efe3] focus:outline-none focus:ring-2 focus:ring-[#245d92] focus:ring-offset-2 xl:hidden"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[#e5ddd3] text-[#6b3915] transition hover:bg-[#F7F4DE] focus:outline-none focus:ring-2 focus:ring-[#245d92] focus:ring-offset-2 xl:hidden"
           >
             {menuOpen ? "×" : "☰"}
           </button>
@@ -117,14 +117,14 @@ function Header({
         {menuOpen ? (
           <div
             id="mobile-site-menu"
-            className="border-t border-[#e5ddd3] bg-[#f7efe3] px-4 py-4 shadow-lg xl:hidden"
+            className="border-t border-[#e5ddd3] bg-[#F7F4DE] px-4 py-4 shadow-lg xl:hidden"
           >
             <nav aria-label="Mobile navigation" className="grid gap-1">
               <Link
                 href="/"
                 prefetch
                 onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-4 py-3 text-sm font-bold text-[#8a4b1f] transition hover:bg-white"
+                className="rounded-lg px-4 py-3 text-sm font-bold text-[#8a4b1f] transition hover:bg-[#F7F6EE]"
               >
                 होम
               </Link>
@@ -134,7 +134,7 @@ function Header({
                   href={`/category/${slug}`}
                   prefetch
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-4 py-3 text-sm font-semibold text-[#8a4b1f] transition hover:bg-white hover:text-[#8a4b1f]"
+                  className="rounded-lg px-4 py-3 text-sm font-semibold text-[#8a4b1f] transition hover:bg-[#F7F6EE] hover:text-[#8a4b1f]"
                 >
                   {name}
                 </Link>
@@ -148,7 +148,7 @@ function Header({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8a4b1f] bg-white text-[#6b3915] transition hover:bg-[#8a4b1f] hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8a4b1f] bg-[#F7F6EE] text-[#6b3915] transition hover:bg-[#8a4b1f] hover:text-white"
                 >
                   <SocialIcon name={name} className="h-5 w-5" />
                 </a>
@@ -189,7 +189,7 @@ function Footer({
   categories?: NavigationCategory[];
 }) {
   return (
-    <footer className="border-t border-[#e5ddd3] bg-white pb-8 pt-14 text-[#555]">
+    <footer className="border-t border-[#e5ddd3] bg-[#F7F6EE] pb-8 pt-14 text-[#555]">
       <div className="mx-auto grid max-w-7xl gap-10 border-b border-[#f0e7dd] px-4 pb-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">

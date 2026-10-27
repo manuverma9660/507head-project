@@ -92,7 +92,7 @@ export default async function ArticleRevisionsPage({
               return (
                 <li
                   key={revision.id}
-                  className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm"
+                  className="rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-5 shadow-sm"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="font-bold text-[#8a4b1f]">
@@ -126,7 +126,7 @@ export default async function ArticleRevisionsPage({
                       name="revision_id"
                       value={revision.id}
                     />
-                    <button className="rounded-lg border border-[#8a4b1f] px-3 py-2 text-xs font-bold text-[#8a4b1f] hover:bg-[#f7efe3]">
+                    <button className="rounded-lg border border-[#8a4b1f] px-3 py-2 text-xs font-bold text-[#8a4b1f] hover:bg-[#F7F4DE]">
                       इस revision को restore करें
                     </button>
                   </form>
@@ -135,7 +135,7 @@ export default async function ArticleRevisionsPage({
             })}
           </ol>
         ) : (
-          <p className="mt-8 rounded-2xl border border-[#e7ddd0] bg-white p-8 text-center text-sm text-gray-600">
+          <p className="mt-8 rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-8 text-center text-sm text-gray-600">
             अभी कोई revision नहीं है। अगला save, update या publish revision बना
             देगा।
           </p>

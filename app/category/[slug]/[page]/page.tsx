@@ -69,7 +69,7 @@ export default async function CategoryPaginationPage({
             <article
               key={article.id}
               data-article-href={`/blog/${article.slug}`}
-              className="overflow-hidden rounded-2xl border border-[#e7ddd0] bg-white shadow-sm"
+              className="overflow-hidden rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] shadow-sm"
             >
               <Link
                 href={`/blog/${article.slug}`}
@@ -99,7 +99,7 @@ export default async function CategoryPaginationPage({
                 ? `/category/${slug}`
                 : `/category/${slug}/${pageNumber - 1}`
             }
-            className="rounded-xl border border-[#8a4b1f] px-4 py-2 text-sm font-bold text-[#8a4b1f] hover:bg-[#f7efe3]"
+            className="rounded-xl border border-[#8a4b1f] px-4 py-2 text-sm font-bold text-[#8a4b1f] hover:bg-[#F7F4DE]"
           >
             ← पिछला पेज
           </Link>

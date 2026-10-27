@@ -203,7 +203,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Author & Publication Meta Bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-y border-[#e5ddd3] py-4 mb-8 text-sm text-[#666]">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f7efe3] border border-[#e5ddd3] text-lg font-bold text-[#8a4b1f]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F7F4DE] border border-[#e5ddd3] text-lg font-bold text-[#8a4b1f]">
               ✍️
             </div>
             <div>
@@ -268,7 +268,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {article.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-lg bg-[#f7efe3] border border-[#e5ddd3] px-3 py-1.5 text-xs font-semibold text-[#6b3915]"
+                  className="rounded-lg bg-[#F7F4DE] border border-[#e5ddd3] px-3 py-1.5 text-xs font-semibold text-[#6b3915]"
                 >
                   #{tag}
                 </span>
@@ -278,8 +278,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}
 
         {/* Author Bio Box */}
-        <div className="mt-12 rounded-2xl border border-[#e5ddd3] bg-white p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-5">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#f7efe3] border border-[#e5ddd3] text-2xl">
+        <div className="mt-12 rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-5">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#F7F4DE] border border-[#e5ddd3] text-2xl">
             📰
           </div>
           <div className="text-center sm:text-left">
@@ -333,7 +333,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <Link
                   key={rel.id}
                   href={`/blog/${rel.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-xl border border-[#e5ddd3] bg-white transition hover:-translate-y-1 hover:shadow-md"
+                  className="group flex flex-col overflow-hidden rounded-xl border border-[#e5ddd3] bg-[#F7F6EE] transition hover:-translate-y-1 hover:shadow-md"
                 >
                   <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#eee]">
                     <Image

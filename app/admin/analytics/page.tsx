@@ -96,7 +96,7 @@ export default async function AdminAnalyticsPage() {
               value: total,
               icon: "📰",
               color: "text-[#8a4b1f]",
-              bg: "bg-[#f7efe3]",
+              bg: "bg-[#F7F4DE]",
             },
             {
               label: "प्रकाशित",
@@ -122,7 +122,7 @@ export default async function AdminAnalyticsPage() {
           ].map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm"
+              className="rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-5 shadow-sm"
             >
               <div
                 className={`mb-2 flex h-10 w-10 items-center justify-center rounded-xl ${s.bg} text-xl`}
@@ -137,7 +137,7 @@ export default async function AdminAnalyticsPage() {
 
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Recent Articles */}
-          <div className="rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-bold">हाल के लेख</h2>
             {recentArticles.length === 0 ? (
               <p className="text-sm text-gray-500">कोई लेख नहीं मिला।</p>
@@ -179,7 +179,7 @@ export default async function AdminAnalyticsPage() {
           </div>
 
           {/* Category Distribution */}
-          <div className="rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-bold">श्रेणी वितरण</h2>
             {topCategories.length === 0 ? (
               <p className="text-sm text-gray-500">कोई डेटा नहीं।</p>
@@ -211,7 +211,7 @@ export default async function AdminAnalyticsPage() {
         </div>
 
         {/* Note about page views */}
-        <div className="mt-6 rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm">
+        <div className="mt-6 rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 shadow-sm">
           <h2 className="mb-2 text-lg font-bold">Page Views Analytics</h2>
           <p className="text-sm text-gray-600">
             Real-time page views tracking के लिए{" "}

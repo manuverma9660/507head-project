@@ -13,7 +13,7 @@ export default function AboutPage() {
     <main className="min-h-screen bg-[#fcf9f5] text-[#222222]">
       {/* Top Header */}
 {/* Hero Section */}
-      <section className="bg-[#f7efe3] border-b border-[#e5ddd3] py-14 sm:py-20">
+      <section className="bg-[#F7F4DE] border-b border-[#e5ddd3] py-14 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <span className="inline-block rounded-full bg-[#8a4b1f]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#8a4b1f] mb-4">
             छतरगढ़ • बीकानेर • राजस्थान
@@ -122,7 +122,7 @@ export default function AboutPage() {
             ].map((pillar) => (
               <div
                 key={pillar.title}
-                className="rounded-xl border border-[#e5ddd3] bg-white p-5"
+                className="rounded-xl border border-[#e5ddd3] bg-[#F7F6EE] p-5"
               >
                 <strong className="block text-[#8a4b1f] text-base">
                   {pillar.title}
@@ -133,7 +133,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-[#f7efe3] border border-[#e5ddd3] p-8 text-center space-y-4">
+        <div className="rounded-2xl bg-[#F7F4DE] border border-[#e5ddd3] p-8 text-center space-y-4">
           <h3 className="text-2xl font-bold text-[#222]">
             क्या आपके पास कोई कहानी या जानकारी है?
           </h3>

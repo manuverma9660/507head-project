@@ -297,7 +297,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
       {formOpen && (
         <section
           id="article-form"
-          className="scroll-mt-6 rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm md:p-7"
+          className="scroll-mt-6 rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-5 shadow-sm md:p-7"
         >
           <h2 className="text-xl font-bold">
             {editingId ? "लेख एडिट करें" : "नया लेख बनाएँ"}
@@ -338,7 +338,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
                 id="article-category"
                 value={categorySlug}
                 onChange={(e) => setCategorySlug(e.target.value)}
-                className="w-full rounded-xl border border-[#e7ddd0] bg-white px-4 py-3 outline-none focus:border-[#8a4b1f]"
+                className="w-full rounded-xl border border-[#e7ddd0] bg-[#F7F6EE] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               >
                 {CATEGORIES.map((category) => (
                   <option key={category.slug} value={category.slug}>
@@ -480,10 +480,10 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
 
           {showPreview && (
             <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 p-4">
-              <div className="mx-auto my-8 max-w-3xl rounded-2xl bg-white p-6 shadow-xl md:p-10">
+              <div className="mx-auto my-8 max-w-3xl rounded-2xl bg-[#F7F6EE] p-6 shadow-xl md:p-10">
                 <div className="flex items-center justify-between border-b border-[#e7ddd0] pb-4">
                   <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">Draft Preview</p>
-                  <button type="button" onClick={() => setShowPreview(false)} className="rounded-lg px-3 py-2 font-bold text-[#8a4b1f] hover:bg-[#f7efe3]">बंद करें</button>
+                  <button type="button" onClick={() => setShowPreview(false)} className="rounded-lg px-3 py-2 font-bold text-[#8a4b1f] hover:bg-[#F7F4DE]">बंद करें</button>
                 </div>
                 <article className="mx-auto max-w-2xl py-8">
                   <p className="text-sm font-bold text-[#8a4b1f]">{categorySlug}</p>
@@ -501,7 +501,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
         </section>
       )}
 
-      <section className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm md:p-7">
+      <section className="rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-5 shadow-sm md:p-7">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h2 className="text-xl font-bold">सभी लेख ({filtered.length})</h2>
 
@@ -518,7 +518,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
               aria-label="श्रेणी से फ़िल्टर करें"
               value={categoryFilter}
               onChange={(event) => setCategoryFilter(event.target.value)}
-              className="rounded-xl border border-[#e7ddd0] bg-white px-4 py-3 text-sm"
+              className="rounded-xl border border-[#e7ddd0] bg-[#F7F6EE] px-4 py-3 text-sm"
             >
               <option value="all">सभी श्रेणियां</option>
               <option value="news">📢 ताज़ा खबरें</option>
@@ -537,7 +537,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
               onChange={(event) =>
                 setFilter(event.target.value as ArticleStatus)
               }
-              className="rounded-xl border border-[#e7ddd0] bg-white px-4 py-3 text-sm"
+              className="rounded-xl border border-[#e7ddd0] bg-[#F7F6EE] px-4 py-3 text-sm"
             >
               <option value="all">सभी स्थिति</option>
               <option value="draft">Draft</option>
@@ -575,7 +575,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
                     </td>
 
                     <td className="px-3 py-4">
-                      <span className="inline-block rounded-lg bg-[#f7efe3] px-2.5 py-1 text-xs font-bold text-[#8a4b1f]">
+                      <span className="inline-block rounded-lg bg-[#F7F4DE] px-2.5 py-1 text-xs font-bold text-[#8a4b1f]">
                         {article.category_name || "ताज़ा खबरें"}
                       </span>
                     </td>
@@ -630,7 +630,7 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
                         {id && !id.startsWith("art-") && (
                           <Link
                             href={`/admin/articles/${id}/revisions`}
-                            className="rounded-lg border border-[#8a4b1f] px-3 py-2 font-medium text-[#8a4b1f] hover:bg-[#f7efe3]"
+                            className="rounded-lg border border-[#8a4b1f] px-3 py-2 font-medium text-[#8a4b1f] hover:bg-[#F7F4DE]"
                           >
                             History
                           </Link>

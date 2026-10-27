@@ -69,7 +69,7 @@ export default async function InstagramReelsPage({
 
         <InstagramReelForm />
         {/*
-        <form action={addInstagramReel} className="mt-7 grid gap-4 rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:grid-cols-2 md:p-7">
+        <form action={addInstagramReel} className="mt-7 grid gap-4 rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-5 shadow-sm md:grid-cols-2 md:p-7">
           <label className="grid gap-2 md:col-span-2"><span className="text-sm font-bold">Instagram Reel URL *</span><input name="reel_url" required placeholder="https://www.instagram.com/reel/.../" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
           <label className="grid gap-2"><span className="text-sm font-bold">Title</span><input name="title" maxLength={120} placeholder="रील का नाम" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
           <label className="grid gap-2"><span className="text-sm font-bold">Cover image URL (optional)</span><input name="thumbnail_url" type="url" placeholder="https://...jpg" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
@@ -77,7 +77,7 @@ export default async function InstagramReelsPage({
         </form>
         */}
 
-        <section className="mt-8 rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:p-7">
+        <section className="mt-8 rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-5 shadow-sm md:p-7">
           <h2 className="text-xl font-bold">Added reels ({reels?.length ?? 0})</h2>
           <div className="mt-5 grid gap-4">
             {(reels ?? []).map((reel) => (

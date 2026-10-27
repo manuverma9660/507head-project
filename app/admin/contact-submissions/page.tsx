@@ -43,7 +43,7 @@ export default async function ContactSubmissionsPage() {
           {(messages ?? []).map((item) => (
             <article
               key={item.id}
-              className="rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm"
+              className="rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-5 shadow-sm"
             >
               <div className="flex flex-wrap justify-between gap-2">
                 <h2 className="font-bold">{item.name}</h2>
@@ -66,7 +66,7 @@ export default async function ContactSubmissionsPage() {
             </article>
           ))}
           {(!messages || messages.length === 0) && (
-            <p className="rounded-2xl bg-white p-8 text-center text-gray-500">
+            <p className="rounded-2xl bg-[#F7F6EE] p-8 text-center text-gray-500">
               No contact messages yet.
             </p>
           )}

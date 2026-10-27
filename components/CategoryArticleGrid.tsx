@@ -30,7 +30,7 @@ export default function CategoryArticleGrid({
           className={`shrink-0 rounded-full px-5 py-2 text-xs sm:text-sm font-bold transition-all ${
             selectedCategory === "all"
               ? "bg-[#8a4b1f] text-white shadow-sm"
-              : "bg-[#f7efe3] text-[#6b3915] hover:bg-[#e8d9c7]"
+              : "bg-[#F7F4DE] text-[#6b3915] hover:bg-[#e8d9c7]"
           }`}
         >
           सभी खबरें ({articles.length})
@@ -51,7 +51,7 @@ export default function CategoryArticleGrid({
               className={`shrink-0 rounded-full px-5 py-2 text-xs sm:text-sm font-bold transition-all ${
                 isSelected
                   ? "bg-[#8a4b1f] text-white shadow-sm"
-                  : "bg-[#f7efe3] text-[#6b3915] hover:bg-[#e8d9c7]"
+                  : "bg-[#F7F4DE] text-[#6b3915] hover:bg-[#e8d9c7]"
               }`}
             >
               {cat.name} ({count})
@@ -66,7 +66,7 @@ export default function CategoryArticleGrid({
           <article
             key={article.id}
             data-article-href={`/blog/${article.slug}`}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+            className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
           >
             <Link
               href={`/blog/${article.slug}`}

@@ -118,7 +118,7 @@ export default async function ArticlesPage() {
         </header>
 
         {error && articlesList.length === 0 ? (
-          <section className="mt-8 rounded-xl border border-red-200 bg-white p-5 text-red-700">
+          <section className="mt-8 rounded-xl border border-red-200 bg-[#F7F6EE] p-5 text-red-700">
             लेख लोड नहीं हुए: {error.message}
           </section>
         ) : (

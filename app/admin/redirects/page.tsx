@@ -51,7 +51,7 @@ export default async function AdminRedirectsPage({ searchParams }: PageProps) {
         <RedirectStatusNotice success={query.success} error={query.error} />
         <form
           action={createRedirect}
-          className="mb-8 grid gap-4 rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm md:grid-cols-[1fr_1fr_110px_auto]"
+          className="mb-8 grid gap-4 rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 shadow-sm md:grid-cols-[1fr_1fr_110px_auto]"
         >
           <input
             required
@@ -77,9 +77,9 @@ export default async function AdminRedirectsPage({ searchParams }: PageProps) {
             Add redirect
           </button>
         </form>
-        <div className="overflow-x-auto rounded-2xl border border-[#e8dac9] bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] shadow-sm">
           <table className="w-full min-w-[620px] text-left text-sm">
-            <thead className="bg-[#f7efe3] text-xs uppercase text-[#6b3915]">
+            <thead className="bg-[#F7F4DE] text-xs uppercase text-[#6b3915]">
               <tr>
                 <th className="p-4">Source</th>
                 <th className="p-4">Destination</th>

@@ -8,7 +8,7 @@ type ArticleShareRowProps = {
 
 export default function ArticleShareRow({ title, url }: ArticleShareRowProps) {
   const buttonClass =
-    "flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-white text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]";
+    "flex h-10 w-10 items-center justify-center rounded-full border border-[#222] bg-[#F7F6EE] text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5]";
 
   return (
     <div

@@ -122,7 +122,7 @@ export default async function AdminDashboardPage() {
       icon: "📰",
       count: totalCount,
       color: "text-[#8a4b1f]",
-      bg: "bg-[#f7efe3]",
+      bg: "bg-[#F7F4DE]",
     },
     {
       title: "Published",
@@ -143,8 +143,8 @@ export default async function AdminDashboardPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f7efe3] text-[#29231e]">
-      <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[#e6d8c7] bg-white px-5 py-5 md:px-10">
+    <main className="min-h-screen bg-[#F7F4DE] text-[#29231e]">
+      <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[#e6d8c7] bg-[#F7F6EE] px-5 py-5 md:px-10">
         <Link href="/admin" className="flex items-center gap-3">
           <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8a4b1f] text-lg font-black text-white">
             507
@@ -189,7 +189,7 @@ export default async function AdminDashboardPage() {
           {stats.map((item) => (
             <div
               key={item.title}
-              className="rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm"
+              className="rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 shadow-sm"
             >
               <div
                 className={`mb-3 flex h-12 w-12 items-center justify-center rounded-xl ${item.bg} text-2xl`}
@@ -218,7 +218,7 @@ export default async function AdminDashboardPage() {
               <Link
                 key={section.title}
                 href={section.href}
-                className="group rounded-2xl border border-[#e8dac9] bg-white p-6 transition hover:-translate-y-1 hover:border-[#8a4b1f] hover:shadow-md"
+                className="group rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 transition hover:-translate-y-1 hover:border-[#8a4b1f] hover:shadow-md"
               >
                 <div className="mb-4 text-3xl">{section.icon}</div>
                 <h3 className="font-bold group-hover:text-[#8a4b1f]">

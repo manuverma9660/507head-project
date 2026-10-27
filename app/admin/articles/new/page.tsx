@@ -91,7 +91,7 @@ export default function NewArticlePage() {
           ← वापस Articles पर जाएँ
         </Link>
 
-        <section className="mt-6 rounded-2xl border border-[#e7ddd0] bg-white p-6 md:p-8">
+        <section className="mt-6 rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-6 md:p-8">
           <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">
             507 HEAD · Editorial
           </p>
@@ -143,7 +143,7 @@ export default function NewArticlePage() {
                 name="category_slug"
                 value={categorySlug}
                 onChange={(e) => setCategorySlug(e.target.value)}
-                className="w-full rounded-xl border border-[#e7ddd0] bg-white px-4 py-3 outline-none focus:border-[#8a4b1f]"
+                className="w-full rounded-xl border border-[#e7ddd0] bg-[#F7F6EE] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat.slug} value={cat.slug}>
@@ -304,7 +304,7 @@ export default function NewArticlePage() {
               <button
                 type="button"
                 onClick={() => setShowPreview(true)}
-                className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#f7efe3]"
+                className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#F7F4DE]"
               >
                 Preview देखें
               </button>
@@ -313,7 +313,7 @@ export default function NewArticlePage() {
                 name="status"
                 value="draft"
                 disabled={isPending}
-                className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#f7efe3] disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#F7F4DE] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isPending ? "सेव हो रहा है..." : "Draft में सेव करें"}
               </button>
@@ -334,7 +334,7 @@ export default function NewArticlePage() {
               name="status"
               value="in_review"
               disabled={isPending}
-              className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#f7efe3] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-xl border border-[#8a4b1f] px-6 py-3 font-semibold text-[#8a4b1f] transition hover:bg-[#F7F4DE] disabled:cursor-not-allowed disabled:opacity-50"
             >
               Send for review
             </button>
@@ -360,7 +360,7 @@ export default function NewArticlePage() {
 
           {showPreview && (
             <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 p-4">
-              <div className="mx-auto my-8 max-w-3xl rounded-2xl bg-white p-6 shadow-xl md:p-10">
+              <div className="mx-auto my-8 max-w-3xl rounded-2xl bg-[#F7F6EE] p-6 shadow-xl md:p-10">
                 <div className="flex items-center justify-between gap-4 border-b border-[#e7ddd0] pb-4">
                   <p className="text-sm font-bold uppercase tracking-widest text-[#8a4b1f]">
                     Draft Preview
@@ -368,7 +368,7 @@ export default function NewArticlePage() {
                   <button
                     type="button"
                     onClick={() => setShowPreview(false)}
-                    className="rounded-lg px-3 py-2 text-sm font-bold text-[#8a4b1f] hover:bg-[#f7efe3]"
+                    className="rounded-lg px-3 py-2 text-sm font-bold text-[#8a4b1f] hover:bg-[#F7F4DE]"
                     aria-label="Preview बंद करें"
                   >
                     बंद करें

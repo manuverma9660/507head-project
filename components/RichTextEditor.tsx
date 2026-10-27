@@ -61,7 +61,7 @@ export default function RichTextEditor({ onChange, content = "" }: Props) {
     editorProps: {
       attributes: {
         class:
-          "min-h-72 rounded-b-xl border border-t-0 border-[#e7ddd0] bg-white px-4 py-3 leading-8 outline-none focus:border-[#8a4b1f]",
+          "min-h-72 rounded-b-xl border border-t-0 border-[#e7ddd0] bg-[#F7F6EE] px-4 py-3 leading-8 outline-none focus:border-[#8a4b1f]",
         "aria-label": "समाचार की सामग्री",
       },
     },
@@ -75,7 +75,7 @@ export default function RichTextEditor({ onChange, content = "" }: Props) {
     return <div className="min-h-72 animate-pulse rounded-xl bg-[#f7f3ed]" />;
 
   const buttonClass =
-    "rounded px-2 py-1 text-xs font-bold hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#245d92]";
+    "rounded px-2 py-1 text-xs font-bold hover:bg-[#F7F6EE] focus:outline-none focus:ring-2 focus:ring-[#245d92]";
   const toggleLink = () => {
     const href = window.prompt("Link URL (https://...)");
     if (href?.startsWith("http://") || href?.startsWith("https://"))

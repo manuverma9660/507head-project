@@ -199,7 +199,7 @@ export default function MediaLibraryClient({
         className="hidden"
         onChange={(event) => void replaceImage(event.target.files?.[0])}
       />
-      <section className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-5 shadow-sm sm:p-6">
         <h2 className="mb-4 text-lg font-bold">नई फ़ाइल अपलोड करें</h2>
         <label
           onDragOver={(event) => event.preventDefault()}
@@ -236,7 +236,7 @@ export default function MediaLibraryClient({
           </p>
         )}
       </section>
-      <section className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-2xl border border-[#e7ddd0] bg-[#F7F6EE] p-5 shadow-sm sm:p-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-lg font-bold">
             Cloudinary Media ({files.length})
@@ -310,7 +310,7 @@ export default function MediaLibraryClient({
                   <div className="flex gap-1">
                     <button
                       onClick={() => copy(file.url)}
-                      className="flex-1 rounded bg-[#f7efe3] px-2 py-1.5 text-xs font-bold text-[#8a4b1f]"
+                      className="flex-1 rounded bg-[#F7F4DE] px-2 py-1.5 text-xs font-bold text-[#8a4b1f]"
                     >
                       URL Copy
                     </button>

@@ -230,7 +230,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
         .login-page {
           --brand: #8a4b1f;
           --brand-dark: #6b3915;
-          --sand: #f7efe3;
+          --sand: #F7F4DE;
           --text: #222222;
           --muted: #666666;
           --line: #e8d9c7;
@@ -470,7 +470,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
           padding: 26px 28px 23px;
           border: 1px solid #e9ddcf;
           border-radius: 12px;
-          background: #ffffff;
+          background: #F7F6EE;
           box-shadow: 0 12px 35px rgba(75, 48, 26, 0.08);
         }
 

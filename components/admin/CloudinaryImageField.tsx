@@ -56,7 +56,7 @@ export default function CloudinaryImageField({
         onDragOver={(event) => event.preventDefault()}
         onDrop={(event) => { event.preventDefault(); void addFile(event.dataTransfer.files[0]); }}
         disabled={uploading}
-        className="flex min-h-32 w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#8a4b1f]/40 bg-[#f7efe3] p-4 text-center transition hover:border-[#8a4b1f] disabled:cursor-wait disabled:opacity-60"
+        className="flex min-h-32 w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#8a4b1f]/40 bg-[#F7F4DE] p-4 text-center transition hover:border-[#8a4b1f] disabled:cursor-wait disabled:opacity-60"
       >
         <span className="text-sm font-bold text-[#8a4b1f]">{uploading ? "Cloudinary पर upload हो रहा है…" : "Image चुनें या यहाँ drag-and-drop करें"}</span>
         <span className="mt-1 text-xs text-[#666]">JPG, PNG, WebP, GIF या AVIF · अधिकतम {MAX_IMAGE_UPLOAD_BYTES / 1024 / 1024} MB · 2400px तक optimize</span>

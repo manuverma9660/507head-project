@@ -78,7 +78,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
       {/* Main Header */}
 {/* Author Hero Profile Header */}
-      <section className="border-b border-[#e5ddd3] bg-gradient-to-b from-[#f7efe3] to-[#fcf9f5] py-12">
+      <section className="border-b border-[#e5ddd3] bg-gradient-to-b from-[#F7F4DE] to-[#fcf9f5] py-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="mb-6 text-xs text-[#777]">
@@ -99,7 +99,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
             {/* Author Avatar */}
-            <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border-2 border-[#8a4b1f]/20 bg-white shadow-md">
+            <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border-2 border-[#8a4b1f]/20 bg-[#F7F6EE] shadow-md">
               <Image
                 src={
                   author.avatar_url ||
@@ -149,7 +149,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         </div>
 
         {articles.length === 0 ? (
-          <div className="rounded-2xl border border-[#e5ddd3] bg-white p-12 text-center">
+          <div className="rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] p-12 text-center">
             <p className="text-base text-gray-600">
               इस लेखक द्वारा अभी कोई लेख प्रकाशित नहीं हुआ है।
             </p>
@@ -166,7 +166,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
               <article
                 key={article.id}
                 data-article-href={`/blog/${article.slug}`}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] transition duration-200 hover:-translate-y-1 hover:shadow-lg"
               >
                 <Link
                   href={`/blog/${article.slug}`}

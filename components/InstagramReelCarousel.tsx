@@ -54,7 +54,7 @@ export default function InstagramReelCarousel({
           aria-label="पिछली रील"
           disabled={!canScrollBack}
           onClick={() => scroll(-1)}
-          className="absolute left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 rounded-full bg-white/95 text-2xl shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-0 md:block"
+          className="absolute left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 rounded-full bg-[#F7F6EE]/95 text-2xl shadow-md transition hover:bg-[#F7F6EE] disabled:pointer-events-none disabled:opacity-0 md:block"
         >
           ‹
         </button>
@@ -100,7 +100,7 @@ export default function InstagramReelCarousel({
           aria-label="अगली रील"
           disabled={!canScrollForward}
           onClick={() => scroll(1)}
-          className="absolute right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 rounded-full bg-white/95 text-2xl shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-0 md:block"
+          className="absolute right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 rounded-full bg-[#F7F6EE]/95 text-2xl shadow-md transition hover:bg-[#F7F6EE] disabled:pointer-events-none disabled:opacity-0 md:block"
         >
           ›
         </button>

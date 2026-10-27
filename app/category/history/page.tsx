@@ -40,7 +40,7 @@ const stories = [
 export default function HistoryPage() {
   return (
     <main className="min-h-screen bg-[#fffdf9] text-stone-900">
-<section className="border-b border-[#e5ddd3] bg-[#f7efe3]">
+<section className="border-b border-[#e5ddd3] bg-[#F7F4DE]">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
           <Link
             href="/#categories"
@@ -52,7 +52,7 @@ export default function HistoryPage() {
 
           <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
             <div>
-              <span className="inline-flex rounded-full border border-[#e5ddd3] bg-white px-4 py-2 text-sm font-bold text-[#6b3915]">
+              <span className="inline-flex rounded-full border border-[#e5ddd3] bg-[#F7F6EE] px-4 py-2 text-sm font-bold text-[#6b3915]">
                 507 HEAD · इतिहास और विरासत
               </span>
 
@@ -77,7 +77,7 @@ export default function HistoryPage() {
               </Link>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white p-2 shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] p-2 shadow-sm">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#eadbc9]">
                 <Image
                   src={stories[0].image}
@@ -125,9 +125,9 @@ export default function HistoryPage() {
           {stories.map((story, index) => (
             <article
               key={story.title}
-              className="group overflow-hidden rounded-xl border border-[#e5ddd3] bg-white transition duration-200 hover:-translate-y-1 hover:shadow-md"
+              className="group overflow-hidden rounded-xl border border-[#e5ddd3] bg-[#F7F6EE] transition duration-200 hover:-translate-y-1 hover:shadow-md"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-[#f7efe3]">
+              <div className="relative aspect-[16/9] overflow-hidden bg-[#F7F4DE]">
                 <Image
                   src={story.image}
                   alt={story.alt}
@@ -139,7 +139,7 @@ export default function HistoryPage() {
               </div>
 
               <div className="p-5">
-                <span className="inline-flex rounded-full bg-[#f7efe3] px-3 py-1 text-xs font-bold text-[#6b3915]">
+                <span className="inline-flex rounded-full bg-[#F7F4DE] px-3 py-1 text-xs font-bold text-[#6b3915]">
                   इतिहास और विरासत
                 </span>
 
@@ -177,13 +177,13 @@ export default function HistoryPage() {
           ))}
         </div>
 
-        <p className="mt-8 rounded-xl border border-[#e5ddd3] bg-[#f7efe3] p-5 text-sm leading-7 text-stone-600">
+        <p className="mt-8 rounded-xl border border-[#e5ddd3] bg-[#F7F4DE] p-5 text-sm leading-7 text-stone-600">
           ये शुरुआती नमूना कार्ड हैं, पूरे ऐतिहासिक लेख नहीं। प्रकाशित करने से
           पहले ऐतिहासिक तथ्यों, फोटो के स्रोत और लाइसेंस की जाँच आवश्यक है।
         </p>
       </section>
 
-      <section className="border-y border-[#e5ddd3] bg-white">
+      <section className="border-y border-[#e5ddd3] bg-[#F7F6EE]">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div>
             <h2 className="text-xl font-bold">दूसरे विषय भी देखिए</h2>
@@ -195,7 +195,7 @@ export default function HistoryPage() {
 
           <Link
             href="/#categories"
-            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg border border-[#e5ddd3] px-5 py-3 font-bold text-[#8a4b1f] transition hover:bg-[#f7efe3]"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg border border-[#e5ddd3] px-5 py-3 font-bold text-[#8a4b1f] transition hover:bg-[#F7F4DE]"
           >
             सभी श्रेणियाँ देखें →
           </Link>

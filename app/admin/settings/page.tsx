@@ -80,7 +80,7 @@ export default async function AdminSettingsPage({ searchParams }: Props) {
         )}
         <form
           action={saveSiteSettings}
-          className="space-y-5 rounded-2xl border border-[#e8dac9] bg-white p-6 shadow-sm"
+          className="space-y-5 rounded-2xl border border-[#e8dac9] bg-[#F7F6EE] p-6 shadow-sm"
         >
           {fields.map(([name, label, type]) => (
             <label key={name} className="block text-sm font-semibold">

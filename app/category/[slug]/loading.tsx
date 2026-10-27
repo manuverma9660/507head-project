@@ -5,7 +5,7 @@ export default function CategoryLoading() {
       aria-live="polite"
       className="min-h-screen bg-[#fcf9f5] text-[#222222]"
     >
-      <section className="border-b border-[#e5ddd3] bg-[#f7efe3] py-10 sm:py-14">
+      <section className="border-b border-[#e5ddd3] bg-[#F7F4DE] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="text-sm font-semibold text-[#8a4b1f]">
             श्रेणी खुल रही है…
@@ -18,7 +18,7 @@ export default function CategoryLoading() {
         {[1, 2, 3].map((item) => (
           <div
             key={item}
-            className="overflow-hidden rounded-2xl border border-[#e5ddd3] bg-white"
+            className="overflow-hidden rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE]"
           >
             <div className="aspect-[16/9] animate-pulse bg-[#e5ddd3]" />
             <div className="space-y-3 p-6">
