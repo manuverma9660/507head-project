@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { createArticle } from "../actions";
 import type { RichTextDocument } from "@/lib/rich-text";
+import CloudinaryImageField from "@/components/admin/CloudinaryImageField";
 
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
   ssr: false,
@@ -172,12 +173,17 @@ export default function NewArticlePage() {
 
             {/* Featured Image URL */}
             <div>
-              <label className="mb-2 block font-semibold">
+              <CloudinaryImageField
+                label="Featured image"
+                value={imageUrl}
+                onChange={setImageUrl}
+              />
+              <label className="sr-only">
                 Featured Image URL
               </label>
               <input
                 name="featured_image_url"
-                type="url"
+                type="hidden"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://... (Media Library से copy करें)"

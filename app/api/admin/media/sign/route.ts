@@ -14,6 +14,7 @@ const ALLOWED_TYPES = new Set([
   "image/gif",
   "image/avif",
 ]);
+const UPLOAD_TRANSFORMATION = "c_limit,h_2400,w_2400/f_auto,q_auto";
 
 function safeBaseName(value: string) {
   return (
@@ -77,7 +78,12 @@ export async function POST(request: Request) {
     const publicId = `${CLOUDINARY_MEDIA_FOLDER}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${safeBaseName(fileName)}`;
     // Only body parameters are signed. resource_type belongs in the URL.
     const signature = cloudinary.utils.api_sign_request(
-      { folder: CLOUDINARY_MEDIA_FOLDER, public_id: publicId, timestamp },
+      {
+        folder: CLOUDINARY_MEDIA_FOLDER,
+        public_id: publicId,
+        timestamp,
+        transformation: UPLOAD_TRANSFORMATION,
+      },
       apiSecret,
     );
 
@@ -88,6 +94,7 @@ export async function POST(request: Request) {
       signature,
       folder: CLOUDINARY_MEDIA_FOLDER,
       publicId,
+      transformation: UPLOAD_TRANSFORMATION,
     });
   } catch {
     return NextResponse.json(

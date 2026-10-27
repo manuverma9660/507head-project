@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import CloudinaryImageField from "@/components/admin/CloudinaryImageField";
 import type { RichTextDocument } from "@/lib/rich-text";
 import {
   createArticle,
@@ -356,14 +357,11 @@ export default function ArticleManager({ articles }: { articles: Article[] }) {
               )}
             </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-semibold">Featured Image URL</label>
-              <input type="url" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} placeholder="https://..." className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
-              {imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={imageUrl} alt="Preview" className="mt-3 h-40 w-full rounded-xl border border-[#e7ddd0] object-cover" onError={(event) => { event.currentTarget.style.display = "none"; }} />
-              )}
-            </div>
+            <CloudinaryImageField
+              label="Featured image"
+              value={imageUrl}
+              onChange={setImageUrl}
+            />
 
             <div className="grid gap-4 md:grid-cols-2">
               <div><label className="mb-2 block text-sm font-semibold">Image Alt Text</label><input value={imageAlt} onChange={(event) => setImageAlt(event.target.value)} placeholder="इमेज का विवरण" className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3" /></div>

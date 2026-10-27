@@ -2,6 +2,11 @@
 
 import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
+import {
+  ACCEPTED_IMAGE_TYPES,
+  imageUploadError,
+  uploadCloudinaryImage,
+} from "@/lib/media-upload-client";
 
 export type MediaAsset = {
   id: string;
@@ -16,15 +21,6 @@ export type MediaAsset = {
   created_at: string;
 };
 
-const MAX_SIZE = 10 * 1024 * 1024;
-const ACCEPTED_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-  "image/avif",
-]);
-
 export default function MediaLibraryClient({
   initialFiles,
 }: {
@@ -37,6 +33,8 @@ export default function MediaLibraryClient({
   const [editing, setEditing] = useState<string | null>(null);
   const [altText, setAltText] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const replaceInputRef = useRef<HTMLInputElement>(null);
+  const [replaceTarget, setReplaceTarget] = useState<MediaAsset | null>(null);
   const messageTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function notify(value: string, durationMs = 0) {
@@ -61,9 +59,7 @@ export default function MediaLibraryClient({
   async function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(event.target.files ?? []);
     if (!selected.length) return;
-    const invalid = selected.find(
-      (file) => !ACCEPTED_TYPES.has(file.type) || file.size > MAX_SIZE,
-    );
+    const invalid = selected.find(imageUploadError);
     if (invalid) {
       notify(
         "केवल JPG, PNG, WebP, GIF या AVIF (अधिकतम 10 MB) अपलोड करें।",
@@ -94,6 +90,7 @@ export default function MediaLibraryClient({
         uploadData.set("signature", signature.signature);
         uploadData.set("folder", signature.folder);
         uploadData.set("public_id", signature.publicId);
+        uploadData.set("transformation", signature.transformation);
         const uploadResponse = await fetch(
           `https://api.cloudinary.com/v1_1/${signature.cloudName}/image/upload`,
           { method: "POST", body: uploadData },
@@ -144,6 +141,29 @@ export default function MediaLibraryClient({
     notify("✓ Image विवरण save हो गया।", 1800);
   }
 
+  async function replaceImage(file?: File) {
+    if (!file || !replaceTarget) return;
+    setUploading(true);
+    try {
+      const replacement = await uploadCloudinaryImage(file);
+      const response = await fetch(`/api/admin/media/${replaceTarget.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ replacementPublicId: replacement.public_id }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Image replace नहीं हुई।");
+      setFiles((current) => current.map((item) => item.id === replaceTarget.id ? data.asset : item).filter((item) => item.id !== replacement.id));
+      notify("Image replace हो गई और article URL update हो गया।", 2500);
+    } catch (error) {
+      notify(error instanceof Error ? error.message : "Image replace नहीं हुई।", 5000);
+    } finally {
+      setUploading(false);
+      setReplaceTarget(null);
+      if (replaceInputRef.current) replaceInputRef.current.value = "";
+    }
+  }
+
   async function remove(file: MediaAsset) {
     if (!window.confirm("इस image को हमेशा के लिए delete करना है?")) return;
     const response = await fetch(`/api/admin/media/${file.id}`, {
@@ -172,9 +192,23 @@ export default function MediaLibraryClient({
 
   return (
     <div className="space-y-6">
+      <input
+        ref={replaceInputRef}
+        type="file"
+        accept={Array.from(ACCEPTED_IMAGE_TYPES).join(",")}
+        className="hidden"
+        onChange={(event) => void replaceImage(event.target.files?.[0])}
+      />
       <section className="rounded-2xl border border-[#e7ddd0] bg-white p-5 shadow-sm sm:p-6">
         <h2 className="mb-4 text-lg font-bold">नई फ़ाइल अपलोड करें</h2>
         <label
+          onDragOver={(event) => event.preventDefault()}
+          onDrop={(event) => {
+            event.preventDefault();
+            const dropped = Array.from(event.dataTransfer.files);
+            if (dropped.length)
+              void handleUpload({ target: { files: event.dataTransfer.files } } as React.ChangeEvent<HTMLInputElement>);
+          }}
           className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#c4a882] bg-[#fdf7f0] p-8 text-center transition hover:border-[#8a4b1f] sm:p-10 ${uploading ? "pointer-events-none opacity-60" : ""}`}
         >
           <span className="text-4xl">🖼️</span>
@@ -190,7 +224,7 @@ export default function MediaLibraryClient({
             ref={fileInputRef}
             type="file"
             multiple
-            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+            accept={Array.from(ACCEPTED_IMAGE_TYPES).join(",")}
             className="hidden"
             onChange={handleUpload}
             disabled={uploading}
@@ -279,6 +313,15 @@ export default function MediaLibraryClient({
                       className="flex-1 rounded bg-[#f7efe3] px-2 py-1.5 text-xs font-bold text-[#8a4b1f]"
                     >
                       URL Copy
+                    </button>
+                    <button
+                      onClick={() => {
+                        setReplaceTarget(file);
+                        replaceInputRef.current?.click();
+                      }}
+                      className="rounded border border-[#8a4b1f] px-2 py-1.5 text-xs text-[#8a4b1f]"
+                    >
+                      Replace
                     </button>
                     <button
                       onClick={() => remove(file)}

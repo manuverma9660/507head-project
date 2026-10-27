@@ -1,6 +1,7 @@
 "use client";
 
 import { EditorContent, useEditor } from "@tiptap/react";
+import { useRef, useState } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
@@ -11,6 +12,7 @@ import {
   TableCell,
 } from "@tiptap/extension-table";
 import { parseRichText, type RichTextDocument } from "@/lib/rich-text";
+import { uploadCloudinaryImage } from "@/lib/media-upload-client";
 
 type Props = {
   onChange: (document: RichTextDocument, plainText: string) => void;
@@ -36,6 +38,8 @@ function getPlainText(document: RichTextDocument) {
 }
 
 export default function RichTextEditor({ onChange, content = "" }: Props) {
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const initialContent =
     typeof content === "string" ? parseRichText(content) ?? content : content;
   const editor = useEditor({
@@ -77,10 +81,18 @@ export default function RichTextEditor({ onChange, content = "" }: Props) {
     if (href?.startsWith("http://") || href?.startsWith("https://"))
       editor.chain().focus().setLink({ href }).run();
   };
-  const addImage = () => {
-    const src = window.prompt("Image URL (https://...)");
-    if (src?.startsWith("http://") || src?.startsWith("https://"))
-      editor.chain().focus().setImage({ src }).run();
+  const addUploadedImage = async (file?: File) => {
+    if (!file || uploadingImage) return;
+    setUploadingImage(true);
+    try {
+      const asset = await uploadCloudinaryImage(file);
+      editor.chain().focus().setImage({ src: asset.url }).run();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Image upload नहीं हुआ।");
+    } finally {
+      setUploadingImage(false);
+      if (imageInputRef.current) imageInputRef.current.value = "";
+    }
   };
 
   return (
@@ -161,9 +173,10 @@ export default function RichTextEditor({ onChange, content = "" }: Props) {
         <button type="button" className={buttonClass} onClick={toggleLink}>
           Link
         </button>
-        <button type="button" className={buttonClass} onClick={addImage}>
-          Image URL
+        <button type="button" className={buttonClass} onClick={() => imageInputRef.current?.click()}>
+          {uploadingImage ? "Uploading…" : "Image upload"}
         </button>
+        <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" className="hidden" onChange={(event) => void addUploadedImage(event.target.files?.[0])} />
       </div>
       <EditorContent editor={editor} />
     </div>

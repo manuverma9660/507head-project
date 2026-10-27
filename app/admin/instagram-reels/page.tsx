@@ -2,8 +2,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { addInstagramReel, deleteInstagramReel } from "./actions";
+import { deleteInstagramReel } from "./actions";
 import StatusNotice from "./StatusNotice";
+import InstagramReelForm from "./InstagramReelForm";
 
 export const instant = false;
 
@@ -66,12 +67,15 @@ export default async function InstagramReelsPage({
 
         {status && <StatusNotice status={status} message={messages[status] || "कुछ गलत हो गया।"} />}
 
+        <InstagramReelForm />
+        {/*
         <form action={addInstagramReel} className="mt-7 grid gap-4 rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:grid-cols-2 md:p-7">
           <label className="grid gap-2 md:col-span-2"><span className="text-sm font-bold">Instagram Reel URL *</span><input name="reel_url" required placeholder="https://www.instagram.com/reel/.../" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
           <label className="grid gap-2"><span className="text-sm font-bold">Title</span><input name="title" maxLength={120} placeholder="रील का नाम" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
           <label className="grid gap-2"><span className="text-sm font-bold">Cover image URL (optional)</span><input name="thumbnail_url" type="url" placeholder="https://...jpg" className="rounded-xl border border-[#dfd3c5] px-4 py-3" /></label>
           <button className="w-fit rounded-xl bg-[#8a4b1f] px-5 py-3 font-bold text-white hover:bg-[#6b3915]">Reel जोड़ें</button>
         </form>
+        */}
 
         <section className="mt-8 rounded-2xl border border-[#e8dac9] bg-white p-5 shadow-sm md:p-7">
           <h2 className="text-xl font-bold">Added reels ({reels?.length ?? 0})</h2>
