@@ -32,7 +32,7 @@ function isInstagramReelUrl(value: string) {
     return (
       (url.hostname === "instagram.com" ||
         url.hostname === "www.instagram.com") &&
-      /^\/(reel|p)\/[A-Za-z0-9_-]+\/?$/.test(url.pathname)
+      url.pathname.length > 1
     );
   } catch {
     return false;
