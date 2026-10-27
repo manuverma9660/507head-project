@@ -32,6 +32,11 @@ export interface Article {
   featured_image_alt: string;
   featured_image_caption?: string;
   featured_image_credit?: string;
+  seo_title?: string;
+  seo_description?: string;
+  social_title?: string;
+  social_description?: string;
+  social_image_url?: string;
   is_featured: boolean;
   published_at: string;
   updated_at?: string;
@@ -471,7 +476,7 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
     const { data: dbArticles } = await supabase
       .from("articles")
       .select(
-        "id, slug, title, excerpt, body, body_json, featured_image_url, featured_image_alt, featured_image_caption, featured_image_credit, is_featured, published_at, updated_at, category_id, author_id, categories(id, name, slug)",
+        "id, slug, title, excerpt, body, body_json, featured_image_url, featured_image_alt, featured_image_caption, featured_image_credit, seo_title, seo_description, social_title, social_description, social_image_url, is_featured, published_at, updated_at, category_id, author_id, categories(id, name, slug)",
       )
       .eq("status", "published")
       .order("published_at", { ascending: false });
@@ -615,6 +620,11 @@ export async function getAllPublishedArticles(): Promise<Article[]> {
           featured_image_alt: item.featured_image_alt || item.title,
           featured_image_caption: item.featured_image_caption || undefined,
           featured_image_credit: item.featured_image_credit || undefined,
+          seo_title: item.seo_title || undefined,
+          seo_description: item.seo_description || undefined,
+          social_title: item.social_title || undefined,
+          social_description: item.social_description || undefined,
+          social_image_url: item.social_image_url || undefined,
           is_featured: Boolean(item.is_featured),
           published_at: item.published_at || new Date().toISOString(),
           reading_time_minutes: 4,

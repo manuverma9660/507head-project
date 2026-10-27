@@ -97,7 +97,7 @@ function Header({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#222] bg-[#F7F6EE] text-black transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-[#8a4b1f] bg-white text-[#8a4b1f] transition duration-200 hover:-translate-y-0.5 hover:bg-[#f5f5f5] sm:h-10 sm:w-10"
               >
                 <SocialIcon name={name} className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
@@ -148,7 +148,7 @@ function Header({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8a4b1f] bg-[#F7F6EE] text-[#6b3915] transition hover:bg-[#8a4b1f] hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8a4b1f] bg-white text-[#6b3915] transition hover:bg-[#8a4b1f] hover:text-white"
                 >
                   <SocialIcon name={name} className="h-5 w-5" />
                 </a>
@@ -189,7 +189,7 @@ function Footer({
   categories?: NavigationCategory[];
 }) {
   return (
-    <footer className="border-t border-[#e5ddd3] bg-[#F7F6EE] pb-8 pt-14 text-[#555]">
+    <footer className="border-t border-[#e5ddd3] bg-white pb-8 pt-14 text-[#555]">
       <div className="mx-auto grid max-w-7xl gap-10 border-b border-[#f0e7dd] px-4 pb-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">
@@ -258,18 +258,22 @@ function Footer({
         </div>
         <div>
           <h4 className="mb-4 text-sm font-bold text-[#222]">
-            कार्यालय व संपर्क
+            507 हेड से जुड़े रहें
           </h4>
-          <p className="text-xs leading-relaxed text-[#666]">
-            507 Head संपादकीय डेस्क,
-            <br />
-            छतरगढ़ तहसील, जिला बीकानेर,
-            <br />
-            राजस्थान — 334021
-          </p>
-          <p className="mt-3 text-xs font-semibold text-[#8a4b1f]">
-            ईमेल: info.507head@gmail.com
-          </p>
+          <div className="flex items-center gap-3">
+            {socials.map(([name, href, label]) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="grid h-10 w-10 place-items-center rounded-full bg-[#8a4b1f] text-white transition hover:bg-[#6b3915]"
+              >
+                <SocialIcon name={name} className="h-5 w-5" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 pt-6 text-xs text-[#777] sm:flex-row sm:px-6">

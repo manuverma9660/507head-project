@@ -1,21 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { submitContact } from "./actions";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [contactEmail, setContactEmail] = useState("info.507head@gmail.com");
-
-  useEffect(() => {
-    fetch("/api/site-settings")
-      .then((response) => (response.ok ? response.json() : null))
-      .then((settings) => {
-        if (settings?.contact_email) setContactEmail(settings.contact_email);
-      })
-      .catch(() => undefined);
-  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,59 +42,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Content Form & Details Grid */}
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr]">
-          {/* Contact Details */}
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold text-[#222]">कार्यालय व पता</h2>
-              <p className="mt-2 text-sm text-[#666] leading-relaxed">
-                507 Head समाचार एवं शोध डेस्क,
-                <br />
-                तहसील: छतरगढ़, जिला: बीकानेर,
-                <br />
-                राजस्थान — 334021
-              </p>
-            </div>
-
-            <div className="space-y-4 text-sm">
-              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-[#F7F6EE]">
-                <span className="text-xl">📧</span>
-                <div>
-                  <strong className="block text-[#222]">ईमेल</strong>
-                  <a
-                    href={`mailto:${contactEmail}`}
-                    className="text-[#8a4b1f] hover:underline"
-                  >
-                    {contactEmail}
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-[#F7F6EE]">
-                <span className="text-xl">📱</span>
-                <div>
-                  <strong className="block text-[#222]">
-                    व्हाट्सएप / संदेश
-                  </strong>
-                  <span className="text-[#666]">+91 (बीकानेर डेस्क)</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 rounded-xl border border-[#e5ddd3] bg-[#F7F6EE]">
-                <span className="text-xl">🕒</span>
-                <div>
-                  <strong className="block text-[#222]">कार्य समय</strong>
-                  <span className="text-[#666]">
-                    सोमवार से शनिवार: प्रातः 9:00 से सायं 6:00 तक
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Form */}
+      <section className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
           <div className="rounded-2xl border border-[#e5ddd3] bg-[#F7F6EE] p-8 shadow-sm">
             {submitted ? (
               <div className="p-8 text-center space-y-4">
@@ -216,7 +154,6 @@ export default function ContactPage() {
               </form>
             )}
           </div>
-        </div>
       </section>
 </main>
   );

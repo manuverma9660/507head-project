@@ -29,6 +29,7 @@ const CATEGORIES = [
 
 export default function NewArticlePage() {
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [contentJson, setContentJson] = useState("");
@@ -36,6 +37,11 @@ export default function NewArticlePage() {
   const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
   const [tags, setTags] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
+  const [socialTitle, setSocialTitle] = useState("");
+  const [socialDescription, setSocialDescription] = useState("");
+  const [socialImageUrl, setSocialImageUrl] = useState("");
   const [scheduledFor, setScheduledFor] = useState("");
   const [readingTime, setReadingTime] = useState("3");
   const [message, setMessage] = useState("");
@@ -109,11 +115,29 @@ export default function NewArticlePage() {
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 minLength={3}
-                maxLength={40}
+                maxLength={70}
                 placeholder="लेख का शीर्षक लिखें"
                 className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
               />
-              <p className="mt-1 text-xs text-gray-500">(3 से 40 अक्षर)</p>
+              <p className="mt-1 text-xs text-gray-500">(40-70 characters recommended)</p>
+            </div>
+
+            <div>
+              <label className="mb-2 block font-semibold">
+                SEO URL slug <span className="text-red-500">*</span>
+              </label>
+              <input
+                name="slug"
+                value={slug}
+                onChange={(e) => setSlug(e.target.value.toLowerCase())}
+                required
+                minLength={5}
+                maxLength={90}
+                pattern="[a-z0-9]+(-[a-z0-9]+){2,5}"
+                placeholder="jaise: bajra-kheti-ke-tarike"
+                className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]"
+              />
+              <p className="mt-1 text-xs text-gray-500">3-6 English words, lowercase aur hyphen ke saath.</p>
             </div>
 
             {/* Excerpt */}
@@ -133,6 +157,34 @@ export default function NewArticlePage() {
               />
               <p className="mt-1 text-xs text-gray-500">(अधिकतम 160 अक्षर)</p>
             </div>
+
+            <details className="rounded-xl border border-[#e7ddd0] p-4">
+              <summary className="cursor-pointer font-semibold text-[#8a4b1f]">SEO aur social sharing settings</summary>
+              <div className="mt-4 grid gap-4">
+                <div>
+                  <label className="mb-2 block text-sm font-semibold">SEO title</label>
+                  <input name="seo_title" value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} maxLength={70} className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-semibold">SEO meta description</label>
+                  <textarea name="seo_description" value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} rows={2} maxLength={160} className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold">Social share title</label>
+                    <input name="social_title" value={socialTitle} onChange={(e) => setSocialTitle(e.target.value)} maxLength={70} className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
+                  </div>
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold">Social share image URL</label>
+                    <input name="social_image_url" type="url" value={socialImageUrl} onChange={(e) => setSocialImageUrl(e.target.value)} className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
+                  </div>
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-semibold">Social share description</label>
+                  <textarea name="social_description" value={socialDescription} onChange={(e) => setSocialDescription(e.target.value)} rows={2} maxLength={160} className="w-full rounded-xl border border-[#e7ddd0] px-4 py-3 outline-none focus:border-[#8a4b1f]" />
+                </div>
+              </div>
+            </details>
 
             {/* Category */}
             <div>

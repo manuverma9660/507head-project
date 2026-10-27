@@ -29,16 +29,21 @@ export async function generateMetadata({
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://507head.com";
   const canonicalUrl = `${siteUrl}/blog/${article.slug}/`;
+  const seoTitle = article.seo_title || article.title;
+  const seoDescription = article.seo_description || article.excerpt;
+  const socialTitle = article.social_title || seoTitle;
+  const socialDescription = article.social_description || seoDescription;
+  const socialImage = article.social_image_url || article.featured_image_url;
 
   return {
-    title: `${article.title} | 507 Head`,
-    description: article.excerpt,
+    title: `${seoTitle} | 507 Head`,
+    description: seoDescription,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: article.title,
-      description: article.excerpt,
+      title: socialTitle,
+      description: socialDescription,
       url: canonicalUrl,
       type: "article",
       publishedTime: article.published_at,
@@ -46,7 +51,7 @@ export async function generateMetadata({
       locale: "hi_IN",
       images: [
         {
-          url: article.featured_image_url,
+          url: socialImage,
           width: 1200,
           height: 630,
           alt: article.featured_image_alt,
@@ -55,9 +60,9 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: article.title,
-      description: article.excerpt,
-      images: [article.featured_image_url],
+      title: socialTitle,
+      description: socialDescription,
+      images: [socialImage],
     },
   };
 }

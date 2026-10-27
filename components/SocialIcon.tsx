@@ -14,18 +14,18 @@ export default function SocialIcon({ name, className = "" }: SocialIconProps) {
 
   switch (name) {
     case "facebook":
-      return <FaFacebook aria-hidden className={`text-black ${iconClass}`} />;
+      return <FaFacebook aria-hidden className={iconClass} />;
     case "instagram":
-      return <FaInstagram aria-hidden className={`text-black ${iconClass}`} />;
+      return <FaInstagram aria-hidden className={iconClass} />;
     case "youtube":
-      return <FaYoutube aria-hidden className={`text-black ${iconClass}`} />;
+      return <FaYoutube aria-hidden className={iconClass} />;
     case "whatsapp":
       return (
-        <IoLogoWhatsapp aria-hidden className={`text-black ${iconClass}`} />
+        <IoLogoWhatsapp aria-hidden className={iconClass} />
       );
     case "x":
       return (
-        <FaSquareXTwitter aria-hidden className={`text-black ${iconClass}`} />
+        <FaSquareXTwitter aria-hidden className={iconClass} />
       );
   }
 }

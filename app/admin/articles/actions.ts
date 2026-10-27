@@ -50,6 +50,33 @@ function createArticleSlug(title: string) {
   return `${base || "article"}-${crypto.randomUUID().slice(0, 8)}`;
 }
 
+function getSeoValidationError(values: {
+  slug: string;
+  seoTitle: string;
+  seoDescription: string;
+  socialTitle: string;
+  socialDescription: string;
+  socialImageUrl: string;
+}) {
+  if (values.slug && !/^[a-z0-9]+(?:-[a-z0-9]+){2,5}$/.test(values.slug)) {
+    return "SEO URL slug mein 3-6 lowercase English words aur hyphens hi use karein.";
+  }
+  if (values.seoTitle.length > 70 || values.socialTitle.length > 70) {
+    return "SEO aur social title 70 characters se zyada nahi ho sakte.";
+  }
+  if (values.seoDescription.length > 160 || values.socialDescription.length > 160) {
+    return "SEO aur social description 160 characters se zyada nahi ho sakte.";
+  }
+  if (values.socialImageUrl) {
+    try {
+      new URL(values.socialImageUrl);
+    } catch {
+      return "Social share image ke liye valid URL dalein.";
+    }
+  }
+  return null;
+}
+
 async function getAdminClient() {
   const supabase = await createClient();
 
@@ -112,6 +139,8 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
   }
 
   const title = getTextValue(formData, "title");
+  const requestedSlug = getTextValue(formData, "slug");
+  const slug = requestedSlug || createArticleSlug(title);
   const richText = parseRichText(getTextValue(formData, "content_json"));
   const body = richText
     ? richTextSummary(richText)
@@ -129,6 +158,11 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
     getTextValue(formData, "featured_image_alt") || title;
   const featuredImageCaption = getTextValue(formData, "featured_image_caption");
   const featuredImageCredit = getTextValue(formData, "featured_image_credit");
+  const seoTitle = getTextValue(formData, "seo_title");
+  const seoDescription = getTextValue(formData, "seo_description");
+  const socialTitle = getTextValue(formData, "social_title");
+  const socialDescription = getTextValue(formData, "social_description");
+  const socialImageUrl = getTextValue(formData, "social_image_url");
   const tagsRaw = getTextValue(formData, "tags");
   const status = getArticleStatus(getTextValue(formData, "status"));
   const scheduledFor = getScheduledFor(formData);
@@ -149,6 +183,16 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
   if (validationError) {
     return { success: false, message: validationError };
   }
+
+  const seoValidationError = getSeoValidationError({
+    slug,
+    seoTitle,
+    seoDescription,
+    socialTitle,
+    socialDescription,
+    socialImageUrl,
+  });
+  if (seoValidationError) return { success: false, message: seoValidationError };
 
   if (!title || !body || title.length > 250) {
     return {
@@ -269,7 +313,7 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
 
   const articlePayload: Record<string, unknown> = {
     title,
-    slug: createArticleSlug(title),
+    slug,
     created_by: user.id,
     excerpt: excerpt || null,
     body,
@@ -280,6 +324,11 @@ export async function createArticle(formData: FormData): Promise<ActionResult> {
     featured_image_alt: featuredImageAlt || null,
     featured_image_caption: featuredImageCaption || null,
     featured_image_credit: featuredImageCredit || null,
+    seo_title: seoTitle || null,
+    seo_description: seoDescription || null,
+    social_title: socialTitle || null,
+    social_description: socialDescription || null,
+    social_image_url: socialImageUrl || null,
     tags,
     author_id: authorId,
     published_at: status === "published" ? new Date().toISOString() : null,
