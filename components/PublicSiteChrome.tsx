@@ -190,8 +190,8 @@ function Footer({
 }) {
   return (
     <footer className="border-t border-[#e5ddd3] bg-white pb-8 pt-14 text-[#555]">
-      <div className="mx-auto grid max-w-7xl gap-10 border-b border-[#f0e7dd] px-4 pb-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
-        <div className="space-y-4">
+      <div className="mx-auto grid max-w-7xl gap-10 border-b border-[#f0e7dd] px-4 pb-12 max-sm:grid-cols-2 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
+        <div className="col-span-2 space-y-4 sm:col-auto">
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/images/507-head-logo-brown.png"
@@ -214,7 +214,7 @@ function Footer({
             थार रेगिस्तान, किसान, पशुपालन और मरुस्थलीय विरासत की सच्ची आवाज़।
           </p>
         </div>
-        <div className="order-2 sm:order-none">
+        <div>
           <h4 className="mb-4 text-sm font-bold text-[#222]">
             प्रमुख श्रेणियाँ
           </h4>
@@ -231,7 +231,7 @@ function Footer({
             ))}
           </ul>
         </div>
-        <div className="order-1 sm:order-none">
+        <div>
           <h4 className="mb-4 text-sm font-bold text-[#222]">507 Head लिंक</h4>
           <ul className="space-y-2 text-xs">
             <li>
@@ -256,7 +256,7 @@ function Footer({
             </li>
           </ul>
         </div>
-        <div className="order-3 sm:order-none">
+        <div className="col-span-2 sm:col-auto">
           <h4 className="mb-4 text-sm font-bold text-[#222]">
             507 हेड से जुड़े रहें
           </h4>
