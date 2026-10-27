@@ -29,7 +29,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
   const slide = slides[active];
 
   return (
-    <section className="group/hero border-b border-[#e5ddd3] bg-[#24160d]">
+    <section className="group/hero border-b border-[#cde7ea] bg-[#063f47]">
       <div className="relative isolate min-h-[500px] overflow-hidden sm:min-h-[520px]">
         {slides.map((item, index) => (
           <RemoteArticleImage
@@ -53,7 +53,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
             </p>
             <Link
               href={slide.href}
-              className="mt-7 inline-flex items-center rounded-xl bg-[#a7521d] px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#8a4218]"
+              className="mt-7 inline-flex items-center rounded-xl bg-[#0a92a0] px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#056a75]"
             >
               पूरा लेख पढ़ें{" "}
               <span className="ml-2" aria-hidden>
