@@ -214,7 +214,7 @@ function Footer({
             थार रेगिस्तान, किसान, पशुपालन और मरुस्थलीय विरासत की सच्ची आवाज़।
           </p>
         </div>
-        <div>
+        <div className="order-2 sm:order-none">
           <h4 className="mb-4 text-sm font-bold text-[#222]">
             प्रमुख श्रेणियाँ
           </h4>
@@ -231,7 +231,7 @@ function Footer({
             ))}
           </ul>
         </div>
-        <div>
+        <div className="order-1 sm:order-none">
           <h4 className="mb-4 text-sm font-bold text-[#222]">507 Head लिंक</h4>
           <ul className="space-y-2 text-xs">
             <li>
@@ -256,7 +256,7 @@ function Footer({
             </li>
           </ul>
         </div>
-        <div>
+        <div className="order-3 sm:order-none">
           <h4 className="mb-4 text-sm font-bold text-[#222]">
             507 हेड से जुड़े रहें
           </h4>

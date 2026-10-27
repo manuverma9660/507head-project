@@ -177,10 +177,6 @@ export default function HistoryPage() {
           ))}
         </div>
 
-        <p className="mt-8 rounded-xl border border-[#e5ddd3] bg-[#F7F4DE] p-5 text-sm leading-7 text-stone-600">
-          ये शुरुआती नमूना कार्ड हैं, पूरे ऐतिहासिक लेख नहीं। प्रकाशित करने से
-          पहले ऐतिहासिक तथ्यों, फोटो के स्रोत और लाइसेंस की जाँच आवश्यक है।
-        </p>
       </section>
 
       <section className="border-y border-[#e5ddd3] bg-[#F7F6EE]">
