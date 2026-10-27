@@ -1213,7 +1213,10 @@ button {
   --border: #e5ddd3;
 }
 
-.public-site-shell .bg-\[\#6b3915\],
+.public-site-shell .bg-\[\#6b3915\] {
+  background-color: #6b3915 !important;
+}
+
 .public-site-shell .bg-\[\#8a4b1f\] {
   background-color: #8a4b1f !important;
 }
@@ -1237,7 +1240,7 @@ button {
   color: #8a4b1f !important;
 }
 
-/* Preserve the approved mark while harmonising its teal artwork with the desert palette. */
+/* Keep the supplied logo artwork in the established site tone. */
 .public-site-shell .logo-handbook-tone {
   filter: sepia(0.72) saturate(0.95) hue-rotate(338deg) contrast(0.94);
 }

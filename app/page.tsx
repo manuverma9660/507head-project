@@ -25,6 +25,11 @@ export const metadata: Metadata = {
 const INSTAGRAM_URL = "https://www.instagram.com/507head/";
 const FACEBOOK_URL = "https://www.facebook.com/507Head/";
 const YOUTUBE_URL = "https://www.youtube.com/channel/UC0QF1fncNE4Z8G8ryNa4DiQ";
+const WHITE_CATEGORY_BACKGROUND_SLUGS = new Set([
+  "farming",
+  "wisdom",
+  "pashupalan",
+]);
 
 // The homepage hero is editorially curated. New articles remain in the
 // article listings and never enter this slider automatically.
@@ -286,7 +291,7 @@ export default async function Home() {
       </section>
 
       {/* Reel Thumbnail Strip (Static Thumbnails linking to Instagram) */}
-      <section className="bg-[#f7efe3] border-y border-[#e5ddd3] py-12">
+      <section className="border-y border-[#e5ddd3] bg-white py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -321,7 +326,7 @@ export default async function Home() {
       </section>
 
       {/* Category Blocks: 3 cards per category */}
-      <section className="mx-auto max-w-7xl space-y-10 px-4 py-10 sm:space-y-12 sm:px-6 sm:py-12">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6">
         {categories.map((cat) => {
           const catArticles = allArticles.filter(
             (a) => a.category_slug === cat.slug,
@@ -329,7 +334,10 @@ export default async function Home() {
           if (catArticles.length === 0) return null;
 
           return (
-            <div key={cat.slug} className="pt-6">
+            <div
+              key={cat.slug}
+              className={`relative isolate py-10 sm:py-12 ${WHITE_CATEGORY_BACKGROUND_SLUGS.has(cat.slug) ? "before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-screen before:-translate-x-1/2 before:bg-white" : ""}`}
+            >
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#8a4b1f] pb-3">
                 <div className="flex items-center gap-3">
                   <span className="h-6 w-1.5 rounded-full bg-[#8a4b1f]" />

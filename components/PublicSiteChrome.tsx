@@ -66,15 +66,15 @@ function Header({
                 className="logo-handbook-tone h-12 w-12 shrink-0 rounded-xl object-cover shadow-sm sm:h-14 sm:w-14"
             />
             <span className="min-w-0 leading-tight">
-              <strong className="block text-lg font-black tracking-tight text-[#222] sm:text-2xl">
+              <strong className="block text-lg font-black tracking-tight text-[#8a4b1f] sm:text-2xl">
                 507 हेड
               </strong>
-              <small className="hidden text-xs font-semibold text-[#777] min-[390px]:block">
+              <small className="hidden text-xs font-semibold text-[#8a4b1f] min-[390px]:block">
                 जल, प्रकृति और जनजीवन
               </small>
             </span>
           </Link>
-          <nav className="hidden items-center gap-5 text-sm font-semibold text-[#444] xl:flex">
+          <nav className="hidden items-center gap-5 text-sm font-semibold text-[#8a4b1f] xl:flex">
             <Link href="/" prefetch className="font-bold text-[#8a4b1f]">
               होम
             </Link>
@@ -134,7 +134,7 @@ function Header({
                   href={`/category/${slug}`}
                   prefetch
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-4 py-3 text-sm font-semibold text-[#444] transition hover:bg-white hover:text-[#8a4b1f]"
+                  className="rounded-lg px-4 py-3 text-sm font-semibold text-[#8a4b1f] transition hover:bg-white hover:text-[#8a4b1f]"
                 >
                   {name}
                 </Link>
